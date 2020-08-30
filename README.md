@@ -1,29 +1,9 @@
-# README #
+## Gradle Tasks
 
-This README would normally document whatever steps are necessary to get your application up and running.
-
-### What is this repository for? ###
-
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
-
-### How do I get set up? ###
-
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+### Resource Processing
+* generatePotFile - Generates a `src/main/resources/i18n/messages.pot` translation template file.
+### Running
+* run - Starts a webpack dev server on port 3000.
+### Packaging
+* browserWebpack - Bundles the compiled js files into `build/distributions`
+* zip - Packages a zip archive with all required files into `build/libs/*.zip`

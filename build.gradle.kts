@@ -9,7 +9,7 @@ plugins {
 }
 
 version = "1.0.0-SNAPSHOT"
-group = "com.example"
+group = "se.skoview"
 
 repositories {
     mavenCentral()
@@ -35,7 +35,7 @@ kotlin {
                 sourceMaps = false
                 devServer = KotlinWebpackConfig.DevServer(
                     open = false,
-                    port = 3000,
+                    port = 4000,
                     proxy = mapOf(
                         "/kv/*" to "http://localhost:8080",
                         "/kvws/*" to mapOf("target" to "ws://localhost:8080", "ws" to true)
@@ -56,6 +56,8 @@ kotlin {
     sourceSets["main"].dependencies {
         implementation("pl.treksoft:kvision:$kvisionVersion")
         implementation("pl.treksoft:kvision-i18n:$kvisionVersion")
+        implementation("pl.treksoft:kvision-tabulator:$kvisionVersion")
+        implementation("pl.treksoft:kvision-datacontainer:$kvisionVersion")
     }
     sourceSets["test"].dependencies {
         implementation(kotlin("test-js"))

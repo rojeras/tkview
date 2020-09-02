@@ -1,0 +1,933 @@
+[ {
+  "name" : "clinicalprocess:activity:actions",
+  "description" : "Syftet med denna domän är att kommunicera information om aktiviteter i kärnprocessen på ett strukturerat sätt. Informationen i de olika kontrakten är fördelad i atomära delar och med hjälp av kontextbaserade klasser ska kontrakten koppla ihop information, och på så vis bygga ihop en kontext. Ett exempel på detta kan vara informationen om att en patient har genomgått en operation på grund av en tidigare ställd diagnos. Då har en koppling gjorts mellan den utförda operationen och diagnosen.  Kontrakten ställer krav på att informationen är strukturerad och kodad. Denna domän tillgodoser behov hos exempelvis kvalitetsregister och uppföljningssystem som behöver kunna bearbeta och tolka information maskinellt.",
+  "swedishLong" : "vård- och omsorg kärnprocess:hantera aktiviteter:aktiviteter",
+  "swedishShort" : "aktivitetshantering",
+  "hidden" : false,
+  "interactions" : [ {
+    "name" : "GetActivitiesInteraction",
+    "namespace" : "urn:riv:clinicalprocess:activity:actions:GetActivities:2:rivtabp21",
+    "rivtaProfile" : "rivtabp21",
+    "major" : 2,
+    "responderContract" : {
+      "name" : "GetActivitiesResponder",
+      "major" : 2,
+      "namespace" : "urn:riv:clinicalprocess:activity:actions:GetActivitiesResponder:2"
+    },
+    "interactionDescriptions" : [ {
+      "description" : "Retrieval of activity reports",
+      "lastChangedDate" : "2018-03-12",
+      "folderName" : "GetActivitiesInteraction",
+      "wsdlFileName" : "GetActivitiesInteraction_2.0_RIVTABP21.wsdl"
+    }, {
+      "description" : "Retrieval of activity reports",
+      "lastChangedDate" : "2019-04-23",
+      "folderName" : "GetActivitiesInteraction",
+      "wsdlFileName" : "GetActivitiesInteraction_2.0_RIVTABP21.wsdl"
+    }, {
+      "description" : "Retrieval of activity reports",
+      "lastChangedDate" : "2018-06-21",
+      "folderName" : "GetActivitiesInteraction",
+      "wsdlFileName" : "GetActivitiesInteraction_2.0_RIVTABP21.wsdl"
+    }, {
+      "description" : "Retrieval of activity reports",
+      "lastChangedDate" : "2017-12-18",
+      "folderName" : "GetActivitiesInteraction",
+      "wsdlFileName" : "GetActivitiesInteraction_2.0_RIVTABP21.wsdl"
+    }, {
+      "description" : "Retrieval of activity reports",
+      "lastChangedDate" : "2018-05-31",
+      "folderName" : "GetActivitiesInteraction",
+      "wsdlFileName" : "GetActivitiesInteraction_2.0_RIVTABP21.wsdl"
+    } ]
+  }, {
+    "name" : "GetActivitiesInteraction",
+    "namespace" : "urn:riv:clinicalprocess:activity:actions:GetActivities:1:rivtabp21",
+    "rivtaProfile" : "rivtabp21",
+    "major" : 1,
+    "responderContract" : {
+      "name" : "GetActivitiesResponder",
+      "major" : 1,
+      "namespace" : "urn:riv:clinicalprocess:activity:actions:GetActivitiesResponder:1"
+    },
+    "interactionDescriptions" : [ {
+      "description" : "Retrieval of activity reports",
+      "lastChangedDate" : "2015-12-14",
+      "folderName" : "GetActivitiesInteraction",
+      "wsdlFileName" : "GetActivitiesInteraction_1.0_RIVTABP21.wsdl"
+    }, {
+      "description" : "Retrieval of activity reports",
+      "lastChangedDate" : "2017-06-21",
+      "folderName" : "GetActivitiesInteraction",
+      "wsdlFileName" : "GetActivitiesInteraction_1.0_RIVTABP21.wsdl"
+    }, {
+      "description" : "Retrieval of activity reports",
+      "lastChangedDate" : "2015-05-18",
+      "folderName" : "GetActivitiesInteraction",
+      "wsdlFileName" : "GetActivitiesInteraction_1.0_RIVTABP21.wsdl"
+    }, {
+      "description" : "Retrieval of activity reports",
+      "lastChangedDate" : "2016-06-30",
+      "folderName" : "GetActivitiesInteraction",
+      "wsdlFileName" : "GetActivitiesInteraction_1.0_RIVTABP21.wsdl"
+    }, {
+      "description" : "Retrieval of activity reports",
+      "lastChangedDate" : "2017-04-27",
+      "folderName" : "GetActivitiesInteraction",
+      "wsdlFileName" : "GetActivitiesInteraction_1.0_RIVTABP21.wsdl"
+    }, {
+      "description" : "Retrieval of activity reports",
+      "lastChangedDate" : "2016-10-25",
+      "folderName" : "GetActivitiesInteraction",
+      "wsdlFileName" : "GetActivitiesInteraction_1.0_RIVTABP21.wsdl"
+    }, {
+      "description" : "Retrieval of activity reports",
+      "lastChangedDate" : "2016-01-20",
+      "folderName" : "GetActivitiesInteraction",
+      "wsdlFileName" : "GetActivitiesInteraction_1.0_RIVTABP21.wsdl"
+    }, {
+      "description" : "Retrieval of activity reports",
+      "lastChangedDate" : "2016-11-27",
+      "folderName" : "GetActivitiesInteraction",
+      "wsdlFileName" : "GetActivitiesInteraction_1.0_RIVTABP21.wsdl"
+    }, {
+      "description" : "Retrieval of activity reports",
+      "lastChangedDate" : "2016-02-05",
+      "folderName" : "GetActivitiesInteraction",
+      "wsdlFileName" : "GetActivitiesInteraction_1.0_RIVTABP21.wsdl"
+    }, {
+      "description" : "Retrieval of activity reports",
+      "lastChangedDate" : "2015-04-29",
+      "folderName" : "GetActivitiesInteraction",
+      "wsdlFileName" : "GetActivitiesInteraction_1.0_RIVTABP21.wsdl"
+    }, {
+      "description" : "Retrieval of activity reports",
+      "lastChangedDate" : "2016-10-25",
+      "folderName" : "GetActivitiesInteraction",
+      "wsdlFileName" : "GetActivitiesInteraction_1.0_RIVTABP21.wsdl"
+    } ]
+  } ],
+  "serviceContracts" : [ {
+    "name" : "GetActivitiesResponder",
+    "major" : 1,
+    "namespace" : "urn:riv:clinicalprocess:activity:actions:GetActivitiesResponder:1"
+  }, {
+    "name" : "GetActivitiesResponder",
+    "major" : 2,
+    "namespace" : "urn:riv:clinicalprocess:activity:actions:GetActivitiesResponder:2"
+  } ],
+  "versions" : [ {
+    "name" : "1.0.2",
+    "sourceControlPath" : "https://bitbucket.org/rivta-domains/riv.clinicalprocess.activity.actions/src/clinicalprocess_activity_actions_1.0.2",
+    "documentsFolder" : "docs",
+    "interactionsFolder" : "schemas/interactions",
+    "zipUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/1.0.2/ServiceContracts_clinicalprocess_activity_actions_1.0.2.zip",
+    "hidden" : true,
+    "descriptionDocuments" : [ {
+      "fileName" : "AB_clinicalprocess_activity_actions.docx",
+      "lastChangedDate" : "2016-10-25",
+      "documentType" : "AB"
+    }, {
+      "fileName" : "TKB_clinicalprocess_activity_actions.docx",
+      "lastChangedDate" : "2016-10-25",
+      "documentType" : "TKB"
+    } ],
+    "interactionDescriptions" : [ {
+      "description" : "Retrieval of activity reports",
+      "lastChangedDate" : "2016-10-25",
+      "folderName" : "GetActivitiesInteraction",
+      "wsdlFileName" : "GetActivitiesInteraction_1.0_RIVTABP21.wsdl"
+    } ],
+    "reviews" : [ {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Teknik",
+        "code" : "aor-t"
+      },
+      "reviewOutcome" : {
+        "name" : "Godkänd",
+        "symbol" : "G"
+      },
+      "reportUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/1.0.2/T-granskning clinicalprocess_activity_actions_1.0.2.docx"
+    }, {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Informatik",
+        "code" : "aor-i"
+      },
+      "reviewOutcome" : {
+        "name" : "Delvis Godkänd",
+        "symbol" : "(G)"
+      },
+      "reportUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/1.0.2/VIS_granskning_clinicalprocess_activity_actions_1.0.2.docx"
+    }, {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Säkerhet",
+        "code" : "aor-s"
+      },
+      "reviewOutcome" : {
+        "name" : "Godkänd",
+        "symbol" : "G"
+      },
+      "reportUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/1.0.2/VIS_granskning_clinicalprocess_activity_actions_1.0.2.docx"
+    } ]
+  }, {
+    "name" : "1.0.3",
+    "sourceControlPath" : "https://bitbucket.org/rivta-domains/riv.clinicalprocess.activity.actions/src/1.0.3",
+    "documentsFolder" : "docs",
+    "interactionsFolder" : "schemas/interactions",
+    "zipUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/1.0.3/ServiceContracts_clinicalprocess_activity_actions_1.0.3.zip",
+    "hidden" : true,
+    "descriptionDocuments" : [ {
+      "fileName" : "TKB_clinicalprocess_activity_actions.docx",
+      "lastChangedDate" : "2016-11-27",
+      "documentType" : "TKB"
+    }, {
+      "fileName" : "AB_clinicalprocess_activity_actions.docx",
+      "lastChangedDate" : "2016-11-27",
+      "documentType" : "AB"
+    } ],
+    "interactionDescriptions" : [ {
+      "description" : "Retrieval of activity reports",
+      "lastChangedDate" : "2016-11-27",
+      "folderName" : "GetActivitiesInteraction",
+      "wsdlFileName" : "GetActivitiesInteraction_1.0_RIVTABP21.wsdl"
+    } ],
+    "reviews" : [ {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Informatik",
+        "code" : "aor-i"
+      },
+      "reviewOutcome" : {
+        "name" : "Delvis Godkänd",
+        "symbol" : "(G)"
+      },
+      "reportUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/1.0.3/VIS_granskning_clinicalprocess_activity_actions_1.0.3.docx"
+    }, {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Teknik",
+        "code" : "aor-t"
+      },
+      "reviewOutcome" : {
+        "name" : "Godkänd",
+        "symbol" : "G"
+      },
+      "reportUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/1.0.3/T-granskning clinicalprocess_activity_actions_1.0.3.docx"
+    }, {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Säkerhet",
+        "code" : "aor-s"
+      },
+      "reviewOutcome" : {
+        "name" : "Godkänd",
+        "symbol" : "G"
+      },
+      "reportUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/1.0.3/ServiceContracts_clinicalprocess_activity_actions_1.0.3.zip"
+    } ]
+  }, {
+    "name" : "2.0_RC3",
+    "sourceControlPath" : "https://bitbucket.org/rivta-domains/riv.clinicalprocess.activity.actions/src/2.0_RC3",
+    "documentsFolder" : "docs",
+    "interactionsFolder" : "schemas/interactions",
+    "zipUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/2.0_RC3/ServiceContracts_clinicalprocess_activity_actions_2.0_RC3.zip",
+    "hidden" : true,
+    "descriptionDocuments" : [ {
+      "fileName" : "TKB_clinicalprocess_activity_actions.docx",
+      "lastChangedDate" : "2018-05-31",
+      "documentType" : "TKB"
+    }, {
+      "fileName" : "AB_clinicalprocess_activity_actions.docx",
+      "lastChangedDate" : "2018-05-31",
+      "documentType" : "AB"
+    }, {
+      "fileName" : "IS_clinicalprocess_activity_actions.docx",
+      "lastChangedDate" : "2018-05-31",
+      "documentType" : "IS"
+    } ],
+    "interactionDescriptions" : [ {
+      "description" : "Retrieval of activity reports",
+      "lastChangedDate" : "2018-05-31",
+      "folderName" : "GetActivitiesInteraction",
+      "wsdlFileName" : "GetActivitiesInteraction_2.0_RIVTABP21.wsdl"
+    } ],
+    "reviews" : [ {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Informatik",
+        "code" : "aor-i"
+      },
+      "reviewOutcome" : {
+        "name" : "Godkänd",
+        "symbol" : "G"
+      },
+      "reportUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/2.0_RC3/VIS_gransknings - clinicalprocess_activity_actions_2.0_RC3.docx"
+    }, {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Teknik",
+        "code" : "aor-t"
+      },
+      "reviewOutcome" : {
+        "name" : "Godkänd",
+        "symbol" : "G"
+      },
+      "reportUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/2.0_RC3/T-granskning -clinicalprocess_activity_actions_2.0_RC3.docx"
+    }, {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Säkerhet",
+        "code" : "aor-s"
+      },
+      "reviewOutcome" : {
+        "name" : "Underkänd",
+        "symbol" : "U"
+      },
+      "reportUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/2.0_RC3/VIS_gransknings - clinicalprocess_activity_actions_2.0_RC3.docx"
+    } ]
+  }, {
+    "name" : "1.0.2_RC1",
+    "sourceControlPath" : "https://bitbucket.org/rivta-domains/riv.clinicalprocess.activity.actions/src/clinicalprocess_activity_actions_1.0.2_RC1",
+    "documentsFolder" : "docs",
+    "interactionsFolder" : "schemas/interactions",
+    "zipUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/1.0.2_RC1/ServiceContracts_clinicalprocess_activity_actions_1.0.2_RC1.zip",
+    "hidden" : true,
+    "descriptionDocuments" : [ {
+      "fileName" : "TKB_clinicalprocess_activity_actions.docx",
+      "lastChangedDate" : "2016-06-30",
+      "documentType" : "TKB"
+    }, {
+      "fileName" : "AB_clinicalprocess_activity_actions.docx",
+      "lastChangedDate" : "2016-06-30",
+      "documentType" : "AB"
+    } ],
+    "interactionDescriptions" : [ {
+      "description" : "Retrieval of activity reports",
+      "lastChangedDate" : "2016-06-30",
+      "folderName" : "GetActivitiesInteraction",
+      "wsdlFileName" : "GetActivitiesInteraction_1.0_RIVTABP21.wsdl"
+    } ],
+    "reviews" : [ {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Teknik",
+        "code" : "aor-t"
+      },
+      "reviewOutcome" : {
+        "name" : "Godkänd",
+        "symbol" : "G"
+      },
+      "reportUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/1.0.2_RC1/T-granskning clinicalprocess_activity_actions_1.0.2_RC1.docx"
+    }, {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Informatik",
+        "code" : "aor-i"
+      },
+      "reviewOutcome" : {
+        "name" : "Delvis Godkänd",
+        "symbol" : "(G)"
+      },
+      "reportUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/1.0.2_RC1/VIS_granskning_clinicalprocess_activity_actions 1.0.2_RC1.docx"
+    }, {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Säkerhet",
+        "code" : "aor-s"
+      },
+      "reviewOutcome" : {
+        "name" : "Godkänd",
+        "symbol" : "G"
+      },
+      "reportUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/1.0.2_RC1/VIS_granskning_clinicalprocess_activity_actions 1.0.2_RC1.docx"
+    } ]
+  }, {
+    "name" : "1.0_RC6",
+    "sourceControlPath" : "https://bitbucket.org/rivta-domains/riv.clinicalprocess.activity.actions/src/clinicalprocess_activity_actions_1.0_RC6",
+    "documentsFolder" : "docs",
+    "interactionsFolder" : "schemas/interactions",
+    "zipUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/1.0_RC6/ServiceContracts_clinicalprocess_activity_actions_1.0_RC6.zip",
+    "hidden" : true,
+    "descriptionDocuments" : [ {
+      "fileName" : "TKB_clinicalprocess_activity_actions.docx",
+      "lastChangedDate" : "2015-05-18",
+      "documentType" : "TKB"
+    }, {
+      "fileName" : "AB_clinicalprocess_activity_actions.docx",
+      "lastChangedDate" : "2015-05-18",
+      "documentType" : "AB"
+    }, {
+      "fileName" : "IS_clinicalprocess_activity_actions.docx",
+      "lastChangedDate" : "2015-05-18",
+      "documentType" : "IS"
+    } ],
+    "interactionDescriptions" : [ {
+      "description" : "Retrieval of activity reports",
+      "lastChangedDate" : "2015-05-18",
+      "folderName" : "GetActivitiesInteraction",
+      "wsdlFileName" : "GetActivitiesInteraction_1.0_RIVTABP21.wsdl"
+    } ],
+    "reviews" : [ {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Teknik",
+        "code" : "aor-t"
+      },
+      "reviewOutcome" : {
+        "name" : "Godkänd",
+        "symbol" : "G"
+      },
+      "reportUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/1.0_RC6/AL T-granskning clinicalprocess_activity_actions_1.0_RC6.doc"
+    }, {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Informatik",
+        "code" : "aor-i"
+      },
+      "reviewOutcome" : {
+        "name" : "Underkänd",
+        "symbol" : "U"
+      },
+      "reportUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/1.0_RC6/VIS_granskning clinicalprocess_activity_actions_1.0RC6_7.docx"
+    }, {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Säkerhet",
+        "code" : "aor-s"
+      },
+      "reviewOutcome" : {
+        "name" : "Godkänd",
+        "symbol" : "G"
+      },
+      "reportUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/1.0_RC6/VIS_granskning clinicalprocess_activity_actions_1.0RC6_7.docx"
+    } ]
+  }, {
+    "name" : "1.0",
+    "sourceControlPath" : "https://bitbucket.org/rivta-domains/riv.clinicalprocess.activity.actions/src/clinicalprocess_activity_actions_1.0",
+    "documentsFolder" : "docs",
+    "interactionsFolder" : "schemas/interactions",
+    "zipUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/1.0/ServiceContracts_clinicalprocess_activity_actions_1.0.zip",
+    "hidden" : true,
+    "descriptionDocuments" : [ {
+      "fileName" : "AB_clinicalprocess_activity_actions.docx",
+      "lastChangedDate" : "2016-02-05",
+      "documentType" : "AB"
+    }, {
+      "fileName" : "TKB_clinicalprocess_activity_actions.docx",
+      "lastChangedDate" : "2016-02-05",
+      "documentType" : "TKB"
+    } ],
+    "interactionDescriptions" : [ {
+      "description" : "Retrieval of activity reports",
+      "lastChangedDate" : "2016-02-05",
+      "folderName" : "GetActivitiesInteraction",
+      "wsdlFileName" : "GetActivitiesInteraction_1.0_RIVTABP21.wsdl"
+    } ],
+    "reviews" : [ {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Informatik",
+        "code" : "aor-i"
+      },
+      "reviewOutcome" : {
+        "name" : "Delvis Godkänd",
+        "symbol" : "(G)"
+      },
+      "reportUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/1.0/VIS_granskning clinicalprocess_activity_actions_1.0.docx"
+    }, {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Teknik",
+        "code" : "aor-t"
+      },
+      "reviewOutcome" : {
+        "name" : "Godkänd",
+        "symbol" : "G"
+      },
+      "reportUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/1.0/AL T-granskning clinicalprocess_activity_actions_1.0.doc"
+    }, {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Säkerhet",
+        "code" : "aor-s"
+      },
+      "reviewOutcome" : {
+        "name" : "Godkänd",
+        "symbol" : "G"
+      },
+      "reportUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/1.0/VIS_granskning clinicalprocess_activity_actions_1.0.docx"
+    } ]
+  }, {
+    "name" : "2.0_RC1",
+    "sourceControlPath" : "https://bitbucket.org/rivta-domains/riv.clinicalprocess.activity.actions/src/2.0_RC1",
+    "documentsFolder" : "docs",
+    "interactionsFolder" : "schemas/interactions",
+    "hidden" : true,
+    "descriptionDocuments" : [ {
+      "fileName" : "IS_clinicalprocess_activity_actions.docx",
+      "lastChangedDate" : "2017-12-18",
+      "documentType" : "IS"
+    }, {
+      "fileName" : "AB_clinicalprocess_activity_actions.docx",
+      "lastChangedDate" : "2017-12-18",
+      "documentType" : "AB"
+    }, {
+      "fileName" : "TKB_clinicalprocess_activity_actions.docx",
+      "lastChangedDate" : "2017-12-18",
+      "documentType" : "TKB"
+    } ],
+    "interactionDescriptions" : [ {
+      "description" : "Retrieval of activity reports",
+      "lastChangedDate" : "2017-12-18",
+      "folderName" : "GetActivitiesInteraction",
+      "wsdlFileName" : "GetActivitiesInteraction_2.0_RIVTABP21.wsdl"
+    } ],
+    "reviews" : [ {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Säkerhet",
+        "code" : "aor-s"
+      },
+      "reviewOutcome" : {
+        "name" : "Delvis Godkänd",
+        "symbol" : "(G)"
+      },
+      "reportUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/2.0_RC1/VIS_gransknings - clinicalprocess_activity_actions_2.0_RC1.docx"
+    }, {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Teknik",
+        "code" : "aor-t"
+      },
+      "reviewOutcome" : {
+        "name" : "Underkänd",
+        "symbol" : "U"
+      },
+      "reportUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/2.0_RC1/T-gransking -clinicalprocess_activity_actions_2.0_RC1.docx"
+    }, {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Informatik",
+        "code" : "aor-i"
+      },
+      "reviewOutcome" : {
+        "name" : "Delvis Godkänd",
+        "symbol" : "(G)"
+      },
+      "reportUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/2.0_RC1/VIS_gransknings - clinicalprocess_activity_actions_2.0_RC1.docx"
+    } ]
+  }, {
+    "name" : "1.0_RC5",
+    "sourceControlPath" : "https://bitbucket.org/rivta-domains/riv.clinicalprocess.activity.actions/src/clinicalprocess_activity_actions_1.0_RC5",
+    "documentsFolder" : "docs",
+    "interactionsFolder" : "schemas/interactions",
+    "zipUrl" : "http://rivta.se/downloads/clinicalprocess_activity_actions/1.0_RC5/ServiceContracts_clinicalprocess_activity_actions_1.0_RC5.zip",
+    "hidden" : true,
+    "descriptionDocuments" : [ {
+      "fileName" : "IS_clinicalprocess_activity_actions.docx",
+      "lastChangedDate" : "2015-04-29",
+      "documentType" : "IS"
+    }, {
+      "fileName" : "AB_clinicalprocess_activity_actions.docx",
+      "lastChangedDate" : "2015-04-29",
+      "documentType" : "AB"
+    }, {
+      "fileName" : "TKB_clinicalprocess_activity_actions.docx",
+      "lastChangedDate" : "2015-04-29",
+      "documentType" : "TKB"
+    } ],
+    "interactionDescriptions" : [ {
+      "description" : "Retrieval of activity reports",
+      "lastChangedDate" : "2015-04-29",
+      "folderName" : "GetActivitiesInteraction",
+      "wsdlFileName" : "GetActivitiesInteraction_1.0_RIVTABP21.wsdl"
+    } ],
+    "reviews" : [ {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Teknik",
+        "code" : "aor-t"
+      },
+      "reviewOutcome" : {
+        "name" : "Godkänd",
+        "symbol" : "G"
+      },
+      "reportUrl" : "http://rivta.se/downloads/clinicalprocess_activity_actions/1.0_RC5/AL-T Granskning av clinicalprocess_activity_actions_1.0_RC5.docx"
+    }, {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Informatik",
+        "code" : "aor-i"
+      },
+      "reviewOutcome" : {
+        "name" : "Underkänd",
+        "symbol" : "U"
+      },
+      "reportUrl" : "http://rivta.se/downloads/clinicalprocess_activity_actions/1.0_RC5/VIS_granskningsmall_clinicalprocess_activity_actions 1.0RC4_5.docx"
+    }, {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Säkerhet",
+        "code" : "aor-s"
+      },
+      "reviewOutcome" : {
+        "name" : "Godkänd",
+        "symbol" : "G"
+      },
+      "reportUrl" : "http://rivta.se/downloads/clinicalprocess_activity_actions/1.0_RC5/VIS_granskningsmall_clinicalprocess_activity_actions 1.0RC4_5.docx"
+    } ]
+  }, {
+    "name" : "2.0_RC4",
+    "sourceControlPath" : "https://bitbucket.org/rivta-domains/riv.clinicalprocess.activity.actions/src/2.0_RC4",
+    "documentsFolder" : "docs",
+    "interactionsFolder" : "schemas/interactions",
+    "zipUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/2.0_RC4/ServiceContracts_clinicalprocess_activity_actions_2.0_RC4.zip",
+    "hidden" : true,
+    "descriptionDocuments" : [ {
+      "fileName" : "IS_clinicalprocess_activity_actions.docx",
+      "lastChangedDate" : "2018-06-21",
+      "documentType" : "IS"
+    }, {
+      "fileName" : "TKB_clinicalprocess_activity_actions.docx",
+      "lastChangedDate" : "2018-06-21",
+      "documentType" : "TKB"
+    }, {
+      "fileName" : "AB_clinicalprocess_activity_actions.docx",
+      "lastChangedDate" : "2018-06-21",
+      "documentType" : "AB"
+    } ],
+    "interactionDescriptions" : [ {
+      "description" : "Retrieval of activity reports",
+      "lastChangedDate" : "2018-06-21",
+      "folderName" : "GetActivitiesInteraction",
+      "wsdlFileName" : "GetActivitiesInteraction_2.0_RIVTABP21.wsdl"
+    } ],
+    "reviews" : [ {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Säkerhet",
+        "code" : "aor-s"
+      },
+      "reviewOutcome" : {
+        "name" : "Godkänd",
+        "symbol" : "G"
+      },
+      "reportUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/2.0_RC4/VIS_granskning -  clinicalprocess_activity_actions_2.0 RC4.docx"
+    }, {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Teknik",
+        "code" : "aor-t"
+      },
+      "reviewOutcome" : {
+        "name" : "Godkänd",
+        "symbol" : "G"
+      },
+      "reportUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/2.0_RC4/T-granskning -clinicalprocess_activity_actions_2.0_RC4.docx"
+    }, {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Informatik",
+        "code" : "aor-i"
+      },
+      "reviewOutcome" : {
+        "name" : "Godkänd",
+        "symbol" : "G"
+      },
+      "reportUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/2.0_RC4/VIS_granskning -  clinicalprocess_activity_actions_2.0 RC4.docx"
+    } ]
+  }, {
+    "name" : "1.0.2_RC2",
+    "sourceControlPath" : "https://bitbucket.org/rivta-domains/riv.clinicalprocess.activity.actions/src/1.0.2_RC2",
+    "documentsFolder" : "docs",
+    "interactionsFolder" : "schemas/interactions",
+    "zipUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/1.0.2_RC2/ServiceContracts_clinicalprocess_activity_actions_1.0.2_RC2.zip",
+    "hidden" : true,
+    "descriptionDocuments" : [ {
+      "fileName" : "AB_clinicalprocess_activity_actions.docx",
+      "lastChangedDate" : "2016-10-25",
+      "documentType" : "AB"
+    }, {
+      "fileName" : "TKB_clinicalprocess_activity_actions.docx",
+      "lastChangedDate" : "2016-10-25",
+      "documentType" : "TKB"
+    } ],
+    "interactionDescriptions" : [ {
+      "description" : "Retrieval of activity reports",
+      "lastChangedDate" : "2016-10-25",
+      "folderName" : "GetActivitiesInteraction",
+      "wsdlFileName" : "GetActivitiesInteraction_1.0_RIVTABP21.wsdl"
+    } ],
+    "reviews" : [ {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Informatik",
+        "code" : "aor-i"
+      },
+      "reviewOutcome" : {
+        "name" : "Delvis Godkänd",
+        "symbol" : "(G)"
+      },
+      "reportUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/1.0.2_RC2/VIS_granskning_clinicalprocess_activity_actions_1.0.2_RC2.docx"
+    }, {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Säkerhet",
+        "code" : "aor-s"
+      },
+      "reviewOutcome" : {
+        "name" : "Godkänd",
+        "symbol" : "G"
+      },
+      "reportUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/1.0.2_RC2/VIS_granskning_clinicalprocess_activity_actions_1.0.2_RC2.docx"
+    }, {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Teknik",
+        "code" : "aor-t"
+      },
+      "reviewOutcome" : {
+        "name" : "Godkänd",
+        "symbol" : "G"
+      },
+      "reportUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/1.0.2_RC2/T-granskning clinicalprocess_activity_actions_1.0.2_RC2.docx"
+    } ]
+  }, {
+    "name" : "1.0.4",
+    "sourceControlPath" : "https://bitbucket.org/rivta-domains/riv.clinicalprocess.activity.actions/src/1.0.4",
+    "documentsFolder" : "docs",
+    "interactionsFolder" : "schemas/interactions",
+    "zipUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/1.0.4/ServiceContracts_clinicalprocess_activity_actions_1.0.4.zip",
+    "hidden" : true,
+    "descriptionDocuments" : [ {
+      "fileName" : "AB_clinicalprocess_activity_actions.docx",
+      "lastChangedDate" : "2017-04-27",
+      "documentType" : "AB"
+    }, {
+      "fileName" : "TKB_clinicalprocess_activity_actions.docx",
+      "lastChangedDate" : "2017-04-27",
+      "documentType" : "TKB"
+    } ],
+    "interactionDescriptions" : [ {
+      "description" : "Retrieval of activity reports",
+      "lastChangedDate" : "2017-04-27",
+      "folderName" : "GetActivitiesInteraction",
+      "wsdlFileName" : "GetActivitiesInteraction_1.0_RIVTABP21.wsdl"
+    } ],
+    "reviews" : [ {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Informatik",
+        "code" : "aor-i"
+      },
+      "reviewOutcome" : {
+        "name" : "Delvis Godkänd",
+        "symbol" : "(G)"
+      },
+      "reportUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/1.0.4/VIS_granskning_clinicalprocess_activity_actions_1.0.3.docx"
+    }, {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Säkerhet",
+        "code" : "aor-s"
+      },
+      "reviewOutcome" : {
+        "name" : "Godkänd",
+        "symbol" : "G"
+      },
+      "reportUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/1.0.4/VIS_granskning_clinicalprocess_activity_actions_1.0.3.docx"
+    }, {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Teknik",
+        "code" : "aor-t"
+      },
+      "reviewOutcome" : {
+        "name" : "Godkänd",
+        "symbol" : "G"
+      },
+      "reportUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/1.0.4/T-granskning clinicalprocess_activity_actions_1.0.4.docx"
+    } ]
+  }, {
+    "name" : "1.0.5",
+    "sourceControlPath" : "https://bitbucket.org/rivta-domains/riv.clinicalprocess.activity.actions/src/1.0.5",
+    "documentsFolder" : "docs",
+    "interactionsFolder" : "schemas/interactions",
+    "zipUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/1.0.5/ServiceContracts_clinicalprocess_activity_actions_1.0.5.zip",
+    "hidden" : false,
+    "descriptionDocuments" : [ {
+      "fileName" : "TKB_clinicalprocess_activity_actions.docx",
+      "lastChangedDate" : "2017-06-21",
+      "documentType" : "TKB"
+    }, {
+      "fileName" : "AB_clinicalprocess_activity_actions.docx",
+      "lastChangedDate" : "2017-06-21",
+      "documentType" : "AB"
+    } ],
+    "interactionDescriptions" : [ {
+      "description" : "Retrieval of activity reports",
+      "lastChangedDate" : "2017-06-21",
+      "folderName" : "GetActivitiesInteraction",
+      "wsdlFileName" : "GetActivitiesInteraction_1.0_RIVTABP21.wsdl"
+    } ],
+    "reviews" : [ {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Säkerhet",
+        "code" : "aor-s"
+      },
+      "reviewOutcome" : {
+        "name" : "Godkänd",
+        "symbol" : "G"
+      },
+      "reportUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/1.0.5/VIS_granskning_clinicalprocess_activity_actions_1.0.3.docx"
+    }, {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Informatik",
+        "code" : "aor-i"
+      },
+      "reviewOutcome" : {
+        "name" : "Godkänd",
+        "symbol" : "G"
+      },
+      "reportUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/1.0.5/VIS_granskning_clinicalprocess_activity_actions_1.0.3.docx"
+    }, {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Teknik",
+        "code" : "aor-t"
+      },
+      "reviewOutcome" : {
+        "name" : "Godkänd",
+        "symbol" : "G"
+      },
+      "reportUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/1.0.5/T-granskning clinicalprocess_activity_actions_1.0.5.docx"
+    } ]
+  }, {
+    "name" : "trunk",
+    "sourceControlPath" : "https://bitbucket.org/rivta-domains/riv.clinicalprocess.activity.actions/src/master",
+    "documentsFolder" : "docs",
+    "interactionsFolder" : "schemas/interactions",
+    "hidden" : false,
+    "descriptionDocuments" : [ {
+      "fileName" : "IS_clinicalprocess_activity_actions.docx",
+      "lastChangedDate" : "2019-04-23",
+      "documentType" : "IS"
+    }, {
+      "fileName" : "AB_clinicalprocess_activity_actions.docx",
+      "lastChangedDate" : "2019-04-23",
+      "documentType" : "AB"
+    }, {
+      "fileName" : "TKB_clinicalprocess_activity_actions.docx",
+      "lastChangedDate" : "2019-04-23",
+      "documentType" : "TKB"
+    } ],
+    "interactionDescriptions" : [ {
+      "description" : "Retrieval of activity reports",
+      "lastChangedDate" : "2019-04-23",
+      "folderName" : "GetActivitiesInteraction",
+      "wsdlFileName" : "GetActivitiesInteraction_2.0_RIVTABP21.wsdl"
+    } ]
+  }, {
+    "name" : "1.0_RC8",
+    "sourceControlPath" : "https://bitbucket.org/rivta-domains/riv.clinicalprocess.activity.actions/src/clinicalprocess_activity_actions_1.0_RC8",
+    "documentsFolder" : "docs",
+    "interactionsFolder" : "schemas/interactions",
+    "zipUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/1.0_RC8/ServiceContracts_clinicalprocess_activity_actions_1.0_RC8.zip",
+    "hidden" : true,
+    "descriptionDocuments" : [ {
+      "fileName" : "TKB_clinicalprocess_activity_actions.docx",
+      "lastChangedDate" : "2015-12-14",
+      "documentType" : "TKB"
+    }, {
+      "fileName" : "AB_clinicalprocess_activity_actions.docx",
+      "lastChangedDate" : "2015-12-14",
+      "documentType" : "AB"
+    } ],
+    "interactionDescriptions" : [ {
+      "description" : "Retrieval of activity reports",
+      "lastChangedDate" : "2015-12-14",
+      "folderName" : "GetActivitiesInteraction",
+      "wsdlFileName" : "GetActivitiesInteraction_1.0_RIVTABP21.wsdl"
+    } ],
+    "reviews" : [ {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Säkerhet",
+        "code" : "aor-s"
+      },
+      "reviewOutcome" : {
+        "name" : "Godkänd",
+        "symbol" : "G"
+      },
+      "reportUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/1.0_RC8/VIS_granskning clinicalprocess_activity_actions_1.0RC8.docx"
+    }, {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Informatik",
+        "code" : "aor-i"
+      },
+      "reviewOutcome" : {
+        "name" : "Delvis Godkänd",
+        "symbol" : "(G)"
+      },
+      "reportUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/1.0_RC8/VIS_granskning clinicalprocess_activity_actions_1.0RC8.docx"
+    }, {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Teknik",
+        "code" : "aor-t"
+      },
+      "reviewOutcome" : {
+        "name" : "Godkänd",
+        "symbol" : "G"
+      },
+      "reportUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/1.0_RC8/AL T-granskning clinicalprocess_activity_actions_1.0_RC8.doc"
+    } ]
+  }, {
+    "name" : "1.0_RC9",
+    "sourceControlPath" : "https://bitbucket.org/rivta-domains/riv.clinicalprocess.activity.actions/src/clinicalprocess_activity_actions_1.0_RC9",
+    "documentsFolder" : "docs",
+    "interactionsFolder" : "schemas/interactions",
+    "zipUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/1.0_RC9/ServiceContracts_clinicalprocess_activity_actions_1.0_RC9.zip",
+    "hidden" : true,
+    "descriptionDocuments" : [ {
+      "fileName" : "AB_clinicalprocess_activity_actions.docx",
+      "lastChangedDate" : "2016-01-20",
+      "documentType" : "AB"
+    }, {
+      "fileName" : "TKB_clinicalprocess_activity_actions.docx",
+      "lastChangedDate" : "2016-01-20",
+      "documentType" : "TKB"
+    } ],
+    "interactionDescriptions" : [ {
+      "description" : "Retrieval of activity reports",
+      "lastChangedDate" : "2016-01-20",
+      "folderName" : "GetActivitiesInteraction",
+      "wsdlFileName" : "GetActivitiesInteraction_1.0_RIVTABP21.wsdl"
+    } ],
+    "reviews" : [ {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Säkerhet",
+        "code" : "aor-s"
+      },
+      "reviewOutcome" : {
+        "name" : "Godkänd",
+        "symbol" : "G"
+      },
+      "reportUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/1.0_RC9/VIS_granskning clinicalprocess_activity_actions_1.0RC9.docx"
+    }, {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Informatik",
+        "code" : "aor-i"
+      },
+      "reviewOutcome" : {
+        "name" : "Delvis Godkänd",
+        "symbol" : "(G)"
+      },
+      "reportUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/1.0_RC9/VIS_granskning clinicalprocess_activity_actions_1.0RC9.docx"
+    }, {
+      "reviewProtocol" : {
+        "name" : "Arkitektur & Regelverk: Teknik",
+        "code" : "aor-t"
+      },
+      "reviewOutcome" : {
+        "name" : "Godkänd",
+        "symbol" : "G"
+      },
+      "reportUrl" : "http://rivta.se/downloads//clinicalprocess_activity_actions/1.0_RC9/AL T-granskning clinicalprocess_activity_actions_1.0_RC9.doc"
+    } ]
+  }, {
+    "name" : "2.0_RC2",
+    "sourceControlPath" : "https://bitbucket.org/rivta-domains/riv.clinicalprocess.activity.actions/src/2.0_RC2",
+    "documentsFolder" : "docs",
+    "interactionsFolder" : "schemas/interactions",
+    "hidden" : true,
+    "descriptionDocuments" : [ {
+      "fileName" : "AB_clinicalprocess_activity_actions.docx",
+      "lastChangedDate" : "2018-03-12",
+      "documentType" : "AB"
+    }, {
+      "fileName" : "TKB_clinicalprocess_activity_actions.docx",
+      "lastChangedDate" : "2018-03-12",
+      "documentType" : "TKB"
+    }, {
+      "fileName" : "IS_clinicalprocess_activity_actions.docx",
+      "lastChangedDate" : "2018-03-12",
+      "documentType" : "IS"
+    } ],
+    "interactionDescriptions" : [ {
+      "description" : "Retrieval of activity reports",
+      "lastChangedDate" : "2018-03-12",
+      "folderName" : "GetActivitiesInteraction",
+      "wsdlFileName" : "GetActivitiesInteraction_2.0_RIVTABP21.wsdl"
+    } ]
+  } ],
+  "issueTrackerUrl" : "https://bitbucket.org/rivta-domains/riv.clinicalprocess.activity.actions/issues",
+  "sourceCodeUrl" : "https://bitbucket.org/rivta-domains/riv.clinicalprocess.activity.actions/src"
+}]

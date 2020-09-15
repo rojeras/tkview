@@ -17,17 +17,28 @@
 package se.skoview.app
 
 import pl.treksoft.kvision.Application
-import pl.treksoft.kvision.core.FlexDirection
-import pl.treksoft.kvision.core.JustifyContent
-import pl.treksoft.kvision.html.div
-import pl.treksoft.kvision.panel.flexPanel
 import pl.treksoft.kvision.panel.root
+import pl.treksoft.kvision.redux.createReduxStore
 import pl.treksoft.kvision.require
 import pl.treksoft.kvision.startApplication
-import pl.treksoft.kvision.utils.px
-import tabs.rivta.DInfo
-import tabs.rivta.DomainListPage
-import tabs.rivta.load
+import se.skoview.model.initializeRivState
+import se.skoview.model.rivReducer
+import se.skoview.rivta.RivTaMainPage
+import se.skoview.rivta.load
+
+// todo: Läs ner TPDB domainId dynamiskt: https://integrationer.tjansteplattform.se/tpdb/tpdbapi.php/api/v1/domains
+// todo: hippolänkar till kontrakt
+// todo: Back-knapp
+// todo: Paginering
+// todo: Red ut kotlins serialization och instansiering och defalutvärden
+
+
+
+// Initialize the redux store
+val store = createReduxStore(
+    ::rivReducer,
+    initializeRivState()
+)
 
 class App : Application() {
     init {
@@ -38,7 +49,7 @@ class App : Application() {
 
         root("app") {
             println("In App:init()")
-            load({ add(DomainListPage) })
+            load({ add(RivTaMainPage) })
         }
     }
 }

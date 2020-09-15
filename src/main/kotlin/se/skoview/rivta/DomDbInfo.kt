@@ -1,14 +1,25 @@
-package tabs.rivta
+/**
+ * Copyright (C) 2020 Lars Erik Röjerås
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
 
-//import common.libs.getAsync
+package se.skoview.rivta
+
 import kotlinx.serialization.*
-import kotlinx.serialization.internal.StringDescriptor
-import pl.treksoft.kvision.utils.Object
 import se.skoview.app.getAsync
 import kotlin.collections.List
-import kotlin.js.Date
-import pl.treksoft.kvision.utils.obj
-import se.skoview.app.ItemType
 
 @Serializable
 data class Query(val q: String?)
@@ -16,7 +27,8 @@ data class Query(val q: String?)
 @Serializable
 data class SearchResult(val total_count: Int, val incomplete_results: Boolean)
 
-var DomainIndex = arrayOf<ServiceDomain>()
+var DomainArr = arrayOf<ServiceDomain>()
+val DomainMap = mutableMapOf<String, ServiceDomain>()
 
 fun load(callback: () -> Unit) {
     //fun load(callback: () -> Unit) {
@@ -30,7 +42,12 @@ fun load(callback: () -> Unit) {
         val serviceDomains =
             JSON.parse<Array<ServiceDomain>>(response)
         console.log(serviceDomains)
-        DomainIndex = serviceDomains
+        DomainArr = serviceDomains
+
+        // Populate the domain map
+        for (domain in DomainArr) {
+            DomainMap[domain.name] = domain
+        }
 
         callback()
     }
@@ -39,7 +56,7 @@ fun load(callback: () -> Unit) {
 @Serializable
 data class ServiceDomain(
     val name: String,
-    val description: String = "",
+    val description: String, // = "-",
     val swedishLong: String = "",
     val swedishShort: String = "",
     val owner: String = "",
@@ -47,9 +64,9 @@ data class ServiceDomain(
     val issueTrackerUrl: String = "",
     val sourceCodeUrl: String = "",
     val infoPageUrl: String = "",
-    val interactions: List<Interaction> = listOf<Interaction>(),
+    val interactions: Array<Interaction> = arrayOf<Interaction>(),
     val serviceContracts: List<Contract> = listOf<Contract>(),
-    val versions: List<Version> = listOf()
+    val versions: Array<Version> = arrayOf()
 )
 
 @Serializable
@@ -61,7 +78,7 @@ data class Interaction(
     val minor: Int = 0,
     val responderContract: Contract,
     val initiatorContract: Contract? = null,
-    val interactionDescriptions: List<InteractionDescription> = listOf<InteractionDescription>()
+    val interactionDescriptions: Array<InteractionDescription> = arrayOf<InteractionDescription>()
 )
 
 @Serializable
@@ -73,7 +90,7 @@ data class Version(
     val zipUrl: String = "",
     val hidden: Boolean,
     val descriptionDocuments: List<DescriptionDocument> = listOf<DescriptionDocument>(),
-    val interactionDescriptions: List<InteractionDescription> = listOf<InteractionDescription>(),
+    val interactionDescriptions: Array<InteractionDescription> = arrayOf<InteractionDescription>(),
     val reviews: List<Review> = listOf<Review>()
 )
 
@@ -116,17 +133,7 @@ data class InteractionDescription(
     val wsdlFileName: String
 ) {
     // Parse the wsdl file name to create contractName, major and minor
-    val wsdlContract: Triple<String, Int, Int>
-        get() {
-            val aList = wsdlFileName.split("_")
-            val nameInteraction = aList[0]
-            val name = nameInteraction.removeSuffix("Interaction")
-            val version = aList[1]
-            val versionList = version.split(".")
-            val major = versionList[0]
-            val minor = versionList[1]
-            return Triple(name, major.toInt(), minor.toInt())
-        }
+
 
     override fun equals(other: Any?): Boolean {
         if (other == null || other !is InteractionDescription) return false
@@ -172,3 +179,36 @@ object DateSerializer : KSerializer<Date> {
     }
 }
 */
+
+fun ServiceDomain.getDescription(): String {
+    return this.description ?: "---"
+}
+
+enum class DomainType {
+    NATIONAL,
+    APPLICATION_SPECIFIC,
+    EXTERNAL
+}
+
+fun ServiceDomain.getDomainType(): DomainType {
+    val namespaceTypePrefix = this.interactions[0].namespace.split(":")[1]
+
+    println("In getDomainType(), namespacePrefix = $namespaceTypePrefix")
+
+    return when (namespaceTypePrefix) {
+        "riv" -> DomainType.NATIONAL
+        "riv-application" -> DomainType.APPLICATION_SPECIFIC
+        else -> DomainType.EXTERNAL
+    }
+}
+
+fun InteractionDescription.wsdlContract(): Triple<String, Int, Int> {
+    val aList = wsdlFileName.split("_")
+    val nameInteraction = aList[0]
+    val name = nameInteraction.removeSuffix("Interaction")
+    val version = aList[1]
+    val versionList = version.split(".")
+    val major = versionList[0]
+    val minor = versionList[1]
+    return Triple(name, major.toInt(), minor.toInt())
+}

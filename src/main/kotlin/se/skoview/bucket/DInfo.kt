@@ -1,9 +1,26 @@
-package tabs.rivta
+/**
+ * Copyright (C) 2020 Lars Erik Röjerås
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
 
-//import common.libs.ItemType
-//import kotlinext.js.getOwnPropertyNames
+package se.skoview.bucket
+
 import pl.treksoft.kvision.data.BaseDataComponent
 import se.skoview.app.ItemType
+import se.skoview.rivta.DomainArr
+import se.skoview.rivta.Version
 
 object DInfo : BaseDataComponent() {
     class ShowDomDb(
@@ -21,7 +38,7 @@ object DInfo : BaseDataComponent() {
 
     fun view(callback: () -> Unit) {
         //for (domain in ServiceDomain.serviceDomains.sortedBy { it.name }) {
-            for (domain in DomainIndex.sortedBy { it.name }) {
+        DomainArr.sortedBy { it.name }.forEach { domain ->
             println(domain.name)
 
             // Find the highest version which is not an RC
@@ -33,14 +50,14 @@ object DInfo : BaseDataComponent() {
                     .filterNot { it.name.contains("trunk") }
 
             /*
-            for (version in domain.versions
-                .sortedByDescending { it.name }
-                .filterNot { it.name.contains("RC") }
-                .filterNot { it.name.contains("_") }
-                .filterNot { it.name.contains("trunk") }
-            )
+                for (version in domain.versions
+                    .sortedByDescending { it.name }
+                    .filterNot { it.name.contains("RC") }
+                    .filterNot { it.name.contains("_") }
+                    .filterNot { it.name.contains("trunk") }
+                )
 
-             */
+                 */
 
             if (filteredVersion.size > 0) {
                 val currentVersion: Version = filteredVersion[0]

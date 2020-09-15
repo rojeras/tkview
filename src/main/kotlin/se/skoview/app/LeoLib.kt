@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+
 package se.skoview.app
 
+import kotlinx.browser.window
 import org.w3c.xhr.XMLHttpRequest
 import pl.treksoft.kvision.core.Color
-import kotlin.browser.document
-import kotlin.browser.window
 import kotlin.js.Date
 
 enum class ItemType {
@@ -121,12 +121,7 @@ fun getDatesLastMonth(): Pair<Date, Date> {
     return Pair(firstDay, Date(lastDay))
 }
 
-fun getVersion(versionName: String = "hippoVersion"): String {
-    val versionElement = document.getElementById(versionName)
 
-    return if (versionElement != null) versionElement.getAttribute("content") ?: "-1.-1.-1"
-    else "-2.-2.-2"
-}
 
 fun getColorForObject(obj: Any): Color {
     /*

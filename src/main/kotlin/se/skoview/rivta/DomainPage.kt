@@ -18,12 +18,14 @@
 package se.skoview.rivta
 
 import pl.treksoft.kvision.core.*
+import pl.treksoft.kvision.form.select.simpleSelectInput
 import pl.treksoft.kvision.html.*
-import pl.treksoft.kvision.i18n.I18n
 import pl.treksoft.kvision.modal.Modal
 import pl.treksoft.kvision.panel.SimplePanel
 import pl.treksoft.kvision.state.bind
+import se.skoview.app.formControlXs
 import se.skoview.app.store
+import se.skoview.model.*
 
 
 object DomainPage : SimplePanel() {
@@ -51,26 +53,8 @@ object DomainPage : SimplePanel() {
 
                 h2 { +"Domäntyp" }
 
-                val domainTypeText: String
-                val domainTypeAltText: String
-
-                when (domain.getDomainType()) {
-                    DomainType.NATIONAL -> {
-                        domainTypeText = "Nationell Tjänstedomän"
-                        domainTypeAltText =
-                            "Tjänstedomänen utvecklas och/eller förvaltas av Inera. Inera A&R ansvarar för kvalité inom teknik, informatik, arkitektur och testsviter/tjänsteproducenter, samt att domänen passar in i och har en tydlig roll i den sammantagna portföljen av nationella tjänstekontrakt. A&Rs kvalitetssäkringsprocess följs under utvecklings- och förvaltningsfasen."
-                    }
-                    DomainType.EXTERNAL -> {
-                        domainTypeText = "Extern tjänstedomän"
-                        domainTypeAltText =
-                            "Annan part än Inera A&R utvecklar/förvaltar tjänstedomänen. Annan part ansvarar för kvalité inom teknik, informatik och arkitektur. Tjänstekontrakten i tjänstedomänen följer giltig RIV TA-profil (tjänstekontraktens tekniska utformning och paketering) och kan därmed driftsättas och anslutningshanteras i NTJP om ICC.s infrastrukturkrav är uppfyllda. Tjänstekontrakten tillämpas inte inom Ineras uppdrag. Inera A&R ansvarar inte för namnsättning utöver vad som anges nedan, men kan konsulteras om extern part önskar."
-                    }
-                    DomainType.APPLICATION_SPECIFIC -> {
-                        domainTypeText = "Applikationsspecifik tjänstedomän"
-                        domainTypeAltText =
-                            "Tjänstedomänen definierar ett applikations/lösningsspecifikt API till en applikation/tjänst som ägs av Inera. Applikationsförvaltningen vill återanvända Ineras anslutningsorganisation och infrastruktur (Tjänsteplattformen), men ha kvar full kontroll över alla beslut som rör kontraktsdesign, versioner och releaser. Förvaltningen har ett eget, lokalt ansvar för tjänstekontraktens arkitektur, informatik och teknik inom ramen för det ansvar som projektet/förvaltningen har för applikationen/tjänsten i sig. Tjänstekontrakten får bara användas när den specifika applikationen/tjänsten är en av parterna i informationsutbytet."
-                    }
-                }
+                val domainTypeText: String = "${Texts.domainTypeText[domain.getDomainType()]} tjänstedomän"
+                val domainTypeAltText: String = "${Texts.domainTypeAltText[domain.getDomainType()]}"
 
                 val modal = Modal(domainTypeText)
                 modal.add(span(domainTypeAltText))
@@ -86,35 +70,59 @@ object DomainPage : SimplePanel() {
                 }
             }
 
-            h2 { +"Tjänstekontrakt" }
+
             if (domain!!.versions == null) h3 { "Ingen information om versioner av tjänstedomäner är tillgänga" }
             else {
-                println("Time to show domain versions")
-                ul {
-                    //for (version in domain.versions.filterNot {  it.name.contains("_") || it.name.contains("RC") || it.name.contains("trunk") }.sortedBy { it.name }.reversed()) {
-                    domain.versions
-                        .filterNot { it.hidden || it.name.contains("_") || it.name.contains("RC") || it.name.contains("trunk") }
-                        .sortedBy { it.name }
-                        .reversed()
-                        .map { version: Version ->
-                            li {
-                                +version.name
-                                ul {
-                                    version.interactionDescriptions.map {
-                                        li { +"${it.wsdlContract().first} ${it.wsdlContract().second}.${it.wsdlContract().third}" }
-                                    }
-                                }
-                            }
-                        }
 
+                span { +"Välj version av domän" }
+                val options = domain.versions
+                    //.filterNot { it.hidden }
+                    //.filterNot { it.name.contains("_") || it.name.contains("RC") }
+                    //.filterNot { it.name.contains("trunk") }
+                    .sortedBy { it.name }
+                    .reversed()
+                    .map { Pair(it.name, it.name) }
+
+                if (state.selectedDomainVersion == null) store.dispatch(RivAction.SelectDomainVersion(options[0].first))
+
+                simpleSelectInput(
+                    options = options,
+                    value = state.selectedDomainVersion,
+                ) {
+                    fontWeight = FontWeight.BOLD
+                    addCssStyle(formControlXs)
+                }.onEvent {
+                    change = {
+                        val selected: String = self.value ?: ""
+                        store.dispatch(RivAction.SelectDomainVersion(domainVersion = selected))
+                    }
                 }
+
+                val domainVersion = domain.versions.filter { it.name == state.selectedDomainVersion }
+                h3 { +"Specifikationer" }
+
+                println("Will fetch docs:")
+                val docs = domainVersion[0].getDocumentsAndChangeDate()
+                console.log(docs)
+
+                ul {
+                    li {
+                        //domainVersion.
+                    }
+                }
+
+                h3 { +"Tjänstekontrakt" }
+                println("Time to show domain versions")
+
+                ul {
+                    domainVersion.map { version: Version ->
+                        version.interactionDescriptions.map {
+                            li { +"${it.wsdlContract().first} ${it.wsdlContract().second}.${it.wsdlContract().third}" }
+                        }
+                    }
+                }
+                h3 { +"Länkar" }
             }
-
-
-
-            h2 { +"Specifikationer" }
-            h2 { +"Länkar" }
-
         }
     }
 }

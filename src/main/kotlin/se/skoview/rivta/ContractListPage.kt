@@ -17,10 +17,18 @@
 
 package tabs.rivta
 
+import pl.treksoft.kvision.core.BsBgColor
+import pl.treksoft.kvision.core.BsColor
+import pl.treksoft.kvision.core.addBsBgColor
+import pl.treksoft.kvision.core.addBsColor
 import pl.treksoft.kvision.html.*
 import pl.treksoft.kvision.panel.SimplePanel
 import pl.treksoft.kvision.tabulator.*
-import se.skoview.rivta.DomainArr
+import pl.treksoft.kvision.utils.px
+import se.skoview.app.store
+import se.skoview.model.DisplayPage
+import se.skoview.model.DomainArr
+import se.skoview.model.RivAction
 import se.skoview.rivta.getClickableDomainComponent
 
 data class ContractListRecord(
@@ -59,7 +67,19 @@ object ContractListPage : SimplePanel() {
     init {
         ContractListRecord.initialize()
 
-        h2 { +"Lista av tjänstekontrakten" }
+        h2 { +"Tjänstekontrakt" }
+        p { +"Här hittar du en förteckning över samtliga tjänstekontakt. I tabellen kan du också se om tjänstekontrakten är installerade i den nationella Tjänsteplattformen eller inte." }
+        p { +"Informationen på denna sida är direkt hämtad från WSDL-filer i subversion samt tjänsteadresseringskatalogerna i den nationella Tjänsteplattformen. Klicka på länkarna i tabellen för mer information."}
+
+        button("Lista tjänstedomäner")
+            .onClick {
+                store.dispatch(RivAction.SetCurrentPage(DisplayPage.DOMAIN_LIST))
+            }.apply {
+                addBsBgColor(BsBgColor.LIGHT)
+                addBsColor(BsColor.BLACK50)
+                marginBottom = 5.px
+            }
+
         tabulator(
             ContractListRecord.objectList.sortedBy { it.contractName },
             options = TabulatorOptions(

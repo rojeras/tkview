@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package se.skoview.rivta
+package se.skoview.model
 
 import kotlinx.serialization.*
 import se.skoview.app.getAsync
@@ -34,7 +34,7 @@ fun load(callback: () -> Unit) {
     //fun load(callback: () -> Unit) {
     println("In DomDb:load()")
 
-    //val url = "http://api.ntjp.se/dominfo/v1/servicedomain"
+    //val url = "http://api.ntjp.se/dominfo/v1/servicedomain.json"
     val url = "http://localhost:4000/domdb.json"
 
     getAsync(url) { response ->
@@ -190,11 +190,16 @@ enum class DomainType {
     EXTERNAL
 }
 
-fun ServiceDomain.getDomainType(): DomainType {
+fun ServiceDomain.getDomainType(): DomainType? {
+    //println("In getDomainType(), domain: ")
+    //if (this.interactions == null) {
+    requireNotNull (this.interactions) {
+        println("ERROR, $name does not contain any interactions!!")
+        console.log(this)
+        return null
+    }
+
     val namespaceTypePrefix = this.interactions[0].namespace.split(":")[1]
-
-    println("In getDomainType(), namespacePrefix = $namespaceTypePrefix")
-
     return when (namespaceTypePrefix) {
         "riv" -> DomainType.NATIONAL
         "riv-application" -> DomainType.APPLICATION_SPECIFIC
@@ -211,4 +216,13 @@ fun InteractionDescription.wsdlContract(): Triple<String, Int, Int> {
     val major = versionList[0]
     val minor = versionList[1]
     return Triple(name, major.toInt(), minor.toInt())
+}
+
+fun Version.getDocumentsAndChangeDate(): List<Triple<String, String, String>> {
+    val pathToDocs = "$sourceControlPath/$documentsFolder/"
+    val respons = mutableListOf<Triple<String, String, String>>()
+    for (doc in this.descriptionDocuments) {
+        respons.add(Triple(doc.documentType, pathToDocs + doc.fileName, doc.lastChangedDate) as Triple<String, String, String>)
+    }
+    return respons
 }

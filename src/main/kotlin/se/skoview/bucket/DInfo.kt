@@ -19,8 +19,8 @@ package se.skoview.bucket
 
 import pl.treksoft.kvision.data.BaseDataComponent
 import se.skoview.app.ItemType
-import se.skoview.rivta.DomainArr
-import se.skoview.rivta.Version
+import se.skoview.model.DomainArr
+import se.skoview.model.Version
 
 object DInfo : BaseDataComponent() {
     class ShowDomDb(

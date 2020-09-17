@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2020 Lars Erik Röjerås
+ * Copyright (C) 2013-2020 Lars Erik Röjerås
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,24 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+package se.skoview.app
 
-package se.skoview.rivta
+import pl.treksoft.kvision.core.Background
+import pl.treksoft.kvision.core.Col
+import pl.treksoft.kvision.core.Color
+import pl.treksoft.kvision.core.Style
+import pl.treksoft.kvision.utils.rem
 
-import pl.treksoft.kvision.html.h1
-import pl.treksoft.kvision.html.span
-import pl.treksoft.kvision.panel.SimplePanel
-
-class DomainInfoPage(domainName: String) : SimplePanel() {
-    init {
-        println("In DomainInfoPage")
-        val domain = DomainMap[domainName]
-
-        if (domain == null) {
-            span { +"Ingen domäninformation hittades" }
-        } else {
-            h1("${domain.swedishShort} - $domainName")
-        }
-
-
-    }
+val formControlXs = Style {
+    setStyle("height", "calc(1.3em + .4rem + 2px)")
+    setStyle("padding", "0.2rem 0.4rem")
+    fontSize = 1.7.rem
+    lineHeight = 2.0.rem
+    // todo: Try to make this setting to work:
+    background = Background(Color.name(Col.WHITE))
 }

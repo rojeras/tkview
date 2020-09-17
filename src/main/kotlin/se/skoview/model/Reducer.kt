@@ -1,5 +1,6 @@
 package se.skoview.model
 
+
 fun rivReducer(state: RivState, action: RivAction): RivState {
     println("In Reducer, action: $action")
     val newState: RivState = when (action) {
@@ -7,7 +8,14 @@ fun rivReducer(state: RivState, action: RivAction): RivState {
             displayPage = action.page
         )
         is RivAction.SelectDomain -> state.copy(
-            selectedDomain = action.domain
+            selectedDomain = action.domain,
+            selectedDomainVersion = null
+        )
+        is RivAction.SelectDomainVersion -> state.copy(
+            selectedDomainVersion = action.domainVersion
+        )
+        is RivAction.SelectDomainType -> state.copy(
+            domainType = action.type
         )
     }
     println("<<<===== ${action::class}")

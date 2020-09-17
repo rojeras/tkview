@@ -24,15 +24,14 @@ import pl.treksoft.kvision.startApplication
 import se.skoview.model.initializeRivState
 import se.skoview.model.rivReducer
 import se.skoview.rivta.RivTaMainPage
-import se.skoview.rivta.load
+import se.skoview.model.load
 
 // todo: Läs ner TPDB domainId dynamiskt: https://integrationer.tjansteplattform.se/tpdb/tpdbapi.php/api/v1/domains
 // todo: hippolänkar till kontrakt
 // todo: Back-knapp
 // todo: Paginering
 // todo: Red ut kotlins serialization och instansiering och defalutvärden
-
-
+// todo: Lös detta med CORS. Ev ta in REST-lösningen från Roberts showcase. Annat alternativ är att rivta.se dygnsvis hämtar filen och lagrar lokalt...
 
 // Initialize the redux store
 val store = createReduxStore(

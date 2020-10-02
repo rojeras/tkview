@@ -20,6 +20,7 @@ package se.skoview.app
 import kotlinx.browser.window
 import org.w3c.xhr.XMLHttpRequest
 import pl.treksoft.kvision.core.Color
+import pl.treksoft.kvision.core.Component
 import kotlin.js.Date
 
 enum class ItemType {
@@ -144,4 +145,14 @@ fun String.thousands(): String {
     }
 
     return s3.trim().reversed()
+}
+
+fun getHeightToRemainingViewPort(
+    topComponent: Component,
+    delta: Int = 48
+): String {
+    val occupiedViewPortArea = (topComponent.getElementJQuery()?.height() ?: 152).toInt()
+    println("++++++++++ Inner height: $occupiedViewPortArea")
+    val heightToRemove = occupiedViewPortArea + delta
+    return "calc(100vh - ${heightToRemove}px)"
 }

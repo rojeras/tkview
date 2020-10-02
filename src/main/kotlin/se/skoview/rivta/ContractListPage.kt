@@ -71,14 +71,7 @@ object ContractListPage : SimplePanel() {
         p { +"Här hittar du en förteckning över samtliga tjänstekontakt. I tabellen kan du också se om tjänstekontrakten är installerade i den nationella Tjänsteplattformen eller inte." }
         p { +"Informationen på denna sida är direkt hämtad från WSDL-filer i subversion samt tjänsteadresseringskatalogerna i den nationella Tjänsteplattformen. Klicka på länkarna i tabellen för mer information."}
 
-        button("Lista tjänstedomäner")
-            .onClick {
-                store.dispatch(RivAction.SetCurrentPage(DisplayPage.DOMAIN_LIST))
-            }.apply {
-                addBsBgColor(BsBgColor.LIGHT)
-                addBsColor(BsColor.BLACK50)
-                marginBottom = 5.px
-            }
+
 
         tabulator(
             ContractListRecord.objectList.sortedBy { it.contractName },

@@ -35,7 +35,8 @@ fun load(callback: () -> Unit) {
     println("In DomDb:load()")
 
     //val url = "http://api.ntjp.se/dominfo/v1/servicedomain.json"
-    val url = "http://localhost:4000/domdb.json"
+    val url = "http://ind-dtjp-apache-api-vip.ind1.sth.basefarm.net/dominfo/v1/servicedomains.json"
+    //val url = "http://localhost:4000/domdb.json"
 
     getAsync(url) { response ->
         println("Size of response is: ${response.length}")

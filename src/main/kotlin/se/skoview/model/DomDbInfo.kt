@@ -15,40 +15,38 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+@file:Suppress("SENSELESS_COMPARISON")
+
 package se.skoview.model
 
-import kotlinx.serialization.*
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.json.Json
 import se.skoview.app.getAsync
 import kotlin.collections.List
 
 @Serializable
-data class Query(val q: String?)
-
-@Serializable
 data class SearchResult(val total_count: Int, val incomplete_results: Boolean)
 
-var DomainArr = arrayOf<ServiceDomain>()
+val DomainArr = mutableListOf<ServiceDomain>()
 val DomainMap = mutableMapOf<String, ServiceDomain>()
 
 fun load(callback: () -> Unit) {
-    //fun load(callback: () -> Unit) {
+    // fun load(callback: () -> Unit) {
     println("In DomDb:load()")
 
-    //val url = "http://api.ntjp.se/dominfo/v1/servicedomain.json"
-    val url = "http://ind-dtjp-apache-api-vip.ind1.sth.basefarm.net/dominfo/v1/servicedomains.json"
-    //val url = "http://localhost:4000/domdb.json"
+    // val url = "http://api.ntjp.se/dominfo/v1/servicedomain.json"
+    // val url = "http://ind-dtjp-apache-api-vip.ind1.sth.basefarm.net/dominfo/v1/servicedomains.json"
+    //val url = "http://localhost:4000/domdb-prod-2020-10-12.json"
+    val url = "domdb-prod-2020-10-12.json"
 
+    // Older version which I try again to get it to create the actual parsed objects
     getAsync(url) { response ->
         println("Size of response is: ${response.length}")
-        val serviceDomains =
-            JSON.parse<Array<ServiceDomain>>(response)
+        val json = Json { allowStructuredMapKeys = true }
+        val serviceDomains: List<ServiceDomain> =
+            json.decodeFromString(ListSerializer(ServiceDomain.serializer()), response)
         console.log(serviceDomains)
-        DomainArr = serviceDomains
-
-        // Populate the domain map
-        for (domain in DomainArr) {
-            DomainMap[domain.name] = domain
-        }
 
         callback()
     }
@@ -57,18 +55,44 @@ fun load(callback: () -> Unit) {
 @Serializable
 data class ServiceDomain(
     val name: String,
-    val description: String, // = "-",
+    val description: String = "",
     val swedishLong: String = "",
     val swedishShort: String = "",
-    val owner: String = "",
+    val owner: String? = null,
     val hidden: Boolean,
-    val issueTrackerUrl: String = "",
-    val sourceCodeUrl: String = "",
-    val infoPageUrl: String = "",
-    val interactions: Array<Interaction> = arrayOf<Interaction>(),
-    val serviceContracts: List<Contract> = listOf<Contract>(),
-    val versions: Array<Version> = arrayOf()
-)
+    val domainType: DomainType? = null,
+    val issueTrackerUrl: String? = null,
+    val sourceCodeUrl: String? = null,
+    val infoPageUrl: String? = null,
+    val interactions: Array<Interaction>? = null, //  = arrayOf<Interaction>(),
+    val serviceContracts: List<Contract>? = null, //  = listOf<Contract>(),
+    val versions: Array<Version>? = null
+) {
+    init {
+        if (
+            interactions != null &&
+            serviceContracts != null &&
+            versions != null
+
+        ) {
+            DomainMap[this.name] = this
+            DomainArr.add(this)
+        } else println("$name is incomplete and removed")
+    }
+}
+
+@Serializable
+data class DomainType(
+    val name: String
+) {
+    val type: DomainTypeEnum
+        get() = when (name) {
+            "Nationell tjänstedomän" -> DomainTypeEnum.NATIONAL
+            "Applikationsspecifik tjänstedomän" -> DomainTypeEnum.APPLICATION_SPECIFIC
+            "Extern tjänstedomän" -> DomainTypeEnum.EXTERNAL
+            else -> DomainTypeEnum.UNKNOWN
+        }
+}
 
 @Serializable
 data class Interaction(
@@ -120,7 +144,15 @@ data class DescriptionDocument(
     */
     val lastChangedDate: String? = null,
     val documentType: String
-)
+) {
+    val type: RivDocumentTypeEnum
+        get() = when (documentType) {
+            "TKB" -> RivDocumentTypeEnum.TKB
+            "AB" -> RivDocumentTypeEnum.AB
+            "IS" -> RivDocumentTypeEnum.IS
+            else -> RivDocumentTypeEnum.UNKNOWN
+        }
+}
 
 @Serializable
 data class InteractionDescription(
@@ -135,14 +167,13 @@ data class InteractionDescription(
 ) {
     // Parse the wsdl file name to create contractName, major and minor
 
-
     override fun equals(other: Any?): Boolean {
         if (other == null || other !is InteractionDescription) return false
         return description == other.description &&
-                // Use string representation of dates to compare, otherwise always unequal
-                lastChangedDate.toString() == other.lastChangedDate.toString() &&
-                folderName == other.folderName &&
-                wsdlFileName == other.wsdlFileName
+            // Use string representation of dates to compare, otherwise always unequal
+            lastChangedDate.toString() == other.lastChangedDate.toString() &&
+            folderName == other.folderName &&
+            wsdlFileName == other.wsdlFileName
     }
 }
 
@@ -181,33 +212,46 @@ object DateSerializer : KSerializer<Date> {
 }
 */
 
-fun ServiceDomain.getDescription(): String {
-    return this.description ?: "---"
-}
-
-enum class DomainType {
+enum class DomainTypeEnum {
     NATIONAL,
     APPLICATION_SPECIFIC,
-    EXTERNAL
+    EXTERNAL,
+    UNKNOWN
 }
 
-fun ServiceDomain.getDomainType(): DomainType? {
-    //println("In getDomainType(), domain: ")
-    //if (this.interactions == null) {
-    requireNotNull (this.interactions) {
-        println("ERROR, $name does not contain any interactions!!")
-        console.log(this)
-        return null
-    }
+enum class RivDocumentTypeEnum {
+    TKB,
+    AB,
+    IS,
+    UNKNOWN
+}
 
-    val namespaceTypePrefix = this.interactions[0].namespace.split(":")[1]
-    return when (namespaceTypePrefix) {
-        "riv" -> DomainType.NATIONAL
-        "riv-application" -> DomainType.APPLICATION_SPECIFIC
-        else -> DomainType.EXTERNAL
+fun ServiceDomain.getDescription(): String {
+    return this.description ?: ""
+}
+
+fun ServiceDomain.getDomainType(): DomainTypeEnum {
+    if (this.domainType != null) return this.domainType.type
+    else {
+        // Know interactions != null due to filter in ServiceDomain init()
+        if (this.interactions!![0] == null) return DomainTypeEnum.UNKNOWN
+
+        val namespaceTypePrefix = this.interactions[0].namespace.split(":")[1]
+
+        return when (namespaceTypePrefix) {
+            "riv" -> DomainTypeEnum.NATIONAL
+            "riv-application" -> DomainTypeEnum.APPLICATION_SPECIFIC
+            else -> DomainTypeEnum.EXTERNAL
+        }
     }
 }
 
+/**
+ * Return the three parts of a TK identifier in a Triple
+ *
+ * @return Triple(ContractName; String, MajorVersion: Int, MinorVersion: Int)
+ *
+ */
 fun InteractionDescription.wsdlContract(): Triple<String, Int, Int> {
     val aList = wsdlFileName.split("_")
     val nameInteraction = aList[0]
@@ -219,11 +263,6 @@ fun InteractionDescription.wsdlContract(): Triple<String, Int, Int> {
     return Triple(name, major.toInt(), minor.toInt())
 }
 
-fun Version.getDocumentsAndChangeDate(): List<Triple<String, String, String>> {
-    val pathToDocs = "$sourceControlPath/$documentsFolder/"
-    val respons = mutableListOf<Triple<String, String, String>>()
-    for (doc in this.descriptionDocuments) {
-        respons.add(Triple(doc.documentType, pathToDocs + doc.fileName, doc.lastChangedDate) as Triple<String, String, String>)
-    }
-    return respons
+fun Version.getDocumentsAndChangeDate(): List<DescriptionDocument> {
+    return this.descriptionDocuments.toList()
 }

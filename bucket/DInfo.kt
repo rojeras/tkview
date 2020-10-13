@@ -37,7 +37,7 @@ object DInfo : BaseDataComponent() {
     val showDomDbs: MutableList<ShowDomDb> = mutableListOf<ShowDomDb>()
 
     fun view(callback: () -> Unit) {
-        //for (domain in ServiceDomain.serviceDomains.sortedBy { it.name }) {
+        // for (domain in ServiceDomain.serviceDomains.sortedBy { it.name }) {
         DomainArr.sortedBy { it.name }.forEach { domain ->
             println(domain.name)
 

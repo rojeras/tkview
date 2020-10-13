@@ -17,30 +17,160 @@
 
 package tabs.rivta
 
-import pl.treksoft.kvision.core.BsBgColor
-import pl.treksoft.kvision.core.BsColor
-import pl.treksoft.kvision.core.addBsBgColor
-import pl.treksoft.kvision.core.addBsColor
+import pl.treksoft.kvision.core.*
 import pl.treksoft.kvision.html.*
+import pl.treksoft.kvision.html.Align
 import pl.treksoft.kvision.panel.SimplePanel
+import pl.treksoft.kvision.panel.simplePanel
+import pl.treksoft.kvision.state.bind
 import pl.treksoft.kvision.tabulator.*
-import pl.treksoft.kvision.utils.px
+import pl.treksoft.kvision.utils.perc
+import pl.treksoft.kvision.utils.vw
+import se.skoview.app.getHeightToRemainingViewPort
 import se.skoview.app.store
-import se.skoview.model.DisplayPage
 import se.skoview.model.DomainArr
-import se.skoview.model.RivAction
+import se.skoview.model.ServiceDomain
+import se.skoview.model.getDomainType
 import se.skoview.rivta.getClickableDomainComponent
 
-data class ContractListRecord(
+var contractTextDiv = Div()
+
+object ContractListPage : SimplePanel() {
+
+    init {
+        background = Background(Color.name(Col.WHITE))
+        width = 100.vw
+        // background = Background(Color.name(Col.BLUE))
+        ContractListRecord.initialize()
+
+        simplePanel {
+            // background = Background(Color.name(Col.LIGHTCORAL))
+            setStyle("height", getHeightToRemainingViewPort(domainTextDiv, 40))
+
+            div {}.bind(store) { state ->
+                println("After bind")
+
+                val valueList = ContractListRecord.objectList
+                    .filter { it.domain.getDomainType() == state.domainType }
+                    .filter { state.showHiddenDomain || !it.domain.hidden }
+                    .sortedBy { it.contractName }
+                contractTextDiv =
+                    div {
+                        background = Background(Color.name(Col.LIGHTGRAY))
+                        h1 {
+                            width = 100.perc
+                            align = Align.CENTER
+                            +"Tjänstekontrakt (${valueList.size})"
+                        }
+                        p { +"Här hittar du en förteckning över samtliga tjänstekontakt. I tabellen kan du också se om tjänstekontrakten är installerade i den nationella Tjänsteplattformen eller inte." }
+                        p { +"Informationen på denna sida är direkt hämtad från WSDL-filer i subversion samt tjänsteadresseringskatalogerna i den nationella Tjänsteplattformen. Klicka på länkarna i tabellen för mer information." }
+                    }
+                simplePanel {
+                    setStyle("height", getHeightToRemainingViewPort(contractTextDiv, 140))
+                    println("Contract data:")
+                    // console.log(state)
+                    console.log(valueList)
+
+                    tabulator(
+                        // ContractListRecord.objectList.sortedBy { it.contractName },
+                        valueList,
+                        options = TabulatorOptions(
+                            // pagination = PaginationMode.LOCAL,
+                            layout = Layout.FITCOLUMNS,
+                            paginationSize = 1000,
+                            paginationButtonCount = 0,
+                            columns = listOf(
+                                ColumnDefinition(
+                                    "Tjänstekontrakt",
+                                    "contractName",
+                                    headerFilter = Editor.INPUT,
+                                    // headerFilterPlaceholder = "Sök ${heading.toLowerCase()}",
+                                    headerFilterPlaceholder = "Sök...",
+                                    width = "25%",
+                                    // widthGrow = 1,
+                                    formatter = Formatter.TEXTAREA
+                                    /*
+                        formatterComponentFunction = { _, _, item ->
+                            println(item.description)
+                            Div(item.description)
+                        }
+                         */
+                                ),
+                                ColumnDefinition(
+                                    "Beskrivning",
+                                    "description",
+                                    headerFilter = Editor.INPUT,
+                                    // headerFilterPlaceholder = "Sök ${heading.toLowerCase()}",
+                                    headerFilterPlaceholder = "Sök...",
+                                    width = "48%",
+                                    // widthGrow = 3,
+                                    formatter = Formatter.TEXTAREA
+                                    /*
+                        formatterComponentFunction = { _, _, item ->
+                            println(item.description)
+                            Div(item.description)
+                        }
+                         */
+                                ),
+                                ColumnDefinition(
+                                    "Engelskt domännamn",
+                                    "domain",
+                                    headerFilter = Editor.INPUT,
+                                    headerFilterPlaceholder = "Sök...",
+                                    width = "25%",
+                                    // widthGrow = 3,
+                                    formatter = Formatter.TEXTAREA,
+                                    formatterComponentFunction = { _, _, item ->
+                                        getClickableDomainComponent(item.domain.name)
+                                        /*
+                                Div(
+                                    //item.domain
+                                ).apply {
+                                    span { +item.domain }.onClick {
+                                        println("in onClick")
+                                        println("Will dispatch SelectDomain")
+                                        store.dispatch(RivAction.SelectDomain(item.domain))
+                                        println("Will dispatch SetCurrentPAge")
+                                        store.dispatch(RivAction.SetCurrentPage(DisplayPage.DOMAIN))
+                                    }
+                                    color = Color.hex(0x008583)
+                                }
+                                */
+                                    }
+                                )
+                            ),
+                            // selectable = true,
+                            /*
+                    rowSelected = { row ->
+                        val item = row.getData() as ContractListRecord
+                        store.dispatch(RivAction.SelectDomain(item.domain))
+                        store.dispatch(RivAction.SetCurrentPage(DisplayPage.DOMAIN))
+                    }
+                     */
+
+                        )
+                    ) {
+                        // background = Background(Color.name(Col.BEIGE))
+                        height = 100.perc
+                        wordBreak = WordBreak.NORMAL
+                        whiteSpace = WhiteSpace.PREWRAP
+                    }
+                }
+            }
+        }
+    }
+}
+
+private data class ContractListRecord(
     val contractName: String,
     val description: String,
-    val domain: String,
+    val domain: ServiceDomain
 ) {
     companion object {
         val objectList = mutableListOf<ContractListRecord>()
 
         fun initialize() {
-            for (domain in DomainArr.filterNot { it.hidden }) {
+            for (domain in DomainArr) {
                 if (domain.interactions != null) {
                     for (interaction in domain.interactions.distinctBy { it.name }) {
                         var description = "tom"
@@ -51,103 +181,12 @@ data class ContractListRecord(
                             ContractListRecord(
                                 interaction.name.removeSuffix("Interaction"),
                                 description,
-                                domain.name
+                                domain
                             )
                         )
                     }
                 }
             }
-
-        }
-    }
-}
-
-object ContractListPage : SimplePanel() {
-
-    init {
-        ContractListRecord.initialize()
-
-        h2 { +"Tjänstekontrakt" }
-        p { +"Här hittar du en förteckning över samtliga tjänstekontakt. I tabellen kan du också se om tjänstekontrakten är installerade i den nationella Tjänsteplattformen eller inte." }
-        p { +"Informationen på denna sida är direkt hämtad från WSDL-filer i subversion samt tjänsteadresseringskatalogerna i den nationella Tjänsteplattformen. Klicka på länkarna i tabellen för mer information."}
-
-
-
-        tabulator(
-            ContractListRecord.objectList.sortedBy { it.contractName },
-            options = TabulatorOptions(
-                pagination = PaginationMode.LOCAL,
-                layout = Layout.FITCOLUMNS,
-                paginationSize = 1000,
-                columns = listOf(
-                    ColumnDefinition(
-                        "Tjänstekontrakt",
-                        "contractName",
-                        headerFilter = Editor.INPUT,
-                        //headerFilterPlaceholder = "Sök ${heading.toLowerCase()}",
-                        headerFilterPlaceholder = "Sök...",
-                        widthGrow = 1,
-                        formatter = Formatter.TEXTAREA
-                        /*
-                    formatterComponentFunction = { _, _, item ->
-                        println(item.description)
-                        Div(item.description)
-                    }
-                     */
-                    ),
-                    ColumnDefinition(
-                        "Beskrivning",
-                        "description",
-                        headerFilter = Editor.INPUT,
-                        //headerFilterPlaceholder = "Sök ${heading.toLowerCase()}",
-                        headerFilterPlaceholder = "Sök...",
-                        widthGrow = 3,
-                        formatter = Formatter.TEXTAREA
-                        /*
-                    formatterComponentFunction = { _, _, item ->
-                        println(item.description)
-                        Div(item.description)
-                    }
-                     */
-                    ),
-                    ColumnDefinition(
-                        "Engelskt domännamn",
-                        "domain",
-                        headerFilter = Editor.INPUT,
-                        headerFilterPlaceholder = "Sök...",
-                        widthGrow = 3,
-                        formatter = Formatter.TEXTAREA,
-                        formatterComponentFunction = { _, _, item ->
-                            getClickableDomainComponent(item.domain)
-                            /*
-                            Div(
-                                //item.domain
-                            ).apply {
-                                span { +item.domain }.onClick {
-                                    println("in onClick")
-                                    println("Will dispatch SelectDomain")
-                                    store.dispatch(RivAction.SelectDomain(item.domain))
-                                    println("Will dispatch SetCurrentPAge")
-                                    store.dispatch(RivAction.SetCurrentPage(DisplayPage.DOMAIN))
-                                }
-                                color = Color.hex(0x008583)
-                            }
-                            */
-                        }
-                    )
-                ),
-                //selectable = true,
-                /*
-                rowSelected = { row ->
-                    val item = row.getData() as ContractListRecord
-                    store.dispatch(RivAction.SelectDomain(item.domain))
-                    store.dispatch(RivAction.SetCurrentPage(DisplayPage.DOMAIN))
-                }
-                 */
-
-            )
-        ).apply {
-            //height = 80.perc
         }
     }
 }

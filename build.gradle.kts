@@ -32,7 +32,7 @@ kotlin {
         browser {
             runTask {
                 outputFileName = "main.bundle.js"
-                sourceMaps = false
+                //sourceMaps = false
                 devServer = KotlinWebpackConfig.DevServer(
                     open = false,
                     port = 4000,

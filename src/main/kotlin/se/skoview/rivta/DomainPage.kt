@@ -110,26 +110,32 @@ object DomainPage : SimplePanel() {
                 }
             }
 
+            val noOfVersions = mkFilteredDomainVersionsList(state, domain).size
             simplePanel {
                 background = Background(Color.name(Col.WHITE))
                 p { " " }
-                hPanel {
-                    h2 {
-                        +"Välj version:"
-                    }
-                    add(
-                        SelectDomainVersion(state.selectedDomain)
-                            .apply {
-                                width = 150.px
-                                marginLeft = 50.px
-                                fontWeight = FontWeight.BOLD
+                when (noOfVersions) {
+                    0 -> h2 { +"Inga versioner av denna domän är tillgänglig" }
+                    1 -> h2 { +"Version ${mkFilteredDomainVersionsList(state, domain)[0].name}" }
+                    else ->
+                        hPanel {
+                            h2 {
+                                +"Välj version:"
                             }
-                    )
-                    span {
-                        marginLeft = 20.px
-                        fontSize = 20.px
-                        +" (${mkFilteredDomainVersionsList(state, domain).size})"
-                    }
+                            add(
+                                SelectDomainVersion(state.selectedDomain)
+                                    .apply {
+                                        width = 150.px
+                                        marginLeft = 50.px
+                                        fontWeight = FontWeight.BOLD
+                                    }
+                            )
+                            span {
+                                marginLeft = 20.px
+                                fontSize = 20.px
+                                +" ($noOfVersions)"
+                            }
+                        }
                 }
 
                 h3 { +"Tjänstekontrakt" }
@@ -164,10 +170,10 @@ object DomainPage : SimplePanel() {
                     // val docs = selectedDomainVersion.getDocumentsAndChangeDate()
 
                     val baseUrl = "${
-                    domain.sourceCodeUrl.replace(
-                        "src",
-                        "raw"
-                    )
+                        domain.sourceCodeUrl.replace(
+                            "src",
+                            "raw"
+                        )
                     }/${selectedDomainVersion.name}/${selectedDomainVersion.documentsFolder}/"
 
                     println("Documentation url: $baseUrl")

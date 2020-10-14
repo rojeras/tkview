@@ -29,8 +29,8 @@ import se.skoview.rivta.RivTaMainPage
 // todo: Läs ner TPDB domainId dynamiskt: https://integrationer.tjansteplattform.se/tpdb/tpdbapi.php/api/v1/domains
 // todo: hippolänkar till kontrakt
 // todo: Back-knapp
-// todo: Paginering
 // todo: Lös detta med CORS. Ev ta in REST-lösningen från Roberts showcase. Annat alternativ är att rivta.se dygnsvis hämtar filen och lagrar lokalt... Det är nog bäst.
+// done: Paginering
 // done: Red ut kotlins serialization och instansiering och defalutvärden
 
 // Initialize the redux store

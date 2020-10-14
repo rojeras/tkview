@@ -39,7 +39,8 @@ object ContractListPage : SimplePanel() {
 
     init {
         background = Background(Color.name(Col.WHITE))
-        width = 100.vw
+        marginLeft = 1.vw
+        width = 98.vw
         // background = Background(Color.name(Col.BLUE))
         ContractListRecord.initialize()
 

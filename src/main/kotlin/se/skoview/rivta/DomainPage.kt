@@ -23,6 +23,7 @@ import pl.treksoft.kvision.html.*
 import pl.treksoft.kvision.modal.Modal
 import pl.treksoft.kvision.panel.SimplePanel
 import pl.treksoft.kvision.panel.hPanel
+import pl.treksoft.kvision.panel.simplePanel
 import pl.treksoft.kvision.state.bind
 import pl.treksoft.kvision.table.*
 import pl.treksoft.kvision.utils.px
@@ -37,6 +38,7 @@ object DomainPage : SimplePanel() {
         width = 100.vw
         background = Background(Color.name(Col.WHITE))
         div { }.bind(store) { state ->
+            background = Background(Color.name(Col.LIGHTGRAY))
             overflow = Overflow.INITIAL
             println("In DomainPage")
 
@@ -53,6 +55,7 @@ object DomainPage : SimplePanel() {
             console.log(domain)
 
             val selectedDomainVersion = state.selectedDomainVersion
+
             if (selectedDomainVersion == null) {
                 h1 {
                     align = Align.CENTER
@@ -61,148 +64,162 @@ object DomainPage : SimplePanel() {
                 return@bind
             }
 
-            h1 {
-                align = Align.CENTER
-                +domain.name
-            }
-            h3 { +"Beskrivning" }
-            //  span { +domainDescription }
-            p { +domain.getDescription() }
-
-            h3 { +"Domäntyp" }
-
-            val domainTypeText: String = "${Texts.domainTypeText[domain.getDomainType()]} tjänstedomän"
-            val domainTypeAltText: String = "${Texts.domainTypeAltText[domain.getDomainType()]}"
-
-            val modal = Modal(domainTypeText)
-            modal.add(span(domainTypeAltText))
-            modal.addButton(
-                Button("Stäng").onClick {
-                    modal.hide()
+            simplePanel {
+                marginLeft = 15.px
+                h1 {
+                    align = Align.CENTER
+                    +domain.name
                 }
-            )
+                h3 { +"Beskrivning" }
+                //  span { +domainDescription }
+                p { +domain.getDescription() }
 
-            div {
-                p { +domainTypeText }
-                color = Color.hex(0x008583)
-            }.onClick { // .onEvent { mouseover = { modal.show() }
-                modal.show()
-            }
+                h3 { +"Domäntyp" }
 
-            if (!domain.owner.isNullOrEmpty()) {
-                h3 {
-                    +"Ägare"
-                }
-                span { +"${domain.owner}" }
-            }
-            p { +" " }
+                val domainTypeText: String = "${Texts.domainTypeText[domain.getDomainType()]} tjänstedomän"
+                val domainTypeAltText: String = "${Texts.domainTypeAltText[domain.getDomainType()]}"
 
-            h3 { +"Mera information om denna tjänstedomän" }
-            ul {
-                if (!domain.issueTrackerUrl.isNullOrEmpty()) li { link("Ärendehantering", domain.issueTrackerUrl) }
-                if (!domain.sourceCodeUrl.isNullOrEmpty()) li { link("Källkod", domain.sourceCodeUrl) }
-                if (!domain.infoPageUrl.isNullOrEmpty()) li { link("Ytterligare information", domain.infoPageUrl) }
-            }
-
-            hPanel {
-                h2 { +"Välj version:" }
-                add(SelectDomainVersion(state.selectedDomain)
-                    .apply {
-                        width = 150.px
-                        marginLeft = 50.px
-                        fontWeight = FontWeight.BOLD
+                val modal = Modal(domainTypeText)
+                modal.add(span(domainTypeAltText))
+                modal.addButton(
+                    Button("Stäng").onClick {
+                        modal.hide()
                     }
                 )
+
+                div {
+                    p { +domainTypeText }
+                    color = Color.hex(0x008583)
+                }.onClick { // .onEvent { mouseover = { modal.show() }
+                    modal.show()
+                }
+
+                if (!domain.owner.isNullOrEmpty()) {
+                    h3 {
+                        +"Ägare"
+                    }
+                    span { +"${domain.owner}" }
+                }
+                p { +" " }
+
+                h3 { +"Mera information om denna tjänstedomän" }
+                ul {
+                    if (!domain.issueTrackerUrl.isNullOrEmpty()) li { link("Ärendehantering", domain.issueTrackerUrl) }
+                    if (!domain.sourceCodeUrl.isNullOrEmpty()) li { link("Källkod", domain.sourceCodeUrl) }
+                    if (!domain.infoPageUrl.isNullOrEmpty()) li { link("Ytterligare information", domain.infoPageUrl) }
+                }
             }
 
-            h3 { +"Tjänstekontrakt" }
-
-            println("Time to show domain versions")
-
-            table(
-                listOf("Namn", "Beskrivning"),
-                setOf(TableType.BORDERED, TableType.SMALL, TableType.STRIPED, TableType.HOVER),
-                // responsiveType = ResponsiveType.RESPONSIVE
-            ) {
-                selectedDomainVersion.interactionDescriptions
-                    .sortedBy { it.wsdlContract().first }
-                    .map {
-                        row {
-                            cell {
-                                +"${it.wsdlContract().first} ${it.wsdlContract().second}.${it.wsdlContract().third}"
+            simplePanel {
+                background = Background(Color.name(Col.WHITE))
+                p { " " }
+                hPanel {
+                    h2 {
+                        +"Välj version:"
+                    }
+                    add(
+                        SelectDomainVersion(state.selectedDomain)
+                            .apply {
+                                width = 150.px
+                                marginLeft = 50.px
+                                fontWeight = FontWeight.BOLD
                             }
-                            cell {
-                                +it.description
+                    )
+                    span {
+                        marginLeft = 20.px
+                        fontSize = 20.px
+                        +" (${mkFilteredDomainVersionsList(state, domain).size})"
+                    }
+                }
+
+                h3 { +"Tjänstekontrakt" }
+
+                println("Time to show domain versions")
+
+                table(
+                    listOf("Namn", "Beskrivning"),
+                    setOf(TableType.BORDERED, TableType.SMALL, TableType.STRIPED, TableType.HOVER),
+                    // responsiveType = ResponsiveType.RESPONSIVE
+                ) {
+                    selectedDomainVersion.interactionDescriptions
+                        .sortedBy { it.wsdlContract().first }
+                        .map {
+                            row {
+                                cell {
+                                    +"${it.wsdlContract().first} ${it.wsdlContract().second}.${it.wsdlContract().third}"
+                                }
+                                cell {
+                                    +it.description
+                                }
                             }
                         }
-                    }
-            }
+                }
 
-            h3 { +"Specifikationer" }
+                h3 { +"Specifikationer" }
 
-            if (domain.sourceCodeUrl != null) {
+                if (domain.sourceCodeUrl != null) {
 
-                println("Will fetch docs: ${selectedDomainVersion.name}")
+                    println("Will fetch docs: ${selectedDomainVersion.name}")
 
-                // val docs = selectedDomainVersion.getDocumentsAndChangeDate()
+                    // val docs = selectedDomainVersion.getDocumentsAndChangeDate()
 
-                val baseUrl = "${
+                    val baseUrl = "${
                     domain.sourceCodeUrl.replace(
                         "src",
                         "raw"
                     )
-                }/${selectedDomainVersion.name}/${selectedDomainVersion.documentsFolder}/"
+                    }/${selectedDomainVersion.name}/${selectedDomainVersion.documentsFolder}/"
 
-                println("Documentation url: $baseUrl")
-                val documents: List<DescriptionDocument> =
-                    selectedDomainVersion.descriptionDocuments as List<DescriptionDocument>
-                console.log(documents)
-                ul {
-                    documents
-                        .sortedBy { it.type }
-                        .map {
-                            li {
-                                val displayName = when (it.type) {
-                                    RivDocumentTypeEnum.TKB -> "Tjänstekontraktsbeskrivning"
-                                    RivDocumentTypeEnum.AB -> "Arkitekturella beslut"
-                                    RivDocumentTypeEnum.IS -> "Informationsspecifikation"
-                                    else -> it.fileName
+                    println("Documentation url: $baseUrl")
+                    val documents: List<DescriptionDocument> =
+                        selectedDomainVersion.descriptionDocuments as List<DescriptionDocument>
+                    console.log(documents)
+                    ul {
+                        documents
+                            .sortedBy { it.type }
+                            .map {
+                                li {
+                                    val displayName = when (it.type) {
+                                        RivDocumentTypeEnum.TKB -> "Tjänstekontraktsbeskrivning"
+                                        RivDocumentTypeEnum.AB -> "Arkitekturella beslut"
+                                        RivDocumentTypeEnum.IS -> "Informationsspecifikation"
+                                        else -> it.fileName
+                                    }
+                                    link(displayName, "$baseUrl${it.fileName}")
                                 }
-                                link(displayName, "$baseUrl${it.fileName}")
                             }
-                        }
-                    if (!selectedDomainVersion.zipUrl.isNullOrEmpty())
-                        li { link("Releasepaket (zip-fil)", selectedDomainVersion.zipUrl) }
+                        if (!selectedDomainVersion.zipUrl.isNullOrEmpty())
+                            li { link("Releasepaket (zip-fil)", selectedDomainVersion.zipUrl) }
+                    }
                 }
-            }
-            h3 { +"Granskningar" }
+                h3 { +"Granskningar" }
 
-            if (selectedDomainVersion.reviews.isEmpty()) span { +"Inga granskningar är registrerade för denna version." }
-            else {
-                table(
-                    listOf("", "Resultat", "Mera information"),
-                    setOf(TableType.BORDERED, TableType.SMALL, TableType.STRIPED, TableType.HOVER),
-                    // responsiveType = ResponsiveType.RESPONSIVE
-                ) {
-                    for (review in selectedDomainVersion.reviews) {
-                        console.log(review)
-                        row {
-                            cell { +review.reviewProtocol.name }
-                            cell {
-                                color = when (review.reviewOutcome.name) {
-                                    "Godkänd" -> Color.name(Col.GREEN)
-                                    "Underkänd" -> Color.name(Col.RED)
-                                    "Delvis Godkänd" -> Color.name(Col.BLACK)
-                                    else -> Color.name(Col.BLACK)
+                if (selectedDomainVersion.reviews.isEmpty()) span { +"Inga granskningar är registrerade för denna version." }
+                else {
+                    table(
+                        listOf("", "Resultat", "Mera information"),
+                        setOf(TableType.BORDERED, TableType.SMALL, TableType.STRIPED, TableType.HOVER),
+                        // responsiveType = ResponsiveType.RESPONSIVE
+                    ) {
+                        for (review in selectedDomainVersion.reviews) {
+                            console.log(review)
+                            row {
+                                cell { +review.reviewProtocol.name }
+                                cell {
+                                    color = when (review.reviewOutcome.name) {
+                                        "Godkänd" -> Color.name(Col.GREEN)
+                                        "Underkänd" -> Color.name(Col.RED)
+                                        "Delvis Godkänd" -> Color.name(Col.BLACK)
+                                        else -> Color.name(Col.BLACK)
+                                    }
+                                    bold { +review.reviewOutcome.name }
                                 }
-                                bold { +review.reviewOutcome.name }
+                                cell { link("Ladda ner granskningsprotokoll", review.reportUrl) }
                             }
-                            cell { link("Ladda ner granskningsprotokoll", review.reportUrl) }
                         }
                     }
                 }
             }
-
         }
     }
 }
@@ -229,6 +246,8 @@ fun getDefaultDomainVersion(state: RivState, domain: ServiceDomain): Version? {
     }
 
     // If still no hit just return the first one - which ought to be a sinlge trunk
+    if (versions.isEmpty()) return null
+
     return versions[0]
 }
 
@@ -243,7 +262,6 @@ fun mkFilteredDomainVersionsList(state: RivState, domain: ServiceDomain): List<V
             .sortedBy { it.name }
             .reversed()
 }
-
 
 private class SelectDomainVersion(domain: ServiceDomain?) : SimplePanel() {
     init {

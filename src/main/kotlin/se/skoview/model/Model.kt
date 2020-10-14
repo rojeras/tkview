@@ -24,10 +24,10 @@ fun initializeRivState(): RivState {
         domainType = DomainTypeEnum.NATIONAL,
         selectedDomain = null,
         selectedDomainVersion = null,
-        true,
-        true,
-        true,
-        true,
-        true
+        false,
+        false,
+        false,
+        false,
+        false
     )
 }

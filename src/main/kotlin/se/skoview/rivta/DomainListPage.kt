@@ -41,6 +41,7 @@ object DomainListPage : SimplePanel() {
 
     init {
         background = Background(Color.name(Col.WHITE))
+        marginLeft = 1.vw
         width = 98.vw
         div {}.bind(store) { state ->
 

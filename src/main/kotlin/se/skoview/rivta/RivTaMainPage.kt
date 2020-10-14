@@ -34,10 +34,10 @@ var rivTaPageTop: Div = Div()
 
 object RivTaMainPage : SimplePanel() {
     init {
-        background = Background(Color.hex(0x00706E))
+        // background = Background(Color.hex(0x00706E))
         fontFamily = "Times New Roman"
         id = "top-init"
-        height = 95.vh
+        // height = 95.vh
         this.marginTop = 10.px
         // background = Background(Color.name(Col.YELLOW))
         rivTaPageTop = div {
@@ -45,6 +45,7 @@ object RivTaMainPage : SimplePanel() {
             id = "top-bind"
 
             simplePanel {
+                background = Background(Color.hex(0x00706E))
                 overflow = Overflow.HIDDEN
                 div {
                     h2("Information om tjänstedomäner och tjänstekontrakt")

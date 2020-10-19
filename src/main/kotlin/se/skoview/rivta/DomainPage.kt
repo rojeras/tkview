@@ -24,6 +24,7 @@ import pl.treksoft.kvision.modal.Modal
 import pl.treksoft.kvision.panel.SimplePanel
 import pl.treksoft.kvision.panel.hPanel
 import pl.treksoft.kvision.panel.simplePanel
+import pl.treksoft.kvision.routing.routing
 import pl.treksoft.kvision.state.bind
 import pl.treksoft.kvision.table.*
 import pl.treksoft.kvision.utils.px
@@ -37,6 +38,10 @@ object DomainPage : SimplePanel() {
     init {
         width = 100.vw
         background = Background(Color.name(Col.WHITE))
+
+        // routing.navigate("${View.DOMAIN.url}/$selectedDomainName}" )
+        routing.navigate("DomainPage")
+
         div { }.bind(store) { state ->
             background = Background(Color.name(Col.LIGHTGRAY))
             overflow = Overflow.INITIAL
@@ -45,21 +50,28 @@ object DomainPage : SimplePanel() {
             // val selectedDomain = state.selectedDomain
             // val domain = DomainMap[selectedDomain]
 
-            val domain = state.selectedDomain
-            requireNotNull(domain)
-            val selectedDomain = domain.name
+            val selectedDomainName = state.selectedDomainName
 
-            val domainType = domain.getDomainType()
+            val selectedDomain = DomainMap[selectedDomainName]
+            if (selectedDomain == null) return@bind
 
-            println("Display domain: $selectedDomain")
-            console.log(domain)
+            val domainType = selectedDomain.getDomainType()
+
+            println("Display domain: $selectedDomainName")
+            console.log(selectedDomain)
+
+            if (state.selectedDomainVersion == null) {
+                val domainVersion = updateDomainVersion(state, selectedDomain)
+                if (domainVersion != null) store.dispatch(RivAction.SelectDomainVersion(domainVersion))
+                return@bind
+            }
 
             val selectedDomainVersion = state.selectedDomainVersion
 
             if (selectedDomainVersion == null) {
                 h1 {
                     align = Align.CENTER
-                    +"${domain.name} - inga versioner är tillgängliga"
+                    +"${selectedDomain.name} - inga versioner är tillgängliga"
                 }
                 return@bind
             }
@@ -68,16 +80,16 @@ object DomainPage : SimplePanel() {
                 marginLeft = 15.px
                 h1 {
                     align = Align.CENTER
-                    +domain.name
+                    +selectedDomain.name
                 }
                 h3 { +"Beskrivning" }
                 //  span { +domainDescription }
-                p { +domain.getDescription() }
+                p { +selectedDomain.getDescription() }
 
                 h3 { +"Domäntyp" }
 
-                val domainTypeText: String = "${Texts.domainTypeText[domain.getDomainType()]} tjänstedomän"
-                val domainTypeAltText: String = "${Texts.domainTypeAltText[domain.getDomainType()]}"
+                val domainTypeText: String = "${Texts.domainTypeText[selectedDomain.getDomainType()]} tjänstedomän"
+                val domainTypeAltText: String = "${Texts.domainTypeAltText[selectedDomain.getDomainType()]}"
 
                 val modal = Modal(domainTypeText)
                 modal.add(span(domainTypeAltText))
@@ -94,36 +106,51 @@ object DomainPage : SimplePanel() {
                     modal.show()
                 }
 
-                if (!domain.owner.isNullOrEmpty()) {
+                if (!selectedDomain.owner.isNullOrEmpty()) {
                     h3 {
                         +"Ägare"
                     }
-                    span { +"${domain.owner}" }
+                    span { +"${selectedDomain.owner}" }
                 }
                 p { +" " }
 
                 h3 { +"Mera information om denna tjänstedomän" }
                 ul {
-                    if (!domain.issueTrackerUrl.isNullOrEmpty()) li { link("Ärendehantering", domain.issueTrackerUrl) }
-                    if (!domain.sourceCodeUrl.isNullOrEmpty()) li { link("Källkod", domain.sourceCodeUrl) }
-                    if (!domain.infoPageUrl.isNullOrEmpty()) li { link("Ytterligare information", domain.infoPageUrl) }
+                    if (!selectedDomain.issueTrackerUrl.isNullOrEmpty()) li {
+                        link(
+                            "Ärendehantering",
+                            selectedDomain.issueTrackerUrl
+                        )
+                    }
+                    if (!selectedDomain.sourceCodeUrl.isNullOrEmpty()) li {
+                        link(
+                            "Källkod",
+                            selectedDomain.sourceCodeUrl
+                        )
+                    }
+                    if (!selectedDomain.infoPageUrl.isNullOrEmpty()) li {
+                        link(
+                            "Ytterligare information",
+                            selectedDomain.infoPageUrl
+                        )
+                    }
                 }
             }
 
-            val noOfVersions = mkFilteredDomainVersionsList(state, domain).size
+            val noOfVersions = mkFilteredDomainVersionsList(state, selectedDomain).size
             simplePanel {
                 background = Background(Color.name(Col.WHITE))
                 p { " " }
                 when (noOfVersions) {
                     0 -> h2 { +"Inga versioner av denna domän är tillgänglig" }
-                    1 -> h2 { +"Version ${mkFilteredDomainVersionsList(state, domain)[0].name}" }
+                    1 -> h2 { +"Version ${mkFilteredDomainVersionsList(state, selectedDomain)[0].name}" }
                     else ->
                         hPanel {
                             h2 {
                                 +"Välj version:"
                             }
                             add(
-                                SelectDomainVersion(state.selectedDomain)
+                                SelectDomainVersion(selectedDomain)
                                     .apply {
                                         width = 150.px
                                         marginLeft = 50.px
@@ -163,17 +190,17 @@ object DomainPage : SimplePanel() {
 
                 h3 { +"Specifikationer" }
 
-                if (domain.sourceCodeUrl != null) {
+                if (selectedDomain.sourceCodeUrl != null) {
 
                     println("Will fetch docs: ${selectedDomainVersion.name}")
 
                     // val docs = selectedDomainVersion.getDocumentsAndChangeDate()
 
                     val baseUrl = "${
-                        domain.sourceCodeUrl.replace(
-                            "src",
-                            "raw"
-                        )
+                    selectedDomain.sourceCodeUrl.replace(
+                        "src",
+                        "raw"
+                    )
                     }/${selectedDomainVersion.name}/${selectedDomainVersion.documentsFolder}/"
 
                     println("Documentation url: $baseUrl")

@@ -21,6 +21,7 @@ import pl.treksoft.kvision.panel.root
 import pl.treksoft.kvision.redux.createReduxStore
 import pl.treksoft.kvision.require
 import pl.treksoft.kvision.startApplication
+import pl.treksoft.navigo.Navigo
 import se.skoview.model.initializeRivState
 import se.skoview.model.load
 import se.skoview.model.rivReducer
@@ -39,6 +40,8 @@ val store = createReduxStore(
     initializeRivState()
 )
 
+private val routing = Navigo(null, false, "#")
+
 class App : Application() {
     init {
         require("css/helloworld.css")
@@ -49,6 +52,8 @@ class App : Application() {
         root("app") {
             println("In App:init()")
             load({ add(RivTaMainPage) })
+            routing.initialize().resolve()
+            add(RivTaMainPage)
         }
     }
 }

@@ -21,9 +21,11 @@ import pl.treksoft.kvision.form.check.checkBoxInput
 import pl.treksoft.kvision.form.select.simpleSelectInput
 import pl.treksoft.kvision.html.*
 import pl.treksoft.kvision.panel.*
+import pl.treksoft.kvision.routing.routing
 import pl.treksoft.kvision.state.bind
 import pl.treksoft.kvision.utils.px
 import pl.treksoft.kvision.utils.vh
+import se.skoview.app.View
 import se.skoview.app.formControlXs
 import se.skoview.app.store
 import se.skoview.model.*

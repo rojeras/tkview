@@ -39,7 +39,7 @@ fun getClickableDomainComponent(domainName: String): Div {
         }.onClick {
             println("In onClick in getClickableDomainComponent()")
             println("Will dispatch SelectDomain")
-            store.dispatch(RivAction.SelectDomain(DomainMap[domainName]!!))
+            store.dispatch(RivAction.SelectDomain(domainName))
         }
     }
 }

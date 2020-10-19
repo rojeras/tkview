@@ -22,10 +22,12 @@ import pl.treksoft.kvision.html.*
 import pl.treksoft.kvision.html.Align
 import pl.treksoft.kvision.panel.SimplePanel
 import pl.treksoft.kvision.panel.simplePanel
+import pl.treksoft.kvision.routing.routing
 import pl.treksoft.kvision.state.bind
 import pl.treksoft.kvision.tabulator.*
 import pl.treksoft.kvision.utils.perc
 import pl.treksoft.kvision.utils.vw
+import se.skoview.app.View
 import se.skoview.app.getHeightToRemainingViewPort
 import se.skoview.app.store
 import se.skoview.model.DomainArr
@@ -44,9 +46,13 @@ object ContractListPage : SimplePanel() {
         // background = Background(Color.name(Col.BLUE))
         ContractListRecord.initialize()
 
+        // routing.navigate(View.CONTRACT_LIST.url)
+        routing.navigate("ContractListPage")
+
         simplePanel {
             // background = Background(Color.name(Col.LIGHTCORAL))
             setStyle("height", getHeightToRemainingViewPort(domainTextDiv, 40))
+
 
             div {}.bind(store) { state ->
                 println("After bind")

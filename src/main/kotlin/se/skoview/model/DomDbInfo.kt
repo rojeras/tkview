@@ -23,6 +23,7 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 import se.skoview.app.getAsync
+import se.skoview.app.store
 import kotlin.collections.List
 
 @Serializable
@@ -48,7 +49,9 @@ fun load(callback: () -> Unit) {
             json.decodeFromString(ListSerializer(ServiceDomain.serializer()), response)
         console.log(serviceDomains)
 
-        callback()
+        store.dispatch(RivAction.DomdbLoadingComplete(true))
+
+        //callback()
     }
 }
 

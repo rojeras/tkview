@@ -16,18 +16,32 @@
  */
 package se.skoview.model
 
+import pl.treksoft.kvision.routing.routing
+import se.skoview.app.View
 import se.skoview.rivta.getDefaultDomainVersion
 import se.skoview.rivta.mkFilteredDomainVersionsList
 
 fun rivReducer(state: RivState, action: RivAction): RivState {
-    println("In Reducer, action: $action")
+    println("=====>>> In Reducer, action: $action")
     val newState: RivState = when (action) {
-        is RivAction.SetCurrentPage -> state.copy(
-            displayPage = action.page
-        )
+        is RivAction.SetCurrentPage -> {
+            val newPage = action.page
+
+            /*
+            when (newPage) {
+                DisplayPage.DOMAIN_LIST -> routing.navigate(View.DOMAIN_LIST.url)
+                DisplayPage.CONTRACT_LIST -> routing.navigate(View.CONTRACT_LIST.url)
+                DisplayPage.DOMAIN -> routing.navigate(View.DOMAIN.url + state.selectedDomainName)
+            }
+             */
+
+            state.copy(
+                displayPage = newPage
+            )
+        }
         is RivAction.SelectDomain -> state.copy(
-            selectedDomain = action.domain,
-            selectedDomainVersion = updateDomainVersion(state, action.domain),
+            selectedDomainName = action.domainName,
+            selectedDomainVersion = updateDomainVersion(state, DomainMap[action.domainName]),
             displayPage = DisplayPage.DOMAIN
         )
 
@@ -42,20 +56,31 @@ fun rivReducer(state: RivState, action: RivAction): RivState {
         )
         is RivAction.ShowHiddenVersion -> {
             val newState = state.copy(showHiddenVersion = action.isVisible)
-            newState.copy(selectedDomainVersion = updateDomainVersion(newState, newState.selectedDomain))
+            newState.copy(
+                selectedDomainVersion = updateDomainVersion(state, DomainMap[state.selectedDomainName])
+            )
         }
         is RivAction.ShowRcVersion -> {
             val newState = state.copy(showRcVersion = action.isVisible)
-            newState.copy(selectedDomainVersion = updateDomainVersion(newState, newState.selectedDomain))
+            newState.copy(
+                selectedDomainVersion = updateDomainVersion(state, DomainMap[state.selectedDomainName])
+            )
         }
         is RivAction.ShowUnderscoreVersion -> {
             val newState = state.copy(showUnderscoreVersion = action.isVisible)
-            newState.copy(selectedDomainVersion = updateDomainVersion(newState, newState.selectedDomain))
+            newState.copy(
+                selectedDomainVersion = updateDomainVersion(state, DomainMap[state.selectedDomainName])
+            )
         }
         is RivAction.ShowTrunkVersion -> {
             val newState = state.copy(showTrunkVersion = action.isVisible)
-            newState.copy(selectedDomainVersion = updateDomainVersion(newState, newState.selectedDomain))
+            newState.copy(
+                selectedDomainVersion = updateDomainVersion(state, DomainMap[state.selectedDomainName])
+            )
         }
+        is RivAction.DomdbLoadingComplete -> state.copy(
+            domdbLoadingComplete = action.isComplete
+        )
     }
     println("<<<===== ${action::class}")
     console.log(newState)
@@ -63,7 +88,7 @@ fun rivReducer(state: RivState, action: RivAction): RivState {
     return newState
 }
 
-private fun updateDomainVersion(state: RivState, domain: ServiceDomain?): Version? {
+fun updateDomainVersion(state: RivState, domain: ServiceDomain?): Version? {
     if (domain == null) return null
     val versions = mkFilteredDomainVersionsList(state, domain)
 

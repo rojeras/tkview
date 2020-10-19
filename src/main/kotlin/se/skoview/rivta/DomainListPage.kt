@@ -21,6 +21,7 @@ import pl.treksoft.kvision.core.*
 import pl.treksoft.kvision.html.*
 import pl.treksoft.kvision.panel.SimplePanel
 import pl.treksoft.kvision.panel.simplePanel
+import pl.treksoft.kvision.routing.routing
 import pl.treksoft.kvision.state.bind
 import pl.treksoft.kvision.table.TableType
 import pl.treksoft.kvision.tabulator.*
@@ -28,6 +29,7 @@ import pl.treksoft.kvision.tabulator.Align
 import pl.treksoft.kvision.utils.perc
 import pl.treksoft.kvision.utils.px
 import pl.treksoft.kvision.utils.vw
+import se.skoview.app.View
 import se.skoview.app.getHeightToRemainingViewPort
 import se.skoview.app.store
 import se.skoview.model.*
@@ -43,7 +45,12 @@ object DomainListPage : SimplePanel() {
         background = Background(Color.name(Col.WHITE))
         marginLeft = 1.vw
         width = 98.vw
+
+        // routing.navigate(View.DOMAIN_LIST.url)
+        routing.navigate("DomainListPage")
+
         div {}.bind(store) { state ->
+
 
             val valueList =
                 DomainArr

@@ -22,8 +22,8 @@ package se.skoview.model
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
+import se.skoview.app.RivManager
 import se.skoview.app.getAsync
-import se.skoview.app.store
 import kotlin.collections.List
 
 @Serializable
@@ -32,14 +32,14 @@ data class SearchResult(val total_count: Int, val incomplete_results: Boolean)
 val DomainArr = mutableListOf<ServiceDomain>()
 val DomainMap = mutableMapOf<String, ServiceDomain>()
 
-fun load(callback: () -> Unit) {
+fun domdbLoad() {
     // fun load(callback: () -> Unit) {
     println("In DomDb:load()")
 
     // val url = "http://api.ntjp.se/dominfo/v1/servicedomain.json"
     // val url = "http://ind-dtjp-apache-api-vip.ind1.sth.basefarm.net/dominfo/v1/servicedomains.json"
-    //val url = "http://localhost:4000/domdb-prod-2020-10-12.json"
-    val url = "domdb-prod-2020-10-12.json"
+    // val url = "http://localhost:4000/domdb-prod-2020-10-12.json"
+    val url = "domdb-2020-10-20.json"
 
     // Older version which I try again to get it to create the actual parsed objects
     getAsync(url) { response ->
@@ -49,9 +49,7 @@ fun load(callback: () -> Unit) {
             json.decodeFromString(ListSerializer(ServiceDomain.serializer()), response)
         console.log(serviceDomains)
 
-        store.dispatch(RivAction.DomdbLoadingComplete(true))
-
-        //callback()
+        RivManager.domdbLoadingComplete()
     }
 }
 
@@ -230,7 +228,7 @@ enum class RivDocumentTypeEnum {
 }
 
 fun ServiceDomain.getDescription(): String {
-    return this.description ?: ""
+    return this.description
 }
 
 fun ServiceDomain.getDomainType(): DomainTypeEnum {

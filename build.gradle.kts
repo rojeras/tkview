@@ -63,10 +63,11 @@ kotlin {
         implementation("pl.treksoft:kvision-bootstrap-dialog:$kvisionVersion")
         implementation("pl.treksoft:kvision-bootstrap-typeahead:$kvisionVersion")
         implementation("pl.treksoft:kvision:$kvisionVersion")
-        implementation("pl.treksoft:kvision-i18n:$kvisionVersion")
+        // implementation("pl.treksoft:kvision-i18n:$kvisionVersion")
         implementation("pl.treksoft:kvision-tabulator:$kvisionVersion")
         implementation("pl.treksoft:kvision-datacontainer:$kvisionVersion")
         implementation("pl.treksoft:kvision-redux-kotlin:$kvisionVersion")
+        implementation("pl.treksoft:kvision-pace:$kvisionVersion")
     }
     sourceSets["test"].dependencies {
         implementation(kotlin("test-js"))

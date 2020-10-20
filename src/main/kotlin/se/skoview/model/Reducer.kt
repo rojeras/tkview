@@ -16,33 +16,30 @@
  */
 package se.skoview.model
 
-import pl.treksoft.kvision.routing.routing
 import se.skoview.app.View
 import se.skoview.rivta.getDefaultDomainVersion
 import se.skoview.rivta.mkFilteredDomainVersionsList
 
 fun rivReducer(state: RivState, action: RivAction): RivState {
-    println("=====>>> In Reducer, action: $action")
+    println("=====>>> In Reducer, action:")
+    console.log(action)
+
     val newState: RivState = when (action) {
-        is RivAction.SetCurrentPage -> {
-            val newPage = action.page
+        is RivAction.HomePage -> state.copy(
+            view = View.HOME
+        )
 
-            /*
-            when (newPage) {
-                DisplayPage.DOMAIN_LIST -> routing.navigate(View.DOMAIN_LIST.url)
-                DisplayPage.CONTRACT_LIST -> routing.navigate(View.CONTRACT_LIST.url)
-                DisplayPage.DOMAIN -> routing.navigate(View.DOMAIN.url + state.selectedDomainName)
-            }
-             */
-
+        is RivAction.SetView -> {
+            val newPage = action.view
             state.copy(
-                displayPage = newPage
+                view = newPage
             )
         }
-        is RivAction.SelectDomain -> state.copy(
+
+        is RivAction.SelectAndShowDomain -> state.copy(
             selectedDomainName = action.domainName,
             selectedDomainVersion = updateDomainVersion(state, DomainMap[action.domainName]),
-            displayPage = DisplayPage.DOMAIN
+            view = View.DOMAIN
         )
 
         is RivAction.SelectDomainVersion -> state.copy(
@@ -79,7 +76,7 @@ fun rivReducer(state: RivState, action: RivAction): RivState {
             )
         }
         is RivAction.DomdbLoadingComplete -> state.copy(
-            domdbLoadingComplete = action.isComplete
+            appLoading = !action.isComplete
         )
     }
     println("<<<===== ${action::class}")

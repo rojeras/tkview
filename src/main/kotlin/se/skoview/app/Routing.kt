@@ -1,60 +1,58 @@
+/**
+ * Copyright (C) 2013-2020 Lars Erik Röjerås
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
 package se.skoview.app
 
 import pl.treksoft.navigo.Navigo
-import se.skoview.model.DisplayPage
-import se.skoview.model.DomainMap
-import se.skoview.model.RivAction
 
 enum class View(val url: String) {
     HOME("/"),
     DOMAIN_LIST("/domains"),
     CONTRACT_LIST("/contracts"),
-    DOMAIN("domain")
+    DOMAIN("/domain")
 }
 
+/**
+ * This is the entry point which is invoked when a new URL is set and Enter pressed.
+ */
 fun Navigo.initialize(): Navigo {
     return on(
         View.HOME.url,
         { _ ->
-            viewRouter(View.HOME)
+            RivManager.fromUrlShowView(View.HOME)
         }
     ).on(
         View.DOMAIN_LIST.url,
         { _ ->
-            viewRouter(View.DOMAIN_LIST)
+            RivManager.fromUrlShowView(View.DOMAIN_LIST)
         }
     ).on(
         View.CONTRACT_LIST.url,
         { _ ->
-            viewRouter(View.CONTRACT_LIST)
+            println("Navigo contract list invoked")
+            RivManager.fromUrlShowView(View.CONTRACT_LIST)
         }
     ).on(
         "${View.DOMAIN.url}/:slug",
         { params ->
-            viewRouter(View.DOMAIN, stringParameter(params, "slug"))
+            RivManager.fromUrlShowDomainView(stringParameter(params, "slug"))
         }
     )
 }
 
 fun stringParameter(params: dynamic, parameterName: String): String {
     return (params[parameterName]).toString()
-}
-
-private fun viewRouter(view: View, param: String? = null) {
-    println("viewRouter: view = '$view', param='$param'")
-
-    val state = store.getState()
-
-    if (!param.isNullOrEmpty()) {
-        store.dispatch(RivAction.SelectDomain(param))
-    }
-
-    val showPage: DisplayPage = when (view) {
-        View.HOME -> DisplayPage.DOMAIN_LIST
-        View.DOMAIN_LIST -> DisplayPage.DOMAIN_LIST
-        View.CONTRACT_LIST -> DisplayPage.CONTRACT_LIST
-        View.DOMAIN -> DisplayPage.DOMAIN
-    }
-
-    store.dispatch(RivAction.SetCurrentPage(showPage))
 }

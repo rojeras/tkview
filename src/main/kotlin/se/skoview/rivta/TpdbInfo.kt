@@ -17,9 +17,6 @@
 
 package se.skoview.rivta
 
-// 20200902132008
-// https://integrationer.tjansteplattform.se/tpdb/tpdbapi.php/api/v1/domains
-
 val tpdbDomainIdMap: Map<String, Int> = mapOf(
     "crm:carelisting" to 1,
     "insuranceprocess:healthreporting" to 2,

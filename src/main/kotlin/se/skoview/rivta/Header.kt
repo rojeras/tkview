@@ -21,21 +21,16 @@ import pl.treksoft.kvision.form.check.checkBoxInput
 import pl.treksoft.kvision.form.select.simpleSelectInput
 import pl.treksoft.kvision.html.*
 import pl.treksoft.kvision.panel.*
-import pl.treksoft.kvision.routing.routing
-import pl.treksoft.kvision.state.bind
 import pl.treksoft.kvision.utils.px
-import pl.treksoft.kvision.utils.vh
+import se.skoview.app.RivManager
 import se.skoview.app.View
 import se.skoview.app.formControlXs
-import se.skoview.app.store
 import se.skoview.model.*
-import tabs.rivta.ContractListPage
-import tabs.rivta.DomainListPage
 
 var rivTaPageTop: Div = Div()
 
-object RivTaMainPage : SimplePanel() {
-    init {
+fun Container.headerNav(state: RivState) {
+    div {
         // background = Background(Color.hex(0x00706E))
         fontFamily = "Times New Roman"
         id = "top-init"
@@ -43,7 +38,6 @@ object RivTaMainPage : SimplePanel() {
         this.marginTop = 10.px
         // background = Background(Color.name(Col.YELLOW))
         rivTaPageTop = div {
-        }.bind(store) { state ->
             id = "top-bind"
 
             simplePanel {
@@ -51,41 +45,36 @@ object RivTaMainPage : SimplePanel() {
                 overflow = Overflow.HIDDEN
                 div {
                     h2("Information om tjänstedomäner och tjänstekontrakt")
-                    // div("Detaljerad statistik med diagram och möjlighet att ladda ner informationen för egna analyser.")
                 }.apply {
-                    // width = 100.perc
                     id = "RivtaPage-HeadingArea:Div"
-                    // background = Background(Color.hex(0x00706E))
                     color = Color.name(Col.WHITE)
                     align = Align.CENTER
                     color = Color.name(Col.WHITE)
                     marginTop = 5.px
                 }
-                //  flexPanel( FlexDirection.ROW, FlexWrap.WRAP, JustifyContent.SPACEBETWEEN, AlignItems.CENTER ) {
                 hPanel {
                     fontSize = 20.px
                     background = Background(Color.hex(0x091F5F3))
                     // spacing = 5
                     clear = Clear.BOTH
                     margin = 0.px
-                    // background = Background(Color.hex(0xf6efe9))
                     id = "RivtaPage-ControlPanel:FlexPanel-Bind"
-                    // background = Background(Color.name(Col.SALMON))
 
                     vPanel {
                         marginLeft = 5.px
                         marginRight = 10.px
                         marginTop = 5.px
-                        add(SelectPageButton("Lista Tjänstedomäner", DisplayPage.DOMAIN_LIST))
-                        add(SelectPageButton("Lista Tjänstekontrakt", DisplayPage.CONTRACT_LIST))
+                        add(SelectPageButton(state, "Lista Tjänstedomäner", View.DOMAIN_LIST))
+                        add(SelectPageButton(state, "Lista Tjänstekontrakt", View.CONTRACT_LIST))
                     }
+
                     vPanel {
                         marginLeft = 10.px
-                        if (state.displayPage != DisplayPage.DOMAIN) {
+                        if (state.view != View.DOMAIN) {
                             add(
                                 FilterCheckBox(
                                     "Inkludera dolda tjänstedomäner",
-                                    RivAction.ShowHiddenDomain::class.simpleName,
+                                    RivAction.ShowHiddenDomain::class.simpleName!!,
                                     state.showHiddenDomain
                                 )
                             )
@@ -93,47 +82,44 @@ object RivTaMainPage : SimplePanel() {
                                 span("Typ av tjänstedomän:")
                                 add(
                                     SelectDomainType(state)
-                                        .apply { marginLeft = 50.px }
+                                        .apply {
+                                            marginLeft = 50.px
+                                        }
                                 )
                             }
                         }
-                        if (state.displayPage == DisplayPage.DOMAIN)
+                        if (state.view == View.DOMAIN)
                             add(
                                 FilterCheckBox(
                                     "Inkludera dolda versioner",
-                                    RivAction.ShowHiddenVersion::class.simpleName,
+                                    RivAction.ShowHiddenVersion::class.simpleName!!,
                                     state.showHiddenVersion
                                 )
                             )
-                        if (state.displayPage == DisplayPage.DOMAIN)
+                        if (state.view == View.DOMAIN)
                             add(
                                 FilterCheckBox(
-                                    "inkludera rc-versioner",
-                                    RivAction.ShowRcVersion::class.simpleName,
+                                    "Inkludera rc-versioner",
+                                    RivAction.ShowRcVersion::class.simpleName!!,
                                     state.showRcVersion
                                 )
                             )
 
-                        if (state.displayPage == DisplayPage.DOMAIN)
+                        if (state.view == View.DOMAIN)
                             add(
                                 FilterCheckBox(
                                     "Inkludera trunk",
-                                    RivAction.ShowTrunkVersion::class.simpleName,
+                                    RivAction.ShowTrunkVersion::class.simpleName!!,
                                     state.showTrunkVersion
                                 )
                             )
                     }
+
                     vPanel {
-                        if (state.displayPage == DisplayPage.DOMAIN_LIST || state.displayPage == DisplayPage.CONTRACT_LIST) {
+                        if (state.view == View.DOMAIN_LIST || state.view == View.CONTRACT_LIST) {
                         }
                     }
                 }
-            }
-
-            when (state.displayPage) {
-                DisplayPage.DOMAIN_LIST -> add(DomainListPage)
-                DisplayPage.CONTRACT_LIST -> add(ContractListPage)
-                DisplayPage.DOMAIN -> add(DomainPage)
             }
         }
     }
@@ -151,8 +137,6 @@ private class SelectDomainType(state: RivState) : SimplePanel() {
             options = options,
             value = state.domainType.toString()
         ) {
-            // fontStyle = FontStyle.OBLIQUE
-            // fontWeight = FontWeight.BOLD
             background = Background(Color.name(Col.WHITE))
             fontSize = 20.px
             addCssStyle(formControlXs)
@@ -166,46 +150,37 @@ private class SelectDomainType(state: RivState) : SimplePanel() {
                         DomainTypeEnum.EXTERNAL.toString() -> DomainTypeEnum.EXTERNAL
                         else -> DomainTypeEnum.NATIONAL
                     }
-                store.dispatch(RivAction.SelectDomainType(selectedType))
+                RivManager.selectDomainType(selectedType)
             }
         }
     }
 }
 
-private class SelectPageButton(label: String, page: DisplayPage) : SimplePanel() {
+private class SelectPageButton(state: RivState, label: String, view: View) : SimplePanel() {
     init {
-        val state = store.getState()
-
         marginBottom = 5.px
         button(label)
             .onClick {
                 println("Button '$label' clicked")
-                store.dispatch(RivAction.SetCurrentPage(page))
+                RivManager.fromAppShowView(view)
             }.apply {
                 size = ButtonSize.SMALL
                 addBsBgColor(BsBgColor.LIGHT)
                 addBsColor(BsColor.BLACK50)
                 marginBottom = 5.px
-                disabled = state.displayPage == page
+                disabled = state.view == view
             }
     }
 }
 
-private class FilterCheckBox(label: String, action: String?, currentlySet: Boolean) : SimplePanel() {
+private class FilterCheckBox(label: String, action: String, currentlySet: Boolean) : SimplePanel() {
     init {
-        val state = store.getState()
         div {
             checkBoxInput(
                 value = currentlySet,
             ).onClick {
                 // todo: Figure out how to dispatch the action directly whithout "when"
-                when (action) {
-                    RivAction.ShowHiddenDomain::class.simpleName -> store.dispatch(RivAction.ShowHiddenDomain(value))
-                    RivAction.ShowHiddenVersion::class.simpleName -> store.dispatch(RivAction.ShowHiddenVersion(value))
-                    RivAction.ShowTrunkVersion::class.simpleName -> store.dispatch(RivAction.ShowTrunkVersion(value))
-                    RivAction.ShowRcVersion::class.simpleName -> store.dispatch(RivAction.ShowRcVersion(value))
-                    else -> println("Error in FilterCheckBox - unknown action $action")
-                }
+                RivManager.setFlag(action, value)
             }
             +" $label"
         }

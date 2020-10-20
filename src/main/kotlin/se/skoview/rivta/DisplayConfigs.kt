@@ -23,10 +23,8 @@ import pl.treksoft.kvision.core.WordBreak
 import pl.treksoft.kvision.core.onClick
 import pl.treksoft.kvision.html.Div
 import pl.treksoft.kvision.html.span
-import se.skoview.app.store
-import se.skoview.model.DomainMap
+import se.skoview.app.RivManager
 import se.skoview.model.DomainTypeEnum
-import se.skoview.model.RivAction
 
 fun getClickableDomainComponent(domainName: String): Div {
     return Div {
@@ -39,7 +37,7 @@ fun getClickableDomainComponent(domainName: String): Div {
         }.onClick {
             println("In onClick in getClickableDomainComponent()")
             println("Will dispatch SelectDomain")
-            store.dispatch(RivAction.SelectDomain(domainName))
+            RivManager.fromAppShowDomainView(domainName)
         }
     }
 }

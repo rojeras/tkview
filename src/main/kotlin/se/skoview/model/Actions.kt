@@ -20,7 +20,7 @@ import pl.treksoft.kvision.redux.RAction
 import se.skoview.app.View
 
 sealed class RivAction : RAction {
-    object HomePage: RivAction()
+    object HomePage : RivAction()
     data class SetView(val view: View) : RivAction()
     data class SelectDomainType(val type: DomainTypeEnum) : RivAction()
     data class SelectAndShowDomain(val domainName: String) : RivAction()
@@ -31,4 +31,6 @@ sealed class RivAction : RAction {
     data class ShowUnderscoreVersion(val isVisible: Boolean) : RivAction()
     data class ShowTrunkVersion(val isVisible: Boolean) : RivAction()
     data class DomdbLoadingComplete(val isComplete: Boolean) : RivAction()
+    data class SetAdminMode(val onOff: String) : RivAction()
+    object Refresh : RivAction()
 }

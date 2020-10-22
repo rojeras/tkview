@@ -20,6 +20,7 @@ import pl.treksoft.kvision.redux.createReduxStore
 import pl.treksoft.navigo.Navigo
 import se.skoview.model.*
 import se.skoview.rivta.ContractListRecord
+import se.skoview.model.tpdbLoad
 
 object RivManager {
 
@@ -34,6 +35,8 @@ object RivManager {
 
     fun initialize() {
         routing.initialize().resolve()
+        takApiLoad()
+        tpdbLoad()
         domdbLoad()
     }
 
@@ -52,14 +55,24 @@ object RivManager {
         rivStore.dispatch(RivAction.SelectAndShowDomain(domainName))
     }
 
+    fun fromUrlAdmin(onOff: String) {
+        println("In fromUrlAdmin, onOff = $onOff")
+        rivStore.dispatch(RivAction.SetAdminMode(onOff))
+    }
+
     fun fromAppShowDomainView(domainName: String) {
         println("In fromAppShowDomainView, domainName = $domainName")
         routing.navigate(View.DOMAIN.url + "/$domainName")
     }
 
+
     fun domdbLoadingComplete() {
         ContractListRecord.initialize()
         rivStore.dispatch(RivAction.DomdbLoadingComplete(true))
+    }
+
+    fun refresh() {
+        rivStore.dispatch(RivAction.Refresh)
     }
 
     fun selectDomainType(type: DomainTypeEnum) {

@@ -39,7 +39,6 @@ fun Container.domainView(state: RivState) {
 
         background = Background(Color.name(Col.LIGHTGRAY))
         overflow = Overflow.INITIAL
-        println("In DomainPage")
 
         val selectedDomainName = state.selectedDomainName
 
@@ -155,19 +154,32 @@ fun Container.domainView(state: RivState) {
 
             h3 { +"Tjänstekontrakt" }
             table(
-                listOf("Namn", "Beskrivning"),
+                listOf("Namn", "Beskrivning", "Anslutningar"),
                 setOf(TableType.BORDERED, TableType.SMALL, TableType.STRIPED, TableType.HOVER),
                 // responsiveType = ResponsiveType.RESPONSIVE
             ) {
                 selectedDomainVersion.interactionDescriptions
                     .sortedBy { it.wsdlContract().first }
                     .map {
+                        val name = it.wsdlContract().first
+                        val major = it.wsdlContract().second
+                        val minor = it.wsdlContract().third
                         row {
                             cell {
-                                +"${it.wsdlContract().first} ${it.wsdlContract().second}.${it.wsdlContract().third}"
+                                +"$name $major.$minor"
                             }
                             cell {
                                 +it.description
+                            }
+                            cell {
+                                val url = mkHippoContractUrl(name, major)
+                                val linkText =
+                                    if (url.isNotBlank()) "<a href=\"$url\" target=\"_blank\"><img alt=\"Utforska i hippo\" src=\"tpnet.png\" width=\"20\" height=\"20\"></a>"
+                                    else ""
+                                div(
+                                    rich = true,
+                                    content = linkText
+                                )
                             }
                         }
                     }

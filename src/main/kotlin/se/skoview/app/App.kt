@@ -26,14 +26,17 @@ import pl.treksoft.kvision.panel.ContainerType
 import pl.treksoft.kvision.panel.root
 import pl.treksoft.kvision.require
 import pl.treksoft.kvision.startApplication
+import se.skoview.rivta.contractListView
 import se.skoview.rivta.domainView
 import se.skoview.rivta.headerNav
-import se.skoview.rivta.contractListView
 import tabs.rivta.domainListView
 
-// todo: Läs ner TPDB domainId dynamiskt: https://integrationer.tjansteplattform.se/tpdb/tpdbapi.php/api/v1/domains
-// todo: hippolänkar till kontrakt
+// todo: Applicare Inera CSS: https://flamboyant-meninsky-54afd1.netlify.app/?path=/story/about--home
+// todo: Lägg upp i hemlig folder på rivta.se och verifiera att det fungerar med https
 // todo: Lös detta med CORS. Ev ta in REST-lösningen från Roberts showcase. Annat alternativ är att rivta.se dygnsvis hämtar filen och lagrar lokalt... Det är nog bäst.
+// done: hippolänkar till kontrakt
+// done: Gör det möjligt att slå på/av kryssrutorna
+
 // done: Back-knapp
 // done: Paginering
 // done: Red ut kotlins serialization och instansiering och defalutvärden
@@ -57,27 +60,19 @@ class App : Application() {
              * The application main dispatcher that sets the view in the application will end up here where * the correct page can be rendered.
              */
             main(RivManager.rivStore) { state ->
-                println("In main()")
-                if (!state.appLoading) {
+                if (state.domdbLoadingComplete) {
                     when (state.view) {
                         View.HOME -> {
-                            println("HOME / URL specified")
                             // dummyView(state, "HOME")
                         }
                         View.DOMAIN_LIST -> {
-                            println("Donain list view")
-                            // dummyView(state, "DOMAIN_LIST")
                             domainListView(state)
                         }
                         View.CONTRACT_LIST -> {
-                            println("Contract list view")
                             contractListView(state)
-                            // dummyView(state, "CONTRACT_LIST")
                         }
                         View.DOMAIN -> {
-                            println("Domain view")
                             domainView(state)
-                            // dummyView(state, "DOMAIN")
                         }
                     }
                 }

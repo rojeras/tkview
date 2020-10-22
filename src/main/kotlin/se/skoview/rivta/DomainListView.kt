@@ -30,7 +30,7 @@ import se.skoview.app.getHeightToRemainingViewPort
 import se.skoview.model.*
 import se.skoview.rivta.Texts
 import se.skoview.rivta.getClickableDomainComponent
-import se.skoview.rivta.mkHippoUrl
+import se.skoview.model.mkHippoDomainUrl
 
 var domainTextDiv = Div()
 
@@ -131,7 +131,7 @@ fun Container.domainListView(state: RivState) {
                             width = "8%",
                             formatterComponentFunction =
                                 { _, _, item ->
-                                    val url = mkHippoUrl(item.name)
+                                    val url = mkHippoDomainUrl(item.name)
                                     val linkText =
                                         if (url.isNotBlank()) "<a href=\"$url\" target=\"_blank\"><img alt=\"Utforska i hippo\" src=\"tpnet.png\" width=\"20\" height=\"20\"></a>"
                                         else ""

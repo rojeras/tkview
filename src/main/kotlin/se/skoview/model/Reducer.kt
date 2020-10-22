@@ -28,20 +28,17 @@ fun rivReducer(state: RivState, action: RivAction): RivState {
         is RivAction.HomePage -> state.copy(
             view = View.HOME
         )
-
         is RivAction.SetView -> {
             val newPage = action.view
             state.copy(
                 view = newPage
             )
         }
-
         is RivAction.SelectAndShowDomain -> state.copy(
             selectedDomainName = action.domainName,
             selectedDomainVersion = updateDomainVersion(state, DomainMap[action.domainName]),
             view = View.DOMAIN
         )
-
         is RivAction.SelectDomainVersion -> state.copy(
             selectedDomainVersion = action.domainVersion
         )
@@ -76,8 +73,12 @@ fun rivReducer(state: RivState, action: RivAction): RivState {
             )
         }
         is RivAction.DomdbLoadingComplete -> state.copy(
-            appLoading = !action.isComplete
+            domdbLoadingComplete = action.isComplete
         )
+        is RivAction.SetAdminMode -> state.copy(
+            adminMode = action.onOff == "on"
+        )
+        is RivAction.Refresh -> state
     }
     println("<<<===== ${action::class}")
     console.log(newState)

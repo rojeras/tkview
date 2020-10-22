@@ -28,6 +28,7 @@ data class RivState(
     val showRcVersion: Boolean = false,
     val showUnderscoreVersion: Boolean = false,
     val showTrunkVersion: Boolean = false,
-    val appLoading: Boolean = true
+    val domdbLoadingComplete: Boolean = false,
+    val adminMode: Boolean = false
 )
 

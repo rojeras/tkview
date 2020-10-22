@@ -70,14 +70,17 @@ fun Container.headerNav(state: RivState) {
 
                     vPanel {
                         marginLeft = 10.px
-                        if (state.view != View.DOMAIN) {
-                            add(
-                                FilterCheckBox(
-                                    "Inkludera dolda tjänstedomäner",
-                                    RivAction.ShowHiddenDomain::class.simpleName!!,
-                                    state.showHiddenDomain
+                        if (
+                            state.view != View.DOMAIN
+                        ) {
+                            if (state.adminMode)
+                                add(
+                                    FilterCheckBox(
+                                        "Inkludera dolda tjänstedomäner",
+                                        RivAction.ShowHiddenDomain::class.simpleName!!,
+                                        state.showHiddenDomain
+                                    )
                                 )
-                            )
                             hPanel {
                                 span("Typ av tjänstedomän:")
                                 add(
@@ -88,7 +91,10 @@ fun Container.headerNav(state: RivState) {
                                 )
                             }
                         }
-                        if (state.view == View.DOMAIN)
+                        if (
+                            state.adminMode &&
+                            state.view == View.DOMAIN
+                        ) {
                             add(
                                 FilterCheckBox(
                                     "Inkludera dolda versioner",
@@ -96,7 +102,7 @@ fun Container.headerNav(state: RivState) {
                                     state.showHiddenVersion
                                 )
                             )
-                        if (state.view == View.DOMAIN)
+                            // if (state.view == View.DOMAIN)
                             add(
                                 FilterCheckBox(
                                     "Inkludera rc-versioner",
@@ -105,7 +111,7 @@ fun Container.headerNav(state: RivState) {
                                 )
                             )
 
-                        if (state.view == View.DOMAIN)
+                            // if (state.view == View.DOMAIN)
                             add(
                                 FilterCheckBox(
                                     "Inkludera trunk",
@@ -113,6 +119,7 @@ fun Container.headerNav(state: RivState) {
                                     state.showTrunkVersion
                                 )
                             )
+                        }
                     }
 
                     vPanel {

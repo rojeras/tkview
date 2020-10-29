@@ -28,9 +28,9 @@ import pl.treksoft.kvision.utils.px
 import pl.treksoft.kvision.utils.vw
 import se.skoview.app.getHeightToRemainingViewPort
 import se.skoview.model.*
+import se.skoview.model.mkHippoDomainUrl
 import se.skoview.rivta.Texts
 import se.skoview.rivta.getClickableDomainComponent
-import se.skoview.model.mkHippoDomainUrl
 
 var domainTextDiv = Div()
 
@@ -43,20 +43,20 @@ fun Container.domainListView(state: RivState) {
         val valueList =
             DomainArr
                 .filter { state.showHiddenDomain || !it.hidden }
-                .filter { it.getDomainType() == state.domainType }
+                // .filter { it.getDomainType() == state.domainType }
                 .sortedBy { it.name }
 
         domainTextDiv =
             div {
-                background = Background(Color.name(Col.LIGHTGRAY))
+                // background = Background(Color.name(Col.LIGHTGRAY))
                 // height = 100.perc
                 // overflow = Overflow.HIDDEN
 
-                val heading: String = "${Texts.domainTypeText[state.domainType]}a tjänstedomäner (${valueList.size})"
+                // val heading: String = "${Texts.domainTypeText[state.domainType]}a tjänstedomäner (${valueList.size})"
+                val heading = "Tjänstedomäner"
 
                 div {
                     h1 {
-                        align = pl.treksoft.kvision.html.Align.CENTER
                         +heading
                     }
                     p {
@@ -76,7 +76,7 @@ fun Container.domainListView(state: RivState) {
 
         simplePanel {
             // background = Background(Color.name(Col.LIGHTCORAL))
-            setStyle("height", getHeightToRemainingViewPort(domainTextDiv, 240))
+            setStyle("height", getHeightToRemainingViewPort(domainTextDiv, 130))
 
             tabulator(
                 valueList,
@@ -88,29 +88,9 @@ fun Container.domainListView(state: RivState) {
                     paginationButtonCount = 0,
                     // height = "80.vh",
                     columns = listOf(
-                        ColumnDefinition(
-                            "Svenskt kortnamn",
-                            "swedishShort",
-                            headerFilter = Editor.INPUT,
-                            // headerFilterPlaceholder = "Sök ${heading.toLowerCase()}",
-                            headerFilterPlaceholder = "Sök...",
-                            // widthGrow = 2,
-                            width = "20%",
-                        ),
 
                         ColumnDefinition(
-                            "Svenskt domännamn",
-                            "swedishLong",
-                            headerFilter = Editor.INPUT,
-                            // headerFilterPlaceholder = "Sök ${heading.toLowerCase()}",
-                            headerFilterPlaceholder = "Sök...",
-                            // widthGrow = 3,
-                            width = "40%",
-                            // formatter = Formatter.TEXTAREA,
-                        ),
-
-                        ColumnDefinition(
-                            "Engelskt namn",
+                            "Tjänstedomän (${valueList.size})",
                             "name",
                             headerFilter = Editor.INPUT,
                             // headerFilterPlaceholder = "Sök ${heading.toLowerCase()}",
@@ -121,25 +101,60 @@ fun Container.domainListView(state: RivState) {
                             formatterComponentFunction = { _, _, item ->
                                 getClickableDomainComponent(item.name)
                             }
-
                         ),
+
+                        ColumnDefinition(
+                            "Svenskt kortnamn",
+                            "swedishShort",
+                            headerFilter = Editor.INPUT,
+                            // headerFilterPlaceholder = "Sök ${heading.toLowerCase()}",
+                            headerFilterPlaceholder = "Sök...",
+                            // widthGrow = 2,
+                            width = "18%",
+                        ),
+
+                        ColumnDefinition(
+                            "Svenskt domännamn",
+                            "swedishLong",
+                            headerFilter = Editor.INPUT,
+                            // headerFilterPlaceholder = "Sök ${heading.toLowerCase()}",
+                            headerFilterPlaceholder = "Sök...",
+                            // widthGrow = 3,
+                            width = "30%",
+                            // formatter = Formatter.TEXTAREA,
+                        ),
+
+                        ColumnDefinition(
+                            "Domäntyp",
+                            "name",
+                            headerFilter = Editor.INPUT,
+                            // headerFilterPlaceholder = "Sök ${heading.toLowerCase()}",
+                            headerFilterPlaceholder = "Sök...",
+                            // widthGrow = 1,
+                            width = "10%",
+                            formatter = Formatter.TEXTAREA,
+                            formatterComponentFunction = { _, _, item ->
+                                println("Domäntyp = ${item.getDomainType().displayName}")
+                                Span(item.getDomainType().displayName)
+                            }
+                        ),
+
                         ColumnDefinition(
                             "Anslutningar",
                             "name",
                             hozAlign = Align.CENTER,
                             headerSort = false,
-                            width = "8%",
-                            formatterComponentFunction =
-                                { _, _, item ->
-                                    val url = mkHippoDomainUrl(item.name)
-                                    val linkText =
-                                        if (url.isNotBlank()) "<a href=\"$url\" target=\"_blank\"><img alt=\"Utforska i hippo\" src=\"tpnet.png\" width=\"20\" height=\"20\"></a>"
-                                        else ""
-                                    Div(
-                                        rich = true,
-                                        content = linkText
-                                    )
-                                }
+                            width = "10%",
+                            formatterComponentFunction = { _, _, item ->
+                                val url = mkHippoDomainUrl(item.name)
+                                val linkText =
+                                    if (url.isNotBlank()) "<a href=\"$url\" target=\"_blank\"><img alt=\"Utforska i hippo\" src=\"/tkview/tpnet.png\" width=\"20\" height=\"20\"></a>"
+                                    else ""
+                                Div(
+                                    rich = true,
+                                    content = linkText
+                                )
+                            }
                         )
                     )
                 )

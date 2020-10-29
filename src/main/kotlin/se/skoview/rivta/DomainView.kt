@@ -34,10 +34,14 @@ import se.skoview.model.*
 fun Container.domainView(state: RivState) {
 
     div {
-        width = 100.vw
+
+        marginLeft = 1.vw
+        marginRight = 1.vw
+        width = 98.vw
+
         background = Background(Color.name(Col.WHITE))
 
-        background = Background(Color.name(Col.LIGHTGRAY))
+        // background = Background(Color.name(Col.LIGHTGRAY))
         overflow = Overflow.INITIAL
 
         val selectedDomainName = state.selectedDomainName
@@ -64,9 +68,10 @@ fun Container.domainView(state: RivState) {
 
         simplePanel {
             marginLeft = 15.px
+            marginRight = 15.px
             h1 {
                 align = Align.CENTER
-                +selectedDomain.name
+                +"${selectedDomain.swedishShort} - ${selectedDomain.name}"
             }
             h3 { +"Beskrivning" }
             //  span { +domainDescription }
@@ -126,6 +131,8 @@ fun Container.domainView(state: RivState) {
 
         val noOfVersions = mkFilteredDomainVersionsList(state, selectedDomain).size
         simplePanel {
+            marginLeft = 15.px
+            marginRight = 15.px
             background = Background(Color.name(Col.WHITE))
             p { " " }
             when (noOfVersions) {
@@ -153,6 +160,8 @@ fun Container.domainView(state: RivState) {
             }
 
             h3 { +"Tjänstekontrakt" }
+            marginLeft = 15.px
+            marginRight = 15.px
             table(
                 listOf("Namn", "Beskrivning", "Anslutningar"),
                 setOf(TableType.BORDERED, TableType.SMALL, TableType.STRIPED, TableType.HOVER),
@@ -174,7 +183,7 @@ fun Container.domainView(state: RivState) {
                             cell {
                                 val url = mkHippoContractUrl(name, major)
                                 val linkText =
-                                    if (url.isNotBlank()) "<a href=\"$url\" target=\"_blank\"><img alt=\"Utforska i hippo\" src=\"tpnet.png\" width=\"20\" height=\"20\"></a>"
+                                    if (url.isNotBlank()) "<a href=\"$url\" target=\"_blank\"><img alt=\"Utforska i hippo\" src=\"/tkview/tpnet.png\" width=\"20\" height=\"20\"></a>"
                                     else ""
                                 div(
                                     rich = true,

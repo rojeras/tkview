@@ -39,7 +39,8 @@ fun domdbLoad() {
     // val url = "http://api.ntjp.se/dominfo/v1/servicedomain.json"
     // val url = "http://ind-dtjp-apache-api-vip.ind1.sth.basefarm.net/dominfo/v1/servicedomains.json"
     // val url = "http://localhost:4000/domdb-prod-2020-10-12.json"
-    val url = "domdb-2020-10-20.json"
+    val url = "http://qa.api.ntjp.se/dominfo/v1/servicedomains.json"
+    // val url = "domdb-2020-10-20.json"
 
     // Older version which I try again to get it to create the actual parsed objects
     getAsync(url) { response ->
@@ -213,11 +214,11 @@ object DateSerializer : KSerializer<Date> {
 }
 */
 
-enum class DomainTypeEnum {
-    NATIONAL,
-    APPLICATION_SPECIFIC,
-    EXTERNAL,
-    UNKNOWN
+enum class DomainTypeEnum(val displayName: String) {
+    NATIONAL("Nationell"),
+    APPLICATION_SPECIFIC("Applikationsspecifik"),
+    EXTERNAL("Extern"),
+    UNKNOWN("Okänd")
 }
 
 enum class RivDocumentTypeEnum {

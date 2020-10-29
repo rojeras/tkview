@@ -34,9 +34,10 @@ import tabs.rivta.domainListView
 // todo: Applicare Inera CSS: https://flamboyant-meninsky-54afd1.netlify.app/?path=/story/about--home
 // todo: Lägg upp i hemlig folder på rivta.se och verifiera att det fungerar med https
 // todo: Lös detta med CORS. Ev ta in REST-lösningen från Roberts showcase. Annat alternativ är att rivta.se dygnsvis hämtar filen och lagrar lokalt... Det är nog bäst.
+
+// done: Skapa lite luft i vänstermarginalen
 // done: hippolänkar till kontrakt
 // done: Gör det möjligt att slå på/av kryssrutorna
-
 // done: Back-knapp
 // done: Paginering
 // done: Red ut kotlins serialization och instansiering och defalutvärden
@@ -50,7 +51,7 @@ class App : Application() {
         Pace.init(require("pace-progressbar/themes/green/pace-theme-bounce.css"))
         Pace.setOptions(PaceOptions(manual = true))
         RivManager.initialize()
-        root("app", containerType = ContainerType.NONE, addRow = false) {
+        root("tkview", containerType = ContainerType.NONE, addRow = false) {
             header(RivManager.rivStore) { state ->
                 // The old RivTaMainPage
                 headerNav(state)

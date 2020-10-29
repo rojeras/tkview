@@ -17,11 +17,14 @@
 package se.skoview.rivta
 
 import pl.treksoft.kvision.core.*
+import pl.treksoft.kvision.core.FlexWrap
 import pl.treksoft.kvision.form.check.checkBoxInput
 import pl.treksoft.kvision.form.select.simpleSelectInput
 import pl.treksoft.kvision.html.*
 import pl.treksoft.kvision.panel.*
+import pl.treksoft.kvision.utils.perc
 import pl.treksoft.kvision.utils.px
+import pl.treksoft.kvision.utils.vh
 import se.skoview.app.RivManager
 import se.skoview.app.View
 import se.skoview.app.formControlXs
@@ -30,28 +33,18 @@ import se.skoview.model.*
 var rivTaPageTop: Div = Div()
 
 fun Container.headerNav(state: RivState) {
+
     div {
         // background = Background(Color.hex(0x00706E))
         fontFamily = "Times New Roman"
         id = "top-init"
-        // height = 95.vh
-        this.marginTop = 10.px
-        // background = Background(Color.name(Col.YELLOW))
         rivTaPageTop = div {
             id = "top-bind"
 
             simplePanel {
-                background = Background(Color.hex(0x00706E))
+                // background = Background(Color.hex(0x00706E))
                 overflow = Overflow.HIDDEN
-                div {
-                    h2("Information om tjänstedomäner och tjänstekontrakt")
-                }.apply {
-                    id = "RivtaPage-HeadingArea:Div"
-                    color = Color.name(Col.WHITE)
-                    align = Align.CENTER
-                    color = Color.name(Col.WHITE)
-                    marginTop = 5.px
-                }
+
                 hPanel {
                     fontSize = 20.px
                     background = Background(Color.hex(0x091F5F3))
@@ -60,7 +53,7 @@ fun Container.headerNav(state: RivState) {
                     margin = 0.px
                     id = "RivtaPage-ControlPanel:FlexPanel-Bind"
 
-                    vPanel {
+                    if (state.adminMode) vPanel {
                         marginLeft = 5.px
                         marginRight = 10.px
                         marginTop = 5.px
@@ -81,6 +74,7 @@ fun Container.headerNav(state: RivState) {
                                         state.showHiddenDomain
                                     )
                                 )
+                            /*
                             hPanel {
                                 span("Typ av tjänstedomän:")
                                 add(
@@ -90,6 +84,7 @@ fun Container.headerNav(state: RivState) {
                                         }
                                 )
                             }
+                            */
                         }
                         if (
                             state.adminMode &&
@@ -129,6 +124,20 @@ fun Container.headerNav(state: RivState) {
                 }
             }
         }
+    }
+}
+
+private fun Container.headerDiv(label: String, url: String, size: Int): Tag {
+    return div().apply {
+        // paddingTop = ((size / 2) - 10).px
+        align = Align.CENTER
+        background = Background(Color.name(Col.LIGHTGREEN))
+        width = size.px
+        // height = size.px
+        link(
+            label = label,
+            url = url
+        )
     }
 }
 

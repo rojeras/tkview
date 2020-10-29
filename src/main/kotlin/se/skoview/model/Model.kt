@@ -19,7 +19,7 @@ package se.skoview.model
 import se.skoview.app.View
 
 data class RivState(
-    val view: View = View.HOME,
+    val view: View = View.DOMAIN_LIST,
     val domainType: DomainTypeEnum = DomainTypeEnum.NATIONAL,
     val selectedDomainName: String? = null,
     val selectedDomainVersion: Version? = null,

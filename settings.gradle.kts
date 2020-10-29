@@ -16,4 +16,4 @@ pluginManagement {
         }
     }
 }
-rootProject.name = "rivta"
+rootProject.name = "tkview"

@@ -39,7 +39,8 @@ fun domdbLoad() {
     // val url = "http://api.ntjp.se/dominfo/v1/servicedomain.json"
     // val url = "http://ind-dtjp-apache-api-vip.ind1.sth.basefarm.net/dominfo/v1/servicedomains.json"
     // val url = "http://localhost:4000/domdb-prod-2020-10-12.json"
-    val url = "http://qa.api.ntjp.se/dominfo/v1/servicedomains.json"
+    // val url = "http://qa.api.ntjp.se/dominfo/v1/servicedomains.json"
+    val url = "https://rivta.se/tkview/apicache.php/http://qa.api.ntjp.se/dominfo/v1/servicedomains.json"
     // val url = "domdb-2020-10-20.json"
 
     // Older version which I try again to get it to create the actual parsed objects
@@ -68,8 +69,10 @@ data class ServiceDomain(
     val infoPageUrl: String? = null,
     val interactions: Array<Interaction>? = null, //  = arrayOf<Interaction>(),
     val serviceContracts: List<Contract>? = null, //  = listOf<Contract>(),
-    val versions: Array<Version>? = null
+    val versions: Array<Version>? = null,
+    var domainTypeString: String? = null
 ) {
+
     init {
         if (
             interactions != null &&
@@ -77,6 +80,9 @@ data class ServiceDomain(
             versions != null
 
         ) {
+            domainTypeString = if (domainType != null) domainType.type.displayName
+            else "Ej specificerad"
+
             DomainMap[this.name] = this
             DomainArr.add(this)
         } else println("$name is incomplete and removed")

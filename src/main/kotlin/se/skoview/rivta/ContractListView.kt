@@ -94,14 +94,14 @@ fun Container.contractListView(state: RivState) {
                             ),
                             ColumnDefinition(
                                 "Tjänstedomän",
-                                "domain",
+                                "domainName",
                                 headerFilter = Editor.INPUT,
                                 headerFilterPlaceholder = "Sök...",
                                 width = "25%",
                                 // widthGrow = 3,
                                 formatter = Formatter.TEXTAREA,
                                 formatterComponentFunction = { _, _, item ->
-                                    getClickableDomainComponent(item.domain.name)
+                                    getClickableDomainComponent(item.domainName)
                                 }
                             )
                         ),
@@ -120,7 +120,8 @@ fun Container.contractListView(state: RivState) {
 data class ContractListRecord(
     val contractName: String,
     val description: String,
-    val domain: ServiceDomain
+    val domain: ServiceDomain,
+    val domainName: String
 ) {
     companion object {
         val objectList = mutableListOf<ContractListRecord>()
@@ -137,7 +138,8 @@ data class ContractListRecord(
                             ContractListRecord(
                                 interaction.name.removeSuffix("Interaction"),
                                 description,
-                                domain
+                                domain,
+                                domain.name
                             )
                         )
                     }

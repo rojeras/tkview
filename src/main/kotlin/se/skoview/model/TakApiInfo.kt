@@ -51,7 +51,7 @@ data class TakServiceContract(
 }
 
 fun takApiLoad() {
-    val url = "http://api.ntjp.se/coop/api/v1/installedContracts"
+    val url = "https://rivta.se/tkview/apicache.php/http://api.ntjp.se/coop/api/v1/installedContracts"
 
     getAsync(url) { response ->
         println("Size of TAK-api InstalledContracts are: ${response.length}")

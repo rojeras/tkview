@@ -54,7 +54,7 @@ fun tpdbLoad() {
     // fun load(callback: () -> Unit) {
     println("In tpdbload()")
 
-    val domainsUrl = "https://integrationer.tjansteplattform.se/tpdb/tpdbapi.php/api/v1/domains"
+    val domainsUrl = "https://rivta.se/tkview/apicache.php/https://integrationer.tjansteplattform.se/tpdb/tpdbapi.php/api/v1/domains"
 
     // Older version which I try again to get it to create the actual parsed objects
     getAsync(domainsUrl) { response ->
@@ -67,7 +67,7 @@ fun tpdbLoad() {
         RivManager.refresh()
     }
 
-    val contractsUrl = "https://integrationer.tjansteplattform.se/tpdb/tpdbapi.php/api/v1/contracts"
+    val contractsUrl = "https://rivta.se/tkview/apicache.php/https://integrationer.tjansteplattform.se/tpdb/tpdbapi.php/api/v1/contracts"
 
     getAsync(contractsUrl) { response ->
         println("Size of contracts are: ${response.length}")

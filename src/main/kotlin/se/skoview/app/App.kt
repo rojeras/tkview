@@ -31,10 +31,9 @@ import se.skoview.rivta.domainView
 import se.skoview.rivta.headerNav
 import tabs.rivta.domainListView
 
-// todo: Applicare Inera CSS: https://flamboyant-meninsky-54afd1.netlify.app/?path=/story/about--home
-// todo: Lägg upp i hemlig folder på rivta.se och verifiera att det fungerar med https
-// todo: Lös detta med CORS. Ev ta in REST-lösningen från Roberts showcase. Annat alternativ är att rivta.se dygnsvis hämtar filen och lagrar lokalt... Det är nog bäst.
-
+// done: Applicare Inera CSS: https://flamboyant-meninsky-54afd1.netlify.app/?path=/story/about--home
+// done: Lägg upp i hemlig folder på rivta.se och verifiera att det fungerar med https
+// done: Lös detta med CORS. Ev ta in REST-lösningen från Roberts showcase. Annat alternativ är att rivta.se dygnsvis hämtar filen och lagrar lokalt... Det är nog bäst.
 // done: Skapa lite luft i vänstermarginalen
 // done: hippolänkar till kontrakt
 // done: Gör det möjligt att slå på/av kryssrutorna
@@ -44,7 +43,7 @@ import tabs.rivta.domainListView
 
 class App : Application() {
     init {
-        require("css/helloworld.css")
+        require("css/tkview.css")
     }
 
     override fun start() {
@@ -78,7 +77,6 @@ class App : Application() {
                     }
                 }
             }
-            println("footer()")
             // footer()
         }
     }

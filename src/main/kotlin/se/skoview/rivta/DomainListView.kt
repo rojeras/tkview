@@ -17,17 +17,18 @@
 
 package tabs.rivta
 
-import pl.treksoft.kvision.core.*
-import pl.treksoft.kvision.html.*
+import pl.treksoft.kvision.core.* // ktlint-disable no-wildcard-imports
+import pl.treksoft.kvision.html.* // ktlint-disable no-wildcard-imports
 import pl.treksoft.kvision.panel.simplePanel
 import pl.treksoft.kvision.table.TableType
-import pl.treksoft.kvision.tabulator.*
+import pl.treksoft.kvision.tabulator.* // ktlint-disable no-wildcard-imports
 import pl.treksoft.kvision.tabulator.Align
 import pl.treksoft.kvision.utils.perc
 import pl.treksoft.kvision.utils.px
 import pl.treksoft.kvision.utils.vw
 import se.skoview.app.getHeightToRemainingViewPort
-import se.skoview.model.*
+import se.skoview.model.DomainArr
+import se.skoview.model.RivState
 import se.skoview.model.mkHippoDomainUrl
 import se.skoview.rivta.Texts
 import se.skoview.rivta.getClickableDomainComponent
@@ -126,17 +127,19 @@ fun Container.domainListView(state: RivState) {
 
                         ColumnDefinition(
                             "Domäntyp",
-                            "name",
+                            "domainTypeString",
                             headerFilter = Editor.INPUT,
                             // headerFilterPlaceholder = "Sök ${heading.toLowerCase()}",
-                            headerFilterPlaceholder = "Sök...",
+                            headerFilterPlaceholder = "Sök....",
                             // widthGrow = 1,
                             width = "10%",
                             formatter = Formatter.TEXTAREA,
+                            /*
                             formatterComponentFunction = { _, _, item ->
                                 println("Domäntyp = ${item.getDomainType().displayName}")
                                 Span(item.getDomainType().displayName)
                             }
+                             */
                         ),
 
                         ColumnDefinition(

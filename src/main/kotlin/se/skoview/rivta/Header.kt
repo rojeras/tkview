@@ -16,33 +16,30 @@
  */
 package se.skoview.rivta
 
-import pl.treksoft.kvision.core.*
-import pl.treksoft.kvision.core.FlexWrap
+import pl.treksoft.kvision.core.* // ktlint-disable no-wildcard-imports
 import pl.treksoft.kvision.form.check.checkBoxInput
 import pl.treksoft.kvision.form.select.simpleSelectInput
-import pl.treksoft.kvision.html.*
-import pl.treksoft.kvision.panel.*
-import pl.treksoft.kvision.utils.perc
+import pl.treksoft.kvision.html.* // ktlint-disable no-wildcard-imports
+import pl.treksoft.kvision.panel.* // ktlint-disable no-wildcard-imports
 import pl.treksoft.kvision.utils.px
-import pl.treksoft.kvision.utils.vh
 import se.skoview.app.RivManager
 import se.skoview.app.View
 import se.skoview.app.formControlXs
-import se.skoview.model.*
+import se.skoview.model.DomainTypeEnum
+import se.skoview.model.RivAction
+import se.skoview.model.RivState
 
 var rivTaPageTop: Div = Div()
 
 fun Container.headerNav(state: RivState) {
 
     div {
-        // background = Background(Color.hex(0x00706E))
         fontFamily = "Times New Roman"
         id = "top-init"
         rivTaPageTop = div {
             id = "top-bind"
 
             simplePanel {
-                // background = Background(Color.hex(0x00706E))
                 overflow = Overflow.HIDDEN
 
                 hPanel {
@@ -59,6 +56,7 @@ fun Container.headerNav(state: RivState) {
                         marginTop = 5.px
                         add(SelectPageButton(state, "Lista Tjänstedomäner", View.DOMAIN_LIST))
                         add(SelectPageButton(state, "Lista Tjänstekontrakt", View.CONTRACT_LIST))
+                        add(ResetCacheButton("Reset Cache"))
                     }
 
                     vPanel {
@@ -74,17 +72,6 @@ fun Container.headerNav(state: RivState) {
                                         state.showHiddenDomain
                                     )
                                 )
-                            /*
-                            hPanel {
-                                span("Typ av tjänstedomän:")
-                                add(
-                                    SelectDomainType(state)
-                                        .apply {
-                                            marginLeft = 50.px
-                                        }
-                                )
-                            }
-                            */
                         }
                         if (
                             state.adminMode &&
@@ -116,28 +103,9 @@ fun Container.headerNav(state: RivState) {
                             )
                         }
                     }
-
-                    vPanel {
-                        if (state.view == View.DOMAIN_LIST || state.view == View.CONTRACT_LIST) {
-                        }
-                    }
                 }
             }
         }
-    }
-}
-
-private fun Container.headerDiv(label: String, url: String, size: Int): Tag {
-    return div().apply {
-        // paddingTop = ((size / 2) - 10).px
-        align = Align.CENTER
-        background = Background(Color.name(Col.LIGHTGREEN))
-        width = size.px
-        // height = size.px
-        link(
-            label = label,
-            url = url
-        )
     }
 }
 
@@ -185,6 +153,22 @@ private class SelectPageButton(state: RivState, label: String, view: View) : Sim
                 addBsColor(BsColor.BLACK50)
                 marginBottom = 5.px
                 disabled = state.view == view
+            }
+    }
+}
+
+private class ResetCacheButton(label: String) : SimplePanel() {
+    init {
+        marginBottom = 5.px
+        button(label)
+            .onClick {
+                println("Button '$label' clicked")
+                RivManager.resetCache()
+            }.apply {
+                size = ButtonSize.SMALL
+                addBsBgColor(BsBgColor.LIGHT)
+                addBsColor(BsColor.BLACK50)
+                marginBottom = 5.px
             }
     }
 }

@@ -63,26 +63,20 @@ data class ServiceDomain(
     val swedishShort: String = "",
     val owner: String? = null,
     val hidden: Boolean,
-    val domainType: DomainType? = null,
+    val domainType: DomainType,
     val issueTrackerUrl: String? = null,
     val sourceCodeUrl: String? = null,
     val infoPageUrl: String? = null,
     val interactions: Array<Interaction>? = null, //  = arrayOf<Interaction>(),
     val serviceContracts: List<Contract>? = null, //  = listOf<Contract>(),
     val versions: Array<Version>? = null,
-    var domainTypeString: String? = null
 ) {
-
     init {
         if (
             interactions != null &&
             serviceContracts != null &&
             versions != null
-
         ) {
-            domainTypeString = if (domainType != null) domainType.type.displayName
-            else "Ej specificerad"
-
             DomainMap[this.name] = this
             DomainArr.add(this)
         } else println("$name is incomplete and removed")
@@ -146,10 +140,6 @@ data class Contract(
 @Serializable
 data class DescriptionDocument(
     val fileName: String,
-    /*
-    @Serializable(with = DateSerializer::class)
-    val lastChangedDate: Date? = null,
-    */
     val lastChangedDate: String? = null,
     val documentType: String
 ) {
@@ -165,16 +155,11 @@ data class DescriptionDocument(
 @Serializable
 data class InteractionDescription(
     val description: String = "",
-    /*
-    @Serializable(with = DateSerializer::class)
-    val lastChangedDate: Date? = null,
-    */
     val lastChangedDate: String? = null,
     val folderName: String = "",
     val wsdlFileName: String
 ) {
     // Parse the wsdl file name to create contractName, major and minor
-
     override fun equals(other: Any?): Boolean {
         if (other == null || other !is InteractionDescription) return false
         return description == other.description &&
@@ -204,22 +189,6 @@ data class ReviewOutcome(
     val symbol: String
 )
 
-/*
-@Serializer(forClass = DateSerializer::class)
-object DateSerializer : KSerializer<Date> {
-    override val descriptor: SerialDescriptor =
-        PrimitiveDescriptor("DateSerializer", StringDescriptor.kind as PrimitiveKind)
-
-    override fun serialize(encoder: Encoder, obj: Date) {
-        encoder.encodeString(obj.getDate().toString())
-    }
-
-    override fun deserialize(decoder: Decoder): Date {
-        return Date(decoder.decodeString())
-    }
-}
-*/
-
 enum class DomainTypeEnum(val displayName: String) {
     NATIONAL("Nationell"),
     APPLICATION_SPECIFIC("Applikationsspecifik"),
@@ -238,6 +207,7 @@ fun ServiceDomain.getDescription(): String {
     return this.description
 }
 
+/*
 fun ServiceDomain.getDomainType(): DomainTypeEnum {
     if (this.domainType != null) return this.domainType.type
     else {
@@ -253,6 +223,7 @@ fun ServiceDomain.getDomainType(): DomainTypeEnum {
         }
     }
 }
+*/
 
 /**
  * Return the three parts of a TK identifier in a Triple

@@ -16,11 +16,12 @@
  */
 package se.skoview.app
 
+import kotlinx.browser.window
 import pl.treksoft.kvision.redux.createReduxStore
 import pl.treksoft.navigo.Navigo
-import se.skoview.model.*
-import se.skoview.rivta.ContractListRecord
+import se.skoview.model.* // ktlint-disable no-wildcard-imports
 import se.skoview.model.tpdbLoad
+import se.skoview.rivta.ContractListRecord
 
 object RivManager {
 
@@ -65,7 +66,6 @@ object RivManager {
         routing.navigate(View.DOMAIN.url + "/$domainName")
     }
 
-
     fun domdbLoadingComplete() {
         ContractListRecord.initialize()
         rivStore.dispatch(RivAction.DomdbLoadingComplete(true))
@@ -103,5 +103,14 @@ object RivManager {
 
     fun selectDomainVersion(domainVersion: Version) {
         rivStore.dispatch(RivAction.SelectDomainVersion(domainVersion))
+    }
+
+    fun resetCache() {
+        println("Manager reset cache")
+
+        val url = "https://rivta.se/tkview/apicache.php/reset"
+        getSync(url)
+
+        window.location.reload()
     }
 }

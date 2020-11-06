@@ -21,8 +21,7 @@ import pl.treksoft.kvision.core.Color
 import pl.treksoft.kvision.core.WhiteSpace
 import pl.treksoft.kvision.core.WordBreak
 import pl.treksoft.kvision.core.onClick
-import pl.treksoft.kvision.html.Div
-import pl.treksoft.kvision.html.span
+import pl.treksoft.kvision.html.*
 import se.skoview.app.RivManager
 import se.skoview.model.DomainTypeEnum
 
@@ -50,8 +49,8 @@ object Texts {
     )
 
     val domainTypeAltText = mapOf(
-        DomainTypeEnum.NATIONAL to "Tjänstedomänen utvecklas och/eller förvaltas av Inera. Inera A&R ansvarar för kvalité inom teknik, informatik, arkitektur och testsviter/tjänsteproducenter, samt att domänen passar in i och har en tydlig roll i den sammantagna portföljen av nationella tjänstekontrakt. A&Rs kvalitetssäkringsprocess följs under utvecklings- och förvaltningsfasen.",
-        DomainTypeEnum.EXTERNAL to "Annan part än Inera A&R utvecklar/förvaltar tjänstedomänen. Annan part ansvarar för kvalité inom teknik, informatik och arkitektur. Tjänstekontrakten i tjänstedomänen följer giltig RIV TA-profil (tjänstekontraktens tekniska utformning och paketering) och kan därmed driftsättas och anslutningshanteras i NTJP om ICC.s infrastrukturkrav är uppfyllda. Tjänstekontrakten tillämpas inte inom Ineras uppdrag. Inera A&R ansvarar inte för namnsättning utöver vad som anges nedan, men kan konsulteras om extern part önskar.",
+        DomainTypeEnum.NATIONAL to "Tjänstedomänen utvecklas och/eller förvaltas av Inera. Ineras Arkitektursektion ansvarar för kvalité inom teknik, informatik, arkitektur och testsviter/tjänsteproducenter, samt att domänen passar in i och har en tydlig roll i den sammantagna portföljen av nationella tjänstekontrakt. Arkitektursektionens kvalitetssäkringsprocess följs under utvecklings- och förvaltningsfasen.",
+        DomainTypeEnum.EXTERNAL to "Annan part än Inera utvecklar/förvaltar tjänstedomänen. Annan part ansvarar för kvalité inom teknik, informatik och arkitektur. Tjänstekontrakten i tjänstedomänen följer giltig RIV TA-profil (tjänstekontraktens tekniska utformning och paketering) och kan därmed driftsättas och anslutningshanteras i NTJP om Ineras infrastrukturkrav är uppfyllda. Tjänstekontrakten tillämpas inte inom Ineras uppdrag. Ineras Arkitektursektion ansvarar inte för namnsättning utöver vad som anges nedan, men kan konsulteras om extern part önskar.",
         DomainTypeEnum.APPLICATION_SPECIFIC to "Tjänstedomänen definierar ett applikations/lösningsspecifikt API till en applikation/tjänst som ägs av Inera. Applikationsförvaltningen vill återanvända Ineras anslutningsorganisation och infrastruktur (Tjänsteplattformen), men ha kvar full kontroll över alla beslut som rör kontraktsdesign, versioner och releaser. Förvaltningen har ett eget, lokalt ansvar för tjänstekontraktens arkitektur, informatik och teknik inom ramen för det ansvar som projektet/förvaltningen har för applikationen/tjänsten i sig. Tjänstekontrakten får bara användas när den specifika applikationen/tjänsten är en av parterna i informationsutbytet."
     )
 }

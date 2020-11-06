@@ -17,39 +17,35 @@
 
 package se.skoview.rivta
 
-import pl.treksoft.kvision.core.*
-import pl.treksoft.kvision.html.*
+import pl.treksoft.kvision.core.* // ktlint-disable no-wildcard-imports
+import pl.treksoft.kvision.html.* // ktlint-disable no-wildcard-imports
 import pl.treksoft.kvision.panel.simplePanel
-import pl.treksoft.kvision.tabulator.*
+import pl.treksoft.kvision.tabulator.* // ktlint-disable no-wildcard-imports
 import pl.treksoft.kvision.utils.perc
 import pl.treksoft.kvision.utils.vw
 import se.skoview.app.getHeightToRemainingViewPort
 import se.skoview.model.DomainArr
 import se.skoview.model.RivState
 import se.skoview.model.ServiceDomain
-import se.skoview.model.getDomainType
 
 var contractTextDiv = Div()
 
 fun Container.contractListView(state: RivState) {
+    println("In contractListView")
     div {
         background = Background(Color.name(Col.WHITE))
         marginLeft = 1.vw
         width = 98.vw
 
         simplePanel {
-            // background = Background(Color.name(Col.LIGHTCORAL))
-            // setStyle("height", getHeightToRemainingViewPort(domainTextDiv, 40))
-
             println("After bind")
 
             val valueList = ContractListRecord.objectList
-                .filter { it.domain.getDomainType() == state.domainType }
+                .filter { it.domain.domainType.type == state.domainType }
                 .filter { state.showHiddenDomain || !it.domain.hidden }
                 .sortedBy { it.contractName }
             contractTextDiv =
                 div {
-                    // background = Background(Color.name(Col.LIGHTGRAY))
                     h1 {
                         width = 100.perc
                         +"Tjänstekontrakt"
@@ -60,14 +56,10 @@ fun Container.contractListView(state: RivState) {
             simplePanel {
                 setStyle("height", getHeightToRemainingViewPort(contractTextDiv, 100))
                 println("Contract data:")
-                // console.log(state)
-                console.log(valueList)
 
                 tabulator(
-                    // ContractListRecord.objectList.sortedBy { it.contractName },
                     valueList,
                     options = TabulatorOptions(
-                        // pagination = PaginationMode.LOCAL,
                         layout = Layout.FITCOLUMNS,
                         paginationSize = 1000,
                         paginationButtonCount = 0,
@@ -76,20 +68,16 @@ fun Container.contractListView(state: RivState) {
                                 "Tjänstekontrakt (${valueList.size})",
                                 "contractName",
                                 headerFilter = Editor.INPUT,
-                                // headerFilterPlaceholder = "Sök ${heading.toLowerCase()}",
                                 headerFilterPlaceholder = "Sök...",
                                 width = "25%",
-                                // widthGrow = 1,
                                 formatter = Formatter.TEXTAREA
                             ),
                             ColumnDefinition(
                                 "Beskrivning",
                                 "description",
                                 headerFilter = Editor.INPUT,
-                                // headerFilterPlaceholder = "Sök ${heading.toLowerCase()}",
                                 headerFilterPlaceholder = "Sök...",
                                 width = "48%",
-                                // widthGrow = 3,
                                 formatter = Formatter.TEXTAREA
                             ),
                             ColumnDefinition(
@@ -98,7 +86,6 @@ fun Container.contractListView(state: RivState) {
                                 headerFilter = Editor.INPUT,
                                 headerFilterPlaceholder = "Sök...",
                                 width = "25%",
-                                // widthGrow = 3,
                                 formatter = Formatter.TEXTAREA,
                                 formatterComponentFunction = { _, _, item ->
                                     getClickableDomainComponent(item.domainName)
@@ -107,7 +94,6 @@ fun Container.contractListView(state: RivState) {
                         ),
                     )
                 ) {
-                    // background = Background(Color.name(Col.BEIGE))
                     height = 100.perc
                     wordBreak = WordBreak.NORMAL
                     whiteSpace = WhiteSpace.PREWRAP

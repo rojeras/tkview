@@ -72,7 +72,7 @@ fun takInstalledDomain(domainName: String): Boolean {
 
     val tpdbDomainId = domain.id
 
-    for ((key, tpdbServiceContract) in tpdbContractMap) {
+    for ((_, tpdbServiceContract) in tpdbContractMap) {
         if (
             tpdbServiceContract.serviceDomainId == tpdbDomainId &&
             takInstalledContractNamespace.contains(tpdbServiceContract.namespace)

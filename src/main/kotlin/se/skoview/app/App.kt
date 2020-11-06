@@ -74,6 +74,9 @@ class App : Application() {
                         View.DOMAIN -> {
                             domainView(state)
                         }
+                        View.ADMIN -> {
+
+                        }
                     }
                 }
             }

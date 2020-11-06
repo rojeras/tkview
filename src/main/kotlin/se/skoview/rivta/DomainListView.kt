@@ -36,6 +36,7 @@ import se.skoview.rivta.getClickableDomainComponent
 var domainTextDiv = Div()
 
 fun Container.domainListView(state: RivState) {
+    println("In domainListView")
     div {
         background = Background(Color.name(Col.WHITE))
         marginLeft = 1.vw
@@ -49,34 +50,24 @@ fun Container.domainListView(state: RivState) {
 
         domainTextDiv =
             div {
-                // background = Background(Color.name(Col.LIGHTGRAY))
-                // height = 100.perc
-                // overflow = Overflow.HIDDEN
-
-                // val heading: String = "${Texts.domainTypeText[state.domainType]}a tjänstedomäner (${valueList.size})"
-                val heading = "Tjänstedomäner"
-
                 div {
                     h1 {
-                        +heading
+                        +"Tjänstedomäner"
                     }
                     p {
-                        +"Här hittar du en förteckning över $heading. "
+                        +"Här hittar du en förteckning över tjänstedomäner. "
                         +"Informationen på denna sida är hämtad från subversion och tjänstekontraktsbeskrivningar. Klicka på länkarna i tabellen för mer information."
                     }
-                    p { +"${Texts.domainTypeAltText[state.domainType]}" }
+                    // p { +"${Texts.domainTypeAltText[state.domainType]}" }
                 }.apply {
-                    // width = 100.perc
                     id = "pageHeaderDiv"
                     marginTop = 5.px
                 }
-                // }
             }
 
         println("Antal tjänstedomäner: ${valueList.size}")
 
         simplePanel {
-            // background = Background(Color.name(Col.LIGHTCORAL))
             setStyle("height", getHeightToRemainingViewPort(domainTextDiv, 130))
 
             tabulator(
@@ -84,19 +75,15 @@ fun Container.domainListView(state: RivState) {
                 types = setOf(TableType.BORDERED, TableType.STRIPED, TableType.HOVER),
                 options = TabulatorOptions(
                     layout = Layout.FITCOLUMNS,
-                    // pagination = PaginationMode.LOCAL,
                     paginationSize = 1000,
                     paginationButtonCount = 0,
-                    // height = "80.vh",
                     columns = listOf(
 
                         ColumnDefinition(
                             "Tjänstedomän (${valueList.size})",
                             "name",
                             headerFilter = Editor.INPUT,
-                            // headerFilterPlaceholder = "Sök ${heading.toLowerCase()}",
                             headerFilterPlaceholder = "Sök...",
-                            // widthGrow = 1,
                             width = "30%",
                             formatter = Formatter.TEXTAREA,
                             formatterComponentFunction = { _, _, item ->
@@ -108,9 +95,7 @@ fun Container.domainListView(state: RivState) {
                             "Svenskt kortnamn",
                             "swedishShort",
                             headerFilter = Editor.INPUT,
-                            // headerFilterPlaceholder = "Sök ${heading.toLowerCase()}",
                             headerFilterPlaceholder = "Sök...",
-                            // widthGrow = 2,
                             width = "18%",
                         ),
 
@@ -118,28 +103,24 @@ fun Container.domainListView(state: RivState) {
                             "Svenskt domännamn",
                             "swedishLong",
                             headerFilter = Editor.INPUT,
-                            // headerFilterPlaceholder = "Sök ${heading.toLowerCase()}",
                             headerFilterPlaceholder = "Sök...",
-                            // widthGrow = 3,
                             width = "30%",
-                            // formatter = Formatter.TEXTAREA,
                         ),
 
                         ColumnDefinition(
                             "Domäntyp",
                             "domainTypeString",
                             headerFilter = Editor.INPUT,
-                            // headerFilterPlaceholder = "Sök ${heading.toLowerCase()}",
                             headerFilterPlaceholder = "Sök....",
-                            // widthGrow = 1,
                             width = "10%",
-                            formatter = Formatter.TEXTAREA,
-                            /*
-                            formatterComponentFunction = { _, _, item ->
-                                println("Domäntyp = ${item.getDomainType().displayName}")
-                                Span(item.getDomainType().displayName)
+                            // formatter = Formatter.TEXTAREA,
+                            formatterComponentFunction = { _, _, domain ->
+                                println("In tabulator")
+                                Div {
+                                    content = Texts.domainTypeText[domain.domainType.type]
+                                    title = Texts.domainTypeAltText[domain.domainType.type]
+                                }
                             }
-                             */
                         ),
 
                         ColumnDefinition(

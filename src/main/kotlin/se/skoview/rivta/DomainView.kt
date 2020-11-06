@@ -17,21 +17,22 @@
 
 package se.skoview.rivta
 
-import pl.treksoft.kvision.core.*
+import pl.treksoft.kvision.core.* // ktlint-disable no-wildcard-imports
 import pl.treksoft.kvision.form.select.simpleSelectInput
-import pl.treksoft.kvision.html.*
-import pl.treksoft.kvision.modal.Modal
+import pl.treksoft.kvision.html.* // ktlint-disable no-wildcard-imports
 import pl.treksoft.kvision.panel.SimplePanel
 import pl.treksoft.kvision.panel.hPanel
 import pl.treksoft.kvision.panel.simplePanel
-import pl.treksoft.kvision.table.*
+import pl.treksoft.kvision.table.* // ktlint-disable no-wildcard-imports
 import pl.treksoft.kvision.utils.px
 import pl.treksoft.kvision.utils.vw
 import se.skoview.app.RivManager
 import se.skoview.app.formControlXs
-import se.skoview.model.*
+import se.skoview.model.* // ktlint-disable no-wildcard-imports
 
 fun Container.domainView(state: RivState) {
+
+    println("In domainView")
 
     div {
 
@@ -58,14 +59,6 @@ fun Container.domainView(state: RivState) {
 
         val selectedDomainVersion = state.selectedDomainVersion
 
-        if (selectedDomainVersion == null) {
-            h1 {
-                align = Align.CENTER
-                +"${selectedDomain.name} - inga versioner är tillgängliga"
-            }
-            return@div
-        }
-
         simplePanel {
             marginLeft = 15.px
             marginRight = 15.px
@@ -79,22 +72,9 @@ fun Container.domainView(state: RivState) {
 
             h3 { +"Domäntyp" }
 
-            val domainTypeText: String = "${Texts.domainTypeText[selectedDomain.getDomainType()]} tjänstedomän"
-            val domainTypeAltText: String = "${Texts.domainTypeAltText[selectedDomain.getDomainType()]}"
-
-            val modal = Modal(domainTypeText)
-            modal.add(span(domainTypeAltText))
-            modal.addButton(
-                Button("Stäng").onClick {
-                    modal.hide()
-                }
-            )
-
             div {
-                p { +domainTypeText }
-                color = Color.hex(0x008583)
-            }.onClick { // .onEvent { mouseover = { modal.show() }
-                modal.show()
+                content = "${Texts.domainTypeText[selectedDomain.domainType.type]} tjänstedomän"
+                title = Texts.domainTypeAltText[selectedDomain.domainType.type]
             }
 
             if (!selectedDomain.owner.isNullOrEmpty()) {
@@ -134,7 +114,6 @@ fun Container.domainView(state: RivState) {
             marginLeft = 15.px
             marginRight = 15.px
             background = Background(Color.name(Col.WHITE))
-            p { " " }
             when (noOfVersions) {
                 0 -> h2 { +"Inga versioner av denna domän är tillgänglig" }
                 1 -> h2 { +"Version ${mkFilteredDomainVersionsList(state, selectedDomain)[0].name}" }
@@ -206,7 +185,7 @@ fun Container.domainView(state: RivState) {
                 }/${selectedDomainVersion.name}/${selectedDomainVersion.documentsFolder}/"
 
                 val documents: List<DescriptionDocument> =
-                    selectedDomainVersion.descriptionDocuments as List<DescriptionDocument>
+                    selectedDomainVersion.descriptionDocuments
                 ul {
                     documents
                         .sortedBy { it.type }
@@ -221,7 +200,7 @@ fun Container.domainView(state: RivState) {
                                 link(displayName, "$baseUrl${it.fileName}")
                             }
                         }
-                    if (!selectedDomainVersion.zipUrl.isNullOrEmpty())
+                    if (selectedDomainVersion.zipUrl.isNotEmpty())
                         li { link("Releasepaket (zip-fil)", selectedDomainVersion.zipUrl) }
                 }
             }

@@ -43,7 +43,7 @@ fun Container.headerNav(state: RivState) {
                 overflow = Overflow.HIDDEN
 
                 hPanel {
-                    fontSize = 20.px
+                    fontSize = 30.px
                     background = Background(Color.hex(0x091F5F3))
                     // spacing = 5
                     clear = Clear.BOTH
@@ -157,7 +157,7 @@ private class SelectPageButton(state: RivState, label: String, view: View) : Sim
     }
 }
 
-private class ResetCacheButton(label: String) : SimplePanel() {
+class ResetCacheButton(label: String) : SimplePanel() {
     init {
         marginBottom = 5.px
         button(label)

@@ -24,6 +24,7 @@ import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 import se.skoview.app.RivManager
 import se.skoview.app.getAsync
+import se.skoview.app.getBaseUrl
 import kotlin.collections.List
 
 @Serializable
@@ -36,22 +37,32 @@ fun domdbLoad() {
     // fun load(callback: () -> Unit) {
     println("In DomDb:load()")
 
-    // val url = "http://api.ntjp.se/dominfo/v1/servicedomain.json"
-    // val url = "http://ind-dtjp-apache-api-vip.ind1.sth.basefarm.net/dominfo/v1/servicedomains.json"
-    // val url = "http://localhost:4000/domdb-prod-2020-10-12.json"
-    // val url = "http://qa.api.ntjp.se/dominfo/v1/servicedomains.json"
-    val url = "https://rivta.se/tkview/apicache.php/http://qa.api.ntjp.se/dominfo/v1/servicedomains.json"
-    // val url = "domdb-2020-10-20.json"
+    val url = "${getBaseUrl()}/http://qa.api.ntjp.se/dominfo/v1/servicedomains.json"
 
     // Older version which I try again to get it to create the actual parsed objects
     getAsync(url) { response ->
         println("Size of response is: ${response.length}")
         val json = Json { allowStructuredMapKeys = true }
-        val serviceDomains: List<ServiceDomain> =
-            json.decodeFromString(ListSerializer(ServiceDomain.serializer()), response)
-        console.log(serviceDomains)
+        // val serviceDomains: List<ServiceDomain> = json.decodeFromString(ListSerializer(ServiceDomain.serializer()), response)
+
+        val domDb: DomDb = json.decodeFromString(DomDb.serializer(), response)
+
+        console.log(domDb)
 
         RivManager.domdbLoadingComplete()
+    }
+}
+
+@Serializable
+data class DomDb(
+    val serviceDomains: List<ServiceDomain>,
+    val lastChangeTime: String
+) {
+    init {
+        lastUpdateTime = lastChangeTime
+    }
+    companion object {
+        lateinit var lastUpdateTime: String
     }
 }
 
@@ -71,6 +82,8 @@ data class ServiceDomain(
     val serviceContracts: List<Contract>? = null, //  = listOf<Contract>(),
     val versions: Array<Version>? = null,
 ) {
+    var domainTypeString: String? = null // Used for filtering in tabulator
+
     init {
         if (
             interactions != null &&
@@ -79,6 +92,8 @@ data class ServiceDomain(
         ) {
             DomainMap[this.name] = this
             DomainArr.add(this)
+            console.log(this)
+            domainTypeString = domainType.name
         } else println("$name is incomplete and removed")
     }
 }

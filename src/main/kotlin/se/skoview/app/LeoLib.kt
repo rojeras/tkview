@@ -52,3 +52,16 @@ fun getHeightToRemainingViewPort(
     val heightToRemove = occupiedViewPortArea + delta
     return "calc(100vh - ${heightToRemove}px)"
 }
+
+fun getBaseUrl(): String  {
+    // val url = "http://api.ntjp.se/dominfo/v1/servicedomain.json"
+    // val url = "domdb-2020-10-20.json"
+    // val url = "http://ind-dtjp-apache-api-vip.ind1.sth.basefarm.net/dominfo/v1/servicedomains.json"
+    // val url = "http://localhost:4000/domdb-prod-2020-10-12.json"
+    // val url = "http://qa.api.ntjp.se/dominfo/v1/servicedomains.json"
+    val url = "https://rivta.se/tkview/apicache.php"
+    // val url = "http://localhost:8888/apicache.php/http://qa.api.ntjp.se/dominfo/v1/servicedomains.json"
+    // val url = "http://localhost:8888/apicache.php"
+
+    return url
+}

@@ -68,7 +68,7 @@ fun Container.domainListView(state: RivState) {
         println("Antal tjänstedomäner: ${valueList.size}")
 
         simplePanel {
-            setStyle("height", getHeightToRemainingViewPort(domainTextDiv, 130))
+            setStyle("height", getHeightToRemainingViewPort(domainTextDiv, 45))
 
             tabulator(
                 valueList,
@@ -97,6 +97,13 @@ fun Container.domainListView(state: RivState) {
                             headerFilter = Editor.INPUT,
                             headerFilterPlaceholder = "Sök...",
                             width = "18%",
+                            formatterComponentFunction = { _, _, item ->
+                                getClickableDomainComponent(
+                                    item.name,
+                                    item.swedishShort,
+                                    Color.name(Col.BLACK)
+                                )
+                            }
                         ),
 
                         ColumnDefinition(
@@ -105,6 +112,13 @@ fun Container.domainListView(state: RivState) {
                             headerFilter = Editor.INPUT,
                             headerFilterPlaceholder = "Sök...",
                             width = "30%",
+                            formatterComponentFunction = { _, _, item ->
+                                getClickableDomainComponent(
+                                    item.name,
+                                    item.swedishLong,
+                                    Color.name(Col.BLACK)
+                                )
+                            }
                         ),
 
                         ColumnDefinition(
@@ -115,7 +129,7 @@ fun Container.domainListView(state: RivState) {
                             width = "10%",
                             // formatter = Formatter.TEXTAREA,
                             formatterComponentFunction = { _, _, domain ->
-                                println("In tabulator")
+                                console.log(domain)
                                 Div {
                                     content = Texts.domainTypeText[domain.domainType.type]
                                     title = Texts.domainTypeAltText[domain.domainType.type]
@@ -126,7 +140,7 @@ fun Container.domainListView(state: RivState) {
                         ColumnDefinition(
                             "Anslutningar",
                             "name",
-                            hozAlign = Align.CENTER,
+                            align = Align.CENTER,
                             headerSort = false,
                             width = "10%",
                             formatterComponentFunction = { _, _, item ->
@@ -137,7 +151,9 @@ fun Container.domainListView(state: RivState) {
                                 Div(
                                     rich = true,
                                     content = linkText
-                                )
+                                ) {
+                                    title = "Se anslutningar för denna domän i hippo"
+                                }
                             }
                         )
                     )

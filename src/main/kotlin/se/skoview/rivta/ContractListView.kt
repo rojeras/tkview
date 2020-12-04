@@ -54,13 +54,14 @@ fun Container.contractListView(state: RivState) {
                     p { +"Informationen på denna sida är direkt hämtad från WSDL-filer i subversion samt tjänsteadresseringskatalogerna i den nationella Tjänsteplattformen. Klicka på länkarna i tabellen för mer information." }
                 }
             simplePanel {
-                setStyle("height", getHeightToRemainingViewPort(contractTextDiv, 100))
+                setStyle("height", getHeightToRemainingViewPort(contractTextDiv, 80))
                 println("Contract data:")
 
                 tabulator(
                     valueList,
                     options = TabulatorOptions(
                         layout = Layout.FITCOLUMNS,
+
                         paginationSize = 1000,
                         paginationButtonCount = 0,
                         columns = listOf(
@@ -70,7 +71,10 @@ fun Container.contractListView(state: RivState) {
                                 headerFilter = Editor.INPUT,
                                 headerFilterPlaceholder = "Sök...",
                                 width = "25%",
-                                formatter = Formatter.TEXTAREA
+                                formatter = Formatter.TEXTAREA,
+                                formatterComponentFunction = { _, _, item ->
+                                    getClickableDomainComponent(item.domainName, item.contractName)
+                                }
                             ),
                             ColumnDefinition(
                                 "Beskrivning",
@@ -78,7 +82,14 @@ fun Container.contractListView(state: RivState) {
                                 headerFilter = Editor.INPUT,
                                 headerFilterPlaceholder = "Sök...",
                                 width = "48%",
-                                formatter = Formatter.TEXTAREA
+                                formatter = Formatter.TEXTAREA,
+                                formatterComponentFunction = { _, _, item ->
+                                    getClickableDomainComponent(
+                                        item.domainName,
+                                        item.description,
+                                        Color.name(Col.BLACK)
+                                    )
+                                }
                             ),
                             ColumnDefinition(
                                 "Tjänstedomän",

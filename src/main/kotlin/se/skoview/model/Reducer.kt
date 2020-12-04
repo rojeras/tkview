@@ -73,7 +73,8 @@ fun rivReducer(state: RivState, action: RivAction): RivState {
             )
         }
         is RivAction.DomdbLoadingComplete -> state.copy(
-            domdbLoadingComplete = action.isComplete
+            domdbLoadingComplete = action.isComplete,
+            lastUpdateTime = DomDb.lastUpdateTime
         )
         is RivAction.SetAdminMode -> state.copy(
             adminMode = action.onOff == "on"

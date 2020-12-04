@@ -25,14 +25,24 @@ import pl.treksoft.kvision.html.*
 import se.skoview.app.RivManager
 import se.skoview.model.DomainTypeEnum
 
-fun getClickableDomainComponent(domainName: String): Div {
+fun getClickableDomainComponent(
+    domainName: String,
+    display: String? = null,
+    col: Color = Color.hex(0x008583)
+): Div {
+
+    val displayText: String =
+        if (display.isNullOrBlank()) domainName
+        else display
+
     return Div {
     }.apply {
         span {
             wordBreak = WordBreak.BREAKALL
             whiteSpace = WhiteSpace.PREWRAP
-            color = Color.hex(0x008583)
-            +domainName
+            // color = Color.hex(0x008583)
+            color = col
+            +displayText
         }.onClick {
             println("In onClick in getClickableDomainComponent()")
             println("Will dispatch SelectDomain")

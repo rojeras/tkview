@@ -17,6 +17,7 @@
 package se.skoview.app
 
 import pl.treksoft.kvision.Application
+import pl.treksoft.kvision.html.footer
 import pl.treksoft.kvision.html.header
 import pl.treksoft.kvision.html.main
 import pl.treksoft.kvision.module
@@ -26,10 +27,13 @@ import pl.treksoft.kvision.panel.ContainerType
 import pl.treksoft.kvision.panel.root
 import pl.treksoft.kvision.require
 import pl.treksoft.kvision.startApplication
-import se.skoview.rivta.contractListView
-import se.skoview.rivta.domainView
-import se.skoview.rivta.headerNav
+import se.skoview.rivta.*
 import tabs.rivta.domainListView
+
+/**
+ * To run standalone during development:
+ * http://localhost:4000/standalone.html#/domains
+ */
 
 // done: Applicare Inera CSS: https://flamboyant-meninsky-54afd1.netlify.app/?path=/story/about--home
 // done: Lägg upp i hemlig folder på rivta.se och verifiera att det fungerar med https
@@ -60,6 +64,7 @@ class App : Application() {
              * The application main dispatcher that sets the view in the application will end up here where * the correct page can be rendered.
              */
             main(RivManager.rivStore) { state ->
+                println("State updated in main")
                 if (state.domdbLoadingComplete) {
                     when (state.view) {
                         View.HOME -> {
@@ -75,12 +80,13 @@ class App : Application() {
                             domainView(state)
                         }
                         View.ADMIN -> {
-
                         }
                     }
                 }
             }
-            // footer()
+            footer(RivManager.rivStore) {state ->
+                footerInfo(state)
+            }
         }
     }
 }

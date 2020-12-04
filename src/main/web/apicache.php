@@ -47,9 +47,10 @@ if (!file_exists($filepath) || (time() - 84600 > filemtime($filepath))) {
 }
 
 // $data = json_decode(file_get_contents($filepath), true);
+$lastChangeTime = date("Y-m-d H:i:s", filemtime($filepath));
 $data = file_get_contents($filepath);
 
-echo $data;
+echo '{ "serviceDomains" : '. $data . ', "lastChangeTime" : "' . $lastChangeTime . '" }' ;
 
 exit;
 // ---------------------------------------------------------------------------

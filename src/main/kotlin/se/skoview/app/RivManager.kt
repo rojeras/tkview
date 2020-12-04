@@ -108,7 +108,9 @@ object RivManager {
     fun resetCache() {
         println("Manager reset cache")
 
-        val url = "https://rivta.se/tkview/apicache.php/reset"
+        rivStore.dispatch(RivAction.DomdbLoadingComplete(false))
+
+        val url = "${getBaseUrl()}/reset"
         getSync(url)
 
         window.location.reload()

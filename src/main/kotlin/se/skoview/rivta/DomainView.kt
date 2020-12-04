@@ -92,7 +92,7 @@ fun Container.domainView(state: RivState) {
                         "Ärendehantering",
                         selectedDomain.issueTrackerUrl,
 
-                    )
+                        )
                 }
                 if (!selectedDomain.sourceCodeUrl.isNullOrEmpty()) li {
                     link(
@@ -142,7 +142,7 @@ fun Container.domainView(state: RivState) {
             marginLeft = 15.px
             marginRight = 15.px
             table(
-                listOf("Namn", "Beskrivning", "Anslutningar"),
+                listOf("Namn", "Beskrivning", "Senast uppdaterad", "Se anslutningar i hippo"),
                 setOf(TableType.BORDERED, TableType.SMALL, TableType.STRIPED, TableType.HOVER),
                 // responsiveType = ResponsiveType.RESPONSIVE
             ) {
@@ -160,14 +160,21 @@ fun Container.domainView(state: RivState) {
                                 +it.description
                             }
                             cell {
+                                if (!it.lastChangedDate.isNullOrEmpty())
+                                    +it.lastChangedDate
+                            }
+                            cell {
                                 val url = mkHippoContractUrl(name, major)
                                 val linkText =
                                     if (url.isNotBlank()) "<a href=\"$url\" target=\"_blank\"><img alt=\"Utforska i hippo\" src=\"/tkview/tpnet.png\" width=\"20\" height=\"20\"></a>"
                                     else ""
                                 div(
                                     rich = true,
+                                    align = Align.CENTER,
                                     content = linkText
-                                )
+                                ) {
+                                    title = "Se anslutningar för detta kontrakt i hippo"
+                                }
                             }
                         }
                     }
@@ -178,10 +185,10 @@ fun Container.domainView(state: RivState) {
             if (selectedDomain.sourceCodeUrl != null) {
 
                 val baseUrl = "${
-                selectedDomain.sourceCodeUrl.replace(
-                    "src",
-                    "raw"
-                )
+                    selectedDomain.sourceCodeUrl.replace(
+                        "src",
+                        "raw"
+                    )
                 }/${selectedDomainVersion.name}/${selectedDomainVersion.documentsFolder}/"
 
                 val documents: List<DescriptionDocument> =
@@ -198,6 +205,7 @@ fun Container.domainView(state: RivState) {
                                     else -> it.fileName
                                 }
                                 link(displayName, "$baseUrl${it.fileName}")
+                                +" (${it.lastChangedDate})"
                             }
                         }
                     if (selectedDomainVersion.zipUrl.isNotEmpty())

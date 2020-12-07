@@ -20,7 +20,6 @@
 package se.skoview.model
 
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 import se.skoview.app.RivManager
 import se.skoview.app.getAsync
@@ -55,7 +54,7 @@ fun domdbLoad() {
 
 @Serializable
 data class DomDb(
-    val serviceDomains: List<ServiceDomain>,
+    val answer: List<ServiceDomain>,
     val lastChangeTime: String
 ) {
     init {
@@ -92,9 +91,10 @@ data class ServiceDomain(
         ) {
             DomainMap[this.name] = this
             DomainArr.add(this)
-            console.log(this)
             domainTypeString = domainType.name
-        } else println("$name is incomplete and removed")
+        } else {
+            if (!this.name.isNullOrBlank()) println("${this.name} is incomplete and removed")
+        }
     }
 }
 

@@ -17,10 +17,23 @@
 package se.skoview.model
 
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 import se.skoview.app.RivManager
 import se.skoview.app.getAsync
+import se.skoview.app.getBaseUrl
+
+@Serializable
+data class TakApiDto(
+    val answer: List<InstalledContracts>,
+    val lastChangeTime: String
+) {
+    init {
+        lastUpdateTime = lastChangeTime
+    }
+    companion object {
+        lateinit var lastUpdateTime: String
+    }
+}
 
 @Serializable
 data class InstalledContracts(
@@ -51,14 +64,14 @@ data class TakServiceContract(
 }
 
 fun takApiLoad() {
-    val url = "https://rivta.se/tkview/apicache.php/http://api.ntjp.se/coop/api/v1/installedContracts"
+    val url = "${getBaseUrl()}/http://api.ntjp.se/coop/api/v1/installedContracts"
 
     getAsync(url) { response ->
         println("Size of TAK-api InstalledContracts are: ${response.length}")
         val json = Json { allowStructuredMapKeys = true }
-        val installedContracts: List<InstalledContracts> =
-            json.decodeFromString(ListSerializer(InstalledContracts.serializer()), response)
-        console.log(installedContracts)
+        // val installedContracts: List<InstalledContracts> = json.decodeFromString(ListSerializer(InstalledContracts.serializer()), response)
+        val takApiDto: TakApiDto = json.decodeFromString(TakApiDto.serializer(), response)
+        console.log(takApiDto)
 
         RivManager.refresh()
     }

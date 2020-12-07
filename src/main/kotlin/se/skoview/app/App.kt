@@ -27,6 +27,7 @@ import pl.treksoft.kvision.panel.ContainerType
 import pl.treksoft.kvision.panel.root
 import pl.treksoft.kvision.require
 import pl.treksoft.kvision.startApplication
+import pl.treksoft.kvision.utils.px
 import se.skoview.rivta.*
 import tabs.rivta.domainListView
 
@@ -54,7 +55,12 @@ class App : Application() {
         Pace.init(require("pace-progressbar/themes/green/pace-theme-bounce.css"))
         Pace.setOptions(PaceOptions(manual = true))
         RivManager.initialize()
-        root("tkview", containerType = ContainerType.NONE, addRow = false) {
+        root(
+            id = "tkview",
+            containerType = ContainerType.NONE,
+            addRow = false,
+        ) {
+            fontSize = 16.px
             header(RivManager.rivStore) { state ->
                 // The old RivTaMainPage
                 headerNav(state)

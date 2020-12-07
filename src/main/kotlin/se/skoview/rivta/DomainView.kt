@@ -113,10 +113,10 @@ fun Container.domainView(state: RivState) {
         simplePanel {
             marginLeft = 15.px
             marginRight = 15.px
-            background = Background(Color.name(Col.WHITE))
+            background = Background(Color.hex(0xf8ffff))
             when (noOfVersions) {
                 0 -> h2 { +"Inga versioner av denna domän är tillgänglig" }
-                1 -> h2 { +"Version ${mkFilteredDomainVersionsList(state, selectedDomain)[0].name}" }
+                // 1 -> h2 { +"Version ${mkFilteredDomainVersionsList(state, selectedDomain)[0].name}" }
                 else ->
                     hPanel {
                         h2 {
@@ -132,13 +132,15 @@ fun Container.domainView(state: RivState) {
                         )
                         span {
                             marginLeft = 20.px
-                            fontSize = 20.px
                             +" ($noOfVersions)"
                         }
                     }
             }
 
-            h3 { +"Tjänstekontrakt" }
+            h3 {
+                content = "Tjänstekontrakt"
+                marginTop = 15.px
+            }
             marginLeft = 15.px
             marginRight = 15.px
             table(
@@ -298,7 +300,7 @@ private class SelectDomainVersion(state: RivState, domain: ServiceDomain?) : Sim
             value = value
         ) {
             background = Background(Color.name(Col.WHITE))
-            fontSize = 20.px
+            // fontSize = 20.px
             addCssStyle(formControlXs)
         }.onEvent {
             change = {

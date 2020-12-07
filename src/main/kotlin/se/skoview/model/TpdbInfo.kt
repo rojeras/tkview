@@ -17,10 +17,23 @@
 package se.skoview.model
 
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 import se.skoview.app.RivManager
 import se.skoview.app.getAsync
+import se.skoview.app.getBaseUrl
+
+@Serializable
+data class TpdbServiceContractDto(
+    val answer: List<TpdbServiceContract>,
+    val lastChangeTime: String
+) {
+    init {
+        lastUpdateTime = lastChangeTime
+    }
+    companion object {
+        lateinit var lastUpdateTime: String
+    }
+}
 
 @Serializable
 data class TpdbServiceContract(
@@ -33,6 +46,19 @@ data class TpdbServiceContract(
 ) {
     init {
         tpdbContractMap[Pair(name, major)] = this
+    }
+}
+
+@Serializable
+data class TpdbServiceDomainDto(
+    val answer: List<TpdbServiceDomain>,
+    val lastChangeTime: String
+) {
+    init {
+        lastUpdateTime = lastChangeTime
+    }
+    companion object {
+        lateinit var lastUpdateTime: String
     }
 }
 
@@ -54,27 +80,29 @@ fun tpdbLoad() {
     // fun load(callback: () -> Unit) {
     println("In tpdbload()")
 
-    val domainsUrl = "https://rivta.se/tkview/apicache.php/https://integrationer.tjansteplattform.se/tpdb/tpdbapi.php/api/v1/domains"
+    val url = "${getBaseUrl()}/https://integrationer.tjansteplattform.se/tpdb/tpdbapi.php/api/v1/domains"
 
     // Older version which I try again to get it to create the actual parsed objects
-    getAsync(domainsUrl) { response ->
+    getAsync(url) { response ->
         println("Size of domains are: ${response.length}")
         val json = Json { allowStructuredMapKeys = true }
-        val serviceDomains: List<TpdbServiceDomain> =
-            json.decodeFromString(ListSerializer(TpdbServiceDomain.serializer()), response)
-        console.log(serviceDomains)
+        // val serviceDomains: List<TpdbServiceDomain> = json.decodeFromString(ListSerializer(TpdbServiceDomain.serializer()), response)
+        val tpdbServiceDomainDto: TpdbServiceDomainDto =
+            json.decodeFromString(TpdbServiceDomainDto.serializer(), response)
+        console.log(tpdbServiceDomainDto)
 
         RivManager.refresh()
     }
 
-    val contractsUrl = "https://rivta.se/tkview/apicache.php/https://integrationer.tjansteplattform.se/tpdb/tpdbapi.php/api/v1/contracts"
+    val contractsUrl = "${getBaseUrl()}/https://integrationer.tjansteplattform.se/tpdb/tpdbapi.php/api/v1/contracts"
 
     getAsync(contractsUrl) { response ->
         println("Size of contracts are: ${response.length}")
         val json = Json { allowStructuredMapKeys = true }
-        val serviceContracts: List<TpdbServiceContract> =
-            json.decodeFromString(ListSerializer(TpdbServiceContract.serializer()), response)
-        console.log(serviceContracts)
+        // val serviceContracts: List<TpdbServiceContract> = json.decodeFromString(ListSerializer(TpdbServiceContract.serializer()), response)
+        val tpdbServiceContractsDto: TpdbServiceContractDto =
+            json.decodeFromString(TpdbServiceContractDto.serializer(), response)
+        console.log(tpdbServiceContractsDto)
 
         RivManager.refresh()
     }

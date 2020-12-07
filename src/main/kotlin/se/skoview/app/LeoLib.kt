@@ -59,9 +59,11 @@ fun getBaseUrl(): String  {
     // val url = "http://ind-dtjp-apache-api-vip.ind1.sth.basefarm.net/dominfo/v1/servicedomains.json"
     // val url = "http://localhost:4000/domdb-prod-2020-10-12.json"
     // val url = "http://qa.api.ntjp.se/dominfo/v1/servicedomains.json"
-    val url = "https://rivta.se/tkview/apicache.php"
     // val url = "http://localhost:8888/apicache.php/http://qa.api.ntjp.se/dominfo/v1/servicedomains.json"
+
     // val url = "http://localhost:8888/apicache.php"
+
+    val url = "https://rivta.se/tkview/apicache.php"
 
     return url
 }

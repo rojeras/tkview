@@ -22,6 +22,7 @@ import pl.treksoft.kvision.html.* // ktlint-disable no-wildcard-imports
 import pl.treksoft.kvision.panel.simplePanel
 import pl.treksoft.kvision.tabulator.* // ktlint-disable no-wildcard-imports
 import pl.treksoft.kvision.utils.perc
+import pl.treksoft.kvision.utils.px
 import pl.treksoft.kvision.utils.vw
 import se.skoview.app.getHeightToRemainingViewPort
 import se.skoview.model.DomainArr
@@ -54,7 +55,7 @@ fun Container.contractListView(state: RivState) {
                     p { +"Informationen på denna sida är direkt hämtad från WSDL-filer i subversion samt tjänsteadresseringskatalogerna i den nationella Tjänsteplattformen. Klicka på länkarna i tabellen för mer information." }
                 }
             simplePanel {
-                setStyle("height", getHeightToRemainingViewPort(contractTextDiv, 80))
+                setStyle("height", getHeightToRemainingViewPort(contractTextDiv, 190))
                 println("Contract data:")
 
                 tabulator(
@@ -108,6 +109,7 @@ fun Container.contractListView(state: RivState) {
                     height = 100.perc
                     wordBreak = WordBreak.NORMAL
                     whiteSpace = WhiteSpace.PREWRAP
+                    fontSize = 16.px
                 }
             }
         }

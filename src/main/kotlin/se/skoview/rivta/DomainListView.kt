@@ -68,7 +68,7 @@ fun Container.domainListView(state: RivState) {
         println("Antal tjänstedomäner: ${valueList.size}")
 
         simplePanel {
-            setStyle("height", getHeightToRemainingViewPort(domainTextDiv, 45))
+            setStyle("height", getHeightToRemainingViewPort(domainTextDiv, 160))
 
             tabulator(
                 valueList,
@@ -80,8 +80,8 @@ fun Container.domainListView(state: RivState) {
                     columns = listOf(
 
                         ColumnDefinition(
-                            "Tjänstedomän (${valueList.size})",
-                            "name",
+                            title = "Tjänstedomän (${valueList.size})",
+                            field = "name",
                             headerFilter = Editor.INPUT,
                             headerFilterPlaceholder = "Sök...",
                             width = "30%",
@@ -92,8 +92,8 @@ fun Container.domainListView(state: RivState) {
                         ),
 
                         ColumnDefinition(
-                            "Svenskt kortnamn",
-                            "swedishShort",
+                            title = "Svenskt kortnamn",
+                            field = "swedishShort",
                             headerFilter = Editor.INPUT,
                             headerFilterPlaceholder = "Sök...",
                             width = "18%",
@@ -107,8 +107,8 @@ fun Container.domainListView(state: RivState) {
                         ),
 
                         ColumnDefinition(
-                            "Svenskt domännamn",
-                            "swedishLong",
+                            title = "Svenskt domännamn",
+                            field = "swedishLong",
                             headerFilter = Editor.INPUT,
                             headerFilterPlaceholder = "Sök...",
                             width = "30%",
@@ -122,14 +122,13 @@ fun Container.domainListView(state: RivState) {
                         ),
 
                         ColumnDefinition(
-                            "Domäntyp",
-                            "domainTypeString",
+                            title = "Domäntyp",
+                            field = "domainTypeString",
                             headerFilter = Editor.INPUT,
                             headerFilterPlaceholder = "Sök....",
                             width = "10%",
                             // formatter = Formatter.TEXTAREA,
                             formatterComponentFunction = { _, _, domain ->
-                                console.log(domain)
                                 Div {
                                     content = Texts.domainTypeText[domain.domainType.type]
                                     title = Texts.domainTypeAltText[domain.domainType.type]
@@ -138,8 +137,8 @@ fun Container.domainListView(state: RivState) {
                         ),
 
                         ColumnDefinition(
-                            "Anslutningar",
-                            "name",
+                            title = "Anslutningar",
+                            field = null,
                             align = Align.CENTER,
                             headerSort = false,
                             width = "10%",
@@ -162,6 +161,7 @@ fun Container.domainListView(state: RivState) {
                 height = 100.perc
                 wordBreak = WordBreak.BREAKALL
                 whiteSpace = WhiteSpace.PREWRAP
+                fontSize = 16.px
             }
         }
     }

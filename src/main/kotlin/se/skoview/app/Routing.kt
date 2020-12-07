@@ -43,7 +43,6 @@ fun Navigo.initialize(): Navigo {
     ).on(
         View.CONTRACT_LIST.url,
         { _ ->
-            println("Navigo contract list invoked")
             RivManager.fromUrlShowView(View.CONTRACT_LIST)
         }
     ).on(

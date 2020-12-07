@@ -40,7 +40,6 @@ fun getClickableDomainComponent(
         span {
             wordBreak = WordBreak.BREAKALL
             whiteSpace = WhiteSpace.PREWRAP
-            // color = Color.hex(0x008583)
             color = col
             +displayText
         }.onClick {

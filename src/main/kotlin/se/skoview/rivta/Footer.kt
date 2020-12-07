@@ -11,7 +11,7 @@ fun Container.footerInfo(state: RivState) {
     div(
         rich = true,
     ) {
-        marginTop = 30.px
+        marginTop = 5.px
         width = 100.perc
         align = Align.CENTER
         background = Background(Color.name(Col.LIGHTGRAY))

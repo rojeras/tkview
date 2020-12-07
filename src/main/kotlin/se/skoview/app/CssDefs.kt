@@ -20,12 +20,13 @@ import pl.treksoft.kvision.core.Background
 import pl.treksoft.kvision.core.Col
 import pl.treksoft.kvision.core.Color
 import pl.treksoft.kvision.core.Style
+import pl.treksoft.kvision.utils.px
 import pl.treksoft.kvision.utils.rem
 
 val formControlXs = Style {
     setStyle("height", "calc(1.3em + .4rem + 2px)")
     setStyle("padding", "0.2rem 0.4rem")
-    fontSize = 1.7.rem
+    fontSize = 23.px
     lineHeight = 2.0.rem
     // todo: Try to make this setting to work:
     background = Background(Color.name(Col.WHITE))

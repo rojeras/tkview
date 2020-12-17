@@ -36,7 +36,8 @@ fun domdbLoad() {
     // fun load(callback: () -> Unit) {
     println("In DomDb:load()")
 
-    val url = "${getBaseUrl()}/http://qa.api.ntjp.se/dominfo/v1/servicedomains.json"
+    // val url = "${getBaseUrl()}/http://qa.api.ntjp.se/dominfo/v1/servicedomains.json"
+    val url = "${getBaseUrl()}/http://api.ntjp.se/dominfo/v1/servicedomains.json"
 
     // Older version which I try again to get it to create the actual parsed objects
     getAsync(url) { response ->

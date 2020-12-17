@@ -36,6 +36,10 @@ import tabs.rivta.domainListView
  * http://localhost:4000/standalone.html#/domains
  */
 
+// todo: Ha samma fontstorlek i sökrutorna som för tabelltext
+// todo: Läs ner integrations från tpdb och ha det som grund för vilka items som ska ha länk till hippo
+// todo: Fixa till footer() så att den grå rutan ligger still längts ner. Gärna också på domänsidorna.
+
 // done: Applicare Inera CSS: https://flamboyant-meninsky-54afd1.netlify.app/?path=/story/about--home
 // done: Lägg upp i hemlig folder på rivta.se och verifiera att det fungerar med https
 // done: Lös detta med CORS. Ev ta in REST-lösningen från Roberts showcase. Annat alternativ är att rivta.se dygnsvis hämtar filen och lagrar lokalt... Det är nog bäst.

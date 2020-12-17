@@ -20,6 +20,8 @@ ini_set('memory_limit', '256M');
 
 header('Access-Control-Allow-Origin: *');
 
+date_default_timezone_set('Europe/Stockholm');
+
 $requestURI = $_SERVER['REQUEST_URI'];
 
 $scriptName = '/' . basename(__FILE__, 'apicache.php') . '/';

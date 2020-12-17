@@ -92,7 +92,7 @@ fun Container.domainView(state: RivState) {
                         "Ärendehantering",
                         selectedDomain.issueTrackerUrl,
 
-                        )
+                    )
                 }
                 if (!selectedDomain.sourceCodeUrl.isNullOrEmpty()) li {
                     link(
@@ -102,7 +102,7 @@ fun Container.domainView(state: RivState) {
                 }
                 if (!selectedDomain.infoPageUrl.isNullOrEmpty()) li {
                     link(
-                        "Ytterligare information",
+                        "Release notes",
                         selectedDomain.infoPageUrl
                     )
                 }
@@ -114,127 +114,140 @@ fun Container.domainView(state: RivState) {
             marginLeft = 15.px
             marginRight = 15.px
             background = Background(Color.hex(0xf8ffff))
-            when (noOfVersions) {
-                0 -> h2 { +"Inga versioner av denna domän är tillgänglig" }
-                // 1 -> h2 { +"Version ${mkFilteredDomainVersionsList(state, selectedDomain)[0].name}" }
-                else ->
-                    hPanel {
-                        h2 {
-                            +"Välj version:"
+            simplePanel {
+                margin = 5.px
+
+                when (noOfVersions) {
+                    0 -> h2 { +"Inga versioner av denna domän är tillgänglig" }
+                    // 1 -> h2 { +"Version ${mkFilteredDomainVersionsList(state, selectedDomain)[0].name}" }
+                    else ->
+                        hPanel {
+                            h2 {
+                                marginTop = 15.px
+                                +"Välj domänversion:"
+                            }
+                            add(
+                                SelectDomainVersion(state, selectedDomain)
+                                    .apply {
+                                        width = 150.px
+                                        marginLeft = 50.px
+                                        marginTop = 15.px
+                                        fontWeight = FontWeight.BOLD
+                                    }
+                            )
+                            div {
+                                marginLeft = 20.px
+                                marginTop = 20.px
+                                +" ($noOfVersions)"
+                            }
                         }
-                        add(
-                            SelectDomainVersion(state, selectedDomain)
-                                .apply {
-                                    width = 150.px
-                                    marginLeft = 50.px
-                                    fontWeight = FontWeight.BOLD
+                }
+
+                h3 {
+                    content = "Tjänstekontrakt"
+                    marginTop = 15.px
+                }
+                marginLeft = 15.px
+                marginRight = 15.px
+                table(
+                    // listOf("Namn", "Version", "Beskrivning", "Senast uppdaterad", "Se anslutningar i hippo"),
+                    listOf("Namn", "Version", "Beskrivning", "Se anslutningar i hippo"),
+                    setOf(TableType.BORDERED, TableType.SMALL, TableType.STRIPED, TableType.HOVER),
+                    // responsiveType = ResponsiveType.RESPONSIVE
+                ) {
+                    selectedDomainVersion.interactionDescriptions
+                        .sortedBy { it.wsdlContract().first }
+                        .map {
+                            val name = it.wsdlContract().first
+                            val major = it.wsdlContract().second
+                            val minor = it.wsdlContract().third
+                            row {
+                                cell {
+                                    +"$name"
                                 }
-                        )
-                        span {
-                            marginLeft = 20.px
-                            +" ($noOfVersions)"
-                        }
-                    }
-            }
-
-            h3 {
-                content = "Tjänstekontrakt"
-                marginTop = 15.px
-            }
-            marginLeft = 15.px
-            marginRight = 15.px
-            table(
-                listOf("Namn", "Beskrivning", "Senast uppdaterad", "Se anslutningar i hippo"),
-                setOf(TableType.BORDERED, TableType.SMALL, TableType.STRIPED, TableType.HOVER),
-                // responsiveType = ResponsiveType.RESPONSIVE
-            ) {
-                selectedDomainVersion.interactionDescriptions
-                    .sortedBy { it.wsdlContract().first }
-                    .map {
-                        val name = it.wsdlContract().first
-                        val major = it.wsdlContract().second
-                        val minor = it.wsdlContract().third
-                        row {
-                            cell {
-                                +"$name $major.$minor"
-                            }
-                            cell {
-                                +it.description
-                            }
-                            cell {
-                                if (!it.lastChangedDate.isNullOrEmpty())
-                                    +it.lastChangedDate
-                            }
-                            cell {
-                                val url = mkHippoContractUrl(name, major)
-                                val linkText =
-                                    if (url.isNotBlank()) "<a href=\"$url\" target=\"_blank\"><img alt=\"Utforska i hippo\" src=\"/tkview/tpnet.png\" width=\"20\" height=\"20\"></a>"
-                                    else ""
-                                div(
-                                    rich = true,
-                                    align = Align.CENTER,
-                                    content = linkText
-                                ) {
-                                    title = "Se anslutningar för detta kontrakt i hippo"
+                                cell {
+                                    +"$major.$minor"
+                                }
+                                cell {
+                                    +it.description
+                                }
+                                /*
+                                cell {
+                                    if (!it.lastChangedDate.isNullOrEmpty())
+                                        +it.lastChangedDate
+                                }
+                                 */
+                                cell {
+                                    val url = mkHippoContractUrl(name, major)
+                                    val linkText =
+                                        if (url.isNotBlank()) "<a href=\"$url\" target=\"_blank\"><img alt=\"Utforska i hippo\" src=\"/tkview/tpnet.png\" width=\"20\" height=\"20\"></a>"
+                                        else ""
+                                    div(
+                                        rich = true,
+                                        align = Align.CENTER,
+                                        content = linkText
+                                    ) {
+                                        title = "Se anslutningar för detta kontrakt i hippo"
+                                    }
                                 }
                             }
                         }
-                    }
-            }
+                }
 
-            h3 { +"Specifikationer" }
+                h3 { +"Specifikationer" }
 
-            if (selectedDomain.sourceCodeUrl != null) {
+                if (selectedDomain.sourceCodeUrl != null) {
 
-                val baseUrl = "${
+                    val baseUrl = "${
                     selectedDomain.sourceCodeUrl.replace(
                         "src",
                         "raw"
                     )
-                }/${selectedDomainVersion.name}/${selectedDomainVersion.documentsFolder}/"
+                    }/${selectedDomainVersion.name}/${selectedDomainVersion.documentsFolder}/"
 
-                val documents: List<DescriptionDocument> =
-                    selectedDomainVersion.descriptionDocuments
-                ul {
-                    documents
-                        .sortedBy { it.type }
-                        .map {
-                            li {
-                                val displayName = when (it.type) {
-                                    RivDocumentTypeEnum.TKB -> "Tjänstekontraktsbeskrivning"
-                                    RivDocumentTypeEnum.AB -> "Arkitekturella beslut"
-                                    RivDocumentTypeEnum.IS -> "Informationsspecifikation"
-                                    else -> it.fileName
+                    val documents: List<DescriptionDocument> =
+                        selectedDomainVersion.descriptionDocuments
+                    ul {
+                        documents
+                            .sortedBy { it.type }
+                            .map {
+                                li {
+                                    val displayName = when (it.type) {
+                                        RivDocumentTypeEnum.TKB -> "Tjänstekontraktsbeskrivning"
+                                        RivDocumentTypeEnum.AB -> "Arkitekturella beslut"
+                                        RivDocumentTypeEnum.IS -> "Informationsspecifikation"
+                                        else -> it.fileName
+                                    }
+                                    link(displayName, "$baseUrl${it.fileName}")
+                                    // +" (${it.lastChangedDate})"
                                 }
-                                link(displayName, "$baseUrl${it.fileName}")
-                                +" (${it.lastChangedDate})"
                             }
-                        }
-                    if (selectedDomainVersion.zipUrl.isNotEmpty())
-                        li { link("Releasepaket (zip-fil)", selectedDomainVersion.zipUrl) }
+                        if (selectedDomainVersion.zipUrl.isNotEmpty())
+                            li { link("Releasepaket (zip-fil)", selectedDomainVersion.zipUrl) }
+                    }
                 }
-            }
-            h3 { +"Granskningar" }
+                h3 { +"Granskningar" }
 
-            if (selectedDomainVersion.reviews.isEmpty()) span { +"Inga granskningar är registrerade för denna version." }
-            else {
-                table(
-                    listOf("", "Resultat", "Mera information"),
-                    setOf(TableType.BORDERED, TableType.SMALL, TableType.STRIPED, TableType.HOVER),
-                ) {
-                    for (review in selectedDomainVersion.reviews) {
-                        row {
-                            cell { +review.reviewProtocol.name }
-                            cell {
-                                color = when (review.reviewOutcome.name) {
-                                    "Godkänd" -> Color.name(Col.GREEN)
-                                    "Underkänd" -> Color.name(Col.RED)
-                                    "Delvis Godkänd" -> Color.name(Col.BLACK)
-                                    else -> Color.name(Col.BLACK)
+                if (selectedDomainVersion.reviews.isEmpty()) span { +"Inga granskningar är registrerade för denna version." }
+                else {
+                    table(
+                        listOf("", "Resultat", "Mera information"),
+                        setOf(TableType.BORDERED, TableType.SMALL, TableType.STRIPED, TableType.HOVER),
+                    ) {
+                        for (review in selectedDomainVersion.reviews) {
+                            row {
+                                cell { +review.reviewProtocol.name }
+                                cell {
+                                    color = when (review.reviewOutcome.name) {
+                                        "Godkänd" -> Color.name(Col.GREEN)
+                                        "Underkänd" -> Color.name(Col.RED)
+                                        "Delvis Godkänd" -> Color.name(Col.BLACK)
+                                        else -> Color.name(Col.BLACK)
+                                    }
+                                    bold { +review.reviewOutcome.name }
                                 }
-                                bold { +review.reviewOutcome.name }
+                                cell { link("Ladda ner granskningsprotokoll", review.reportUrl) }
                             }
-                            cell { link("Ladda ner granskningsprotokoll", review.reportUrl) }
                         }
                     }
                 }

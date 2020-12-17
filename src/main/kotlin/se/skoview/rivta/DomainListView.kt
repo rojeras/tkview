@@ -56,7 +56,7 @@ fun Container.domainListView(state: RivState) {
                     }
                     p {
                         +"Här hittar du en förteckning över tjänstedomäner. "
-                        +"Informationen på denna sida är hämtad från subversion och tjänstekontraktsbeskrivningar. Klicka på länkarna i tabellen för mer information."
+                        +"Klicka på raderna i tabellen för mer information."
                     }
                     // p { +"${Texts.domainTypeAltText[state.domainType]}" }
                 }.apply {
@@ -66,9 +66,10 @@ fun Container.domainListView(state: RivState) {
             }
 
         println("Antal tjänstedomäner: ${valueList.size}")
+        console.log(valueList)
 
         simplePanel {
-            setStyle("height", getHeightToRemainingViewPort(domainTextDiv, 160))
+            setStyle("height", getHeightToRemainingViewPort(domainTextDiv, 45))
 
             tabulator(
                 valueList,
@@ -163,6 +164,7 @@ fun Container.domainListView(state: RivState) {
                 whiteSpace = WhiteSpace.PREWRAP
                 fontSize = 16.px
             }
+            println("Leaving tabulator")
         }
     }
 }

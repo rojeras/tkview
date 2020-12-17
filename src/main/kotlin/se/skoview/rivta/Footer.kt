@@ -7,7 +7,6 @@ import pl.treksoft.kvision.utils.px
 import se.skoview.model.RivState
 
 fun Container.footerInfo(state: RivState) {
-    println("footerInfo() called")
     div(
         rich = true,
     ) {
@@ -17,7 +16,7 @@ fun Container.footerInfo(state: RivState) {
         background = Background(Color.name(Col.LIGHTGRAY))
         if (! state.lastUpdateTime.isNullOrBlank()) {
         +"<b>Senast uppdaterad</b> ${state.lastUpdateTime}"
-        add(ResetCacheButton("Uppdatera nu"))
+        // add(ResetCacheButton("Uppdatera nu"))
         }
     }
 }

@@ -51,11 +51,10 @@ fun Container.contractListView(state: RivState) {
                         width = 100.perc
                         +"Tjänstekontrakt"
                     }
-                    p { +"Här hittar du en förteckning över samtliga tjänstekontakt. I tabellen kan du också se om tjänstekontrakten är installerade i den nationella Tjänsteplattformen eller inte." }
-                    p { +"Informationen på denna sida är direkt hämtad från WSDL-filer i subversion samt tjänsteadresseringskatalogerna i den nationella Tjänsteplattformen. Klicka på länkarna i tabellen för mer information." }
+                    p { +"Här hittar du en förteckning över samtliga tjänstekontakt. Klicka på raderna i tabellen för mer information." }
                 }
             simplePanel {
-                setStyle("height", getHeightToRemainingViewPort(contractTextDiv, 190))
+                setStyle("height", getHeightToRemainingViewPort(contractTextDiv, 40))
                 println("Contract data:")
 
                 tabulator(

@@ -61,8 +61,7 @@ fun getBaseUrl(): String  {
     // val url = "http://qa.api.ntjp.se/dominfo/v1/servicedomains.json"
     // val url = "http://localhost:8888/apicache.php/http://qa.api.ntjp.se/dominfo/v1/servicedomains.json"
 
-    // val url = "http://localhost:8888/apicache.php"
-
+    // val url = "http://localhost:8888/tkview/apicache.php"
     val url = "https://rivta.se/tkview/apicache.php"
 
     return url

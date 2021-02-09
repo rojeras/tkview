@@ -108,37 +108,6 @@ fun Container.headerNav(state: RivState) {
     }
 }
 
-private class SelectDomainType(state: RivState) : SimplePanel() {
-    init {
-        val options =
-            listOf(
-                Pair(DomainTypeEnum.NATIONAL.toString(), "Nationella tjänstedomäner"),
-                Pair(DomainTypeEnum.APPLICATION_SPECIFIC.toString(), "Applikationsspecifika tjänstedomäner"),
-                Pair(DomainTypeEnum.EXTERNAL.toString(), "Externa tjänstedomäner")
-            )
-        simpleSelectInput(
-            options = options,
-            value = state.domainType.toString()
-        ) {
-            background = Background(Color.name(Col.WHITE))
-            // fontSize = 20.px
-            addCssStyle(formControlXs)
-        }.onEvent {
-            change = {
-                val selected: String = self.value ?: ""
-                val selectedType: DomainTypeEnum =
-                    when (selected) {
-                        DomainTypeEnum.NATIONAL.toString() -> DomainTypeEnum.NATIONAL
-                        DomainTypeEnum.APPLICATION_SPECIFIC.toString() -> DomainTypeEnum.APPLICATION_SPECIFIC
-                        DomainTypeEnum.EXTERNAL.toString() -> DomainTypeEnum.EXTERNAL
-                        else -> DomainTypeEnum.NATIONAL
-                    }
-                RivManager.selectDomainType(selectedType)
-            }
-        }
-    }
-}
-
 private class SelectPageButton(state: RivState, label: String, view: View) : SimplePanel() {
     init {
         marginBottom = 5.px

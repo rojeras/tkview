@@ -223,24 +223,6 @@ fun ServiceDomain.getDescription(): String {
     return this.description
 }
 
-/*
-fun ServiceDomain.getDomainType(): DomainTypeEnum {
-    if (this.domainType != null) return this.domainType.type
-    else {
-        // Know interactions != null due to filter in ServiceDomain init()
-        if (this.interactions!![0] == null) return DomainTypeEnum.UNKNOWN
-
-        val namespaceTypePrefix = this.interactions[0].namespace.split(":")[1]
-
-        return when (namespaceTypePrefix) {
-            "riv" -> DomainTypeEnum.NATIONAL
-            "riv-application" -> DomainTypeEnum.APPLICATION_SPECIFIC
-            else -> DomainTypeEnum.EXTERNAL
-        }
-    }
-}
-*/
-
 /**
  * Return the three parts of a TK identifier in a Triple
  *

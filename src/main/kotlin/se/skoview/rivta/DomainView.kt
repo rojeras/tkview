@@ -113,23 +113,24 @@ fun Container.domainView(state: RivState) {
         simplePanel {
             marginLeft = 15.px
             marginRight = 15.px
-            background = Background(Color.hex(0xf8ffff))
+            // background = Background(Color.hex(0xf8ffff))
+            border = Border(1.px, BorderStyle.SOLID)
             simplePanel {
                 margin = 5.px
 
                 when (noOfVersions) {
-                    0 -> h2 { +"Inga versioner av denna domän är tillgänglig" }
+                    0 -> h3 { +"Inga versioner av denna domän är tillgänglig" }
                     // 1 -> h2 { +"Version ${mkFilteredDomainVersionsList(state, selectedDomain)[0].name}" }
                     else ->
                         hPanel {
-                            h2 {
+                            h3 {
                                 marginTop = 15.px
                                 +"Välj domänversion:"
                             }
                             add(
                                 SelectDomainVersion(state, selectedDomain)
                                     .apply {
-                                        width = 150.px
+                                        width = 120.px
                                         marginLeft = 50.px
                                         marginTop = 15.px
                                         fontWeight = FontWeight.BOLD
@@ -143,7 +144,7 @@ fun Container.domainView(state: RivState) {
                         }
                 }
 
-                h3 {
+                h4 {
                     content = "Tjänstekontrakt"
                     marginTop = 15.px
                 }
@@ -163,7 +164,7 @@ fun Container.domainView(state: RivState) {
                             val minor = it.wsdlContract().third
                             row {
                                 cell {
-                                    +"$name"
+                                    +name
                                 }
                                 cell {
                                     +"$major.$minor"
@@ -194,7 +195,7 @@ fun Container.domainView(state: RivState) {
                         }
                 }
 
-                h3 { +"Specifikationer" }
+                h4 { +"Specifikationer" }
 
                 if (selectedDomain.sourceCodeUrl != null) {
 
@@ -226,7 +227,7 @@ fun Container.domainView(state: RivState) {
                             li { link("Releasepaket (zip-fil)", selectedDomainVersion.zipUrl) }
                     }
                 }
-                h3 { +"Granskningar" }
+                h4 { +"Granskningar" }
 
                 if (selectedDomainVersion.reviews.isEmpty()) span { +"Inga granskningar är registrerade för denna version." }
                 else {
@@ -312,7 +313,7 @@ private class SelectDomainVersion(state: RivState, domain: ServiceDomain?) : Sim
             options = options,
             value = value
         ) {
-            background = Background(Color.name(Col.WHITE))
+            // background = Background(Color.name(Col.WHITE))
             // fontSize = 20.px
             addCssStyle(formControlXs)
         }.onEvent {

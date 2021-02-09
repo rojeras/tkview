@@ -69,10 +69,9 @@ fun takApiLoad() {
     getAsync(url) { response ->
         println("Size of TAK-api InstalledContracts are: ${response.length}")
         val json = Json { allowStructuredMapKeys = true }
-        // val installedContracts: List<InstalledContracts> = json.decodeFromString(ListSerializer(InstalledContracts.serializer()), response)
         val takApiDto: TakApiDto = json.decodeFromString(TakApiDto.serializer(), response)
         console.log(takApiDto)
-
+        console.log(takInstalledContractNamespace)
         RivManager.refresh()
     }
 }

@@ -17,6 +17,7 @@
 package se.skoview.app
 
 import pl.treksoft.kvision.Application
+import pl.treksoft.kvision.core.Overflow
 import pl.treksoft.kvision.html.footer
 import pl.treksoft.kvision.html.header
 import pl.treksoft.kvision.html.main
@@ -28,7 +29,7 @@ import pl.treksoft.kvision.panel.root
 import pl.treksoft.kvision.require
 import pl.treksoft.kvision.startApplication
 import pl.treksoft.kvision.utils.px
-import se.skoview.rivta.*
+import se.skoview.rivta.* // ktlint-disable no-wildcard-imports
 import tabs.rivta.domainListView
 
 /**
@@ -38,8 +39,16 @@ import tabs.rivta.domainListView
 
 // todo: Ha samma fontstorlek i sökrutorna som för tabelltext
 // todo: Läs ner integrations från tpdb och ha det som grund för vilka items som ska ha länk till hippo
-// todo: Fixa till footer() så att den grå rutan ligger still längts ner. Gärna också på domänsidorna.
+// todo: Red ut varför vissa domäner är ofullständiga och inte kan läsas in (se tkview i zim)
+// todo: Red ut om det finns, eller går att få fram, vettiga datum att visa
+// todo: Change domainversion view to use Tab panels (refer to Showcase/Containers
 
+// done: GetCareContacts v3 does not have a hippo-link. Was due to namespace error in TPDB for this contract. Patched in tkview.
+// done: Utred. Kolla clinicalprocess.activitiyprescrption.actoutcome 2.1.1. Enligt tkview så ingår MH 2.1. Enligt källkoden är det GMH 2.0?! : hippo (TPs) does not know about minor versions
+// done: Ensure sane font sizes everywhere, also domain page and version selector
+// done: It must be obvious that the domain version selector is a dropdown
+// done: Make contract table striped
+// done: Fixa till footer() så att den grå rutan ligger still längts ner. Gärna också på domänsidorna.
 // done: Applicare Inera CSS: https://flamboyant-meninsky-54afd1.netlify.app/?path=/story/about--home
 // done: Lägg upp i hemlig folder på rivta.se och verifiera att det fungerar med https
 // done: Lös detta med CORS. Ev ta in REST-lösningen från Roberts showcase. Annat alternativ är att rivta.se dygnsvis hämtar filen och lagrar lokalt... Det är nog bäst.
@@ -65,6 +74,7 @@ class App : Application() {
             addRow = false,
         ) {
             fontSize = 16.px
+            overflow = Overflow.HIDDEN
             header(RivManager.rivStore) { state ->
                 // The old RivTaMainPage
                 headerNav(state)
@@ -94,7 +104,7 @@ class App : Application() {
                     }
                 }
             }
-            footer(RivManager.rivStore) {state ->
+            footer(RivManager.rivStore) { state ->
                 footerInfo(state)
             }
         }

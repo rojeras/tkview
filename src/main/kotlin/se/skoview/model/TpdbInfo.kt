@@ -30,6 +30,7 @@ data class TpdbServiceContractDto(
     init {
         lastUpdateTime = lastChangeTime
     }
+
     companion object {
         lateinit var lastUpdateTime: String
     }
@@ -57,6 +58,7 @@ data class TpdbServiceDomainDto(
     init {
         lastUpdateTime = lastChangeTime
     }
+
     companion object {
         lateinit var lastUpdateTime: String
     }
@@ -119,9 +121,21 @@ fun mkHippoDomainUrl(domainName: String): String {
 
 fun mkHippoContractUrl(contractName: String, major: Int): String {
     val contract: TpdbServiceContract? = tpdbContractMap[Pair(contractName, major)]
-    if (contract == null) return ""
+    if (contract == null) {
+        println("Contract $contractName v$major is not used according to TPDB")
+        return ""
+    }
 
-    if (!takInstalledContractNamespace.contains(contract.namespace)) return ""
+    // Handle namespace error in TPDB
+    val checkedNamespace =
+        if (contract.namespace.equals("urn:riv:cliniralprocess:logistics:logistics:GetCareContactsResponder:3")) "urn:riv:clinicalprocess:logistics:logistics:GetCareContactsResponder:3"
+        else contract.namespace
+
+    // A contract may have been installed earlier, but removed today. Check in TakApi if currently installed.
+    if (!takInstalledContractNamespace.contains(checkedNamespace)) {
+        println("Contract $contractName v$major is not installed today according to TakApi. Namespace=${contract.namespace}")
+        return ""
+    }
 
     return "https://integrationer.tjansteplattform.se/hippo/?filter=C${contract.id}"
 }

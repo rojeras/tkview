@@ -21,7 +21,7 @@ import pl.treksoft.kvision.core.Color
 import pl.treksoft.kvision.core.WhiteSpace
 import pl.treksoft.kvision.core.WordBreak
 import pl.treksoft.kvision.core.onClick
-import pl.treksoft.kvision.html.*
+import pl.treksoft.kvision.html.* // ktlint-disable no-wildcard-imports
 import se.skoview.app.RivManager
 import se.skoview.model.DomainTypeEnum
 

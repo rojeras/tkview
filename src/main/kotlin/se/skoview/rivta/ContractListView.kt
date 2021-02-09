@@ -100,7 +100,10 @@ fun Container.contractListView(state: RivState) {
                                 width = "25%",
                                 formatter = Formatter.TEXTAREA,
                                 formatterComponentFunction = { _, _, item ->
-                                    getClickableDomainComponent(item.domainName)
+                                    getClickableDomainComponent(
+                                        item.domainName,
+                                        item.domainName,
+                                    )
                                 }
                             )
                         ),

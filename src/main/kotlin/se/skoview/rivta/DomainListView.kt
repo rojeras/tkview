@@ -88,7 +88,10 @@ fun Container.domainListView(state: RivState) {
                             width = "30%",
                             formatter = Formatter.TEXTAREA,
                             formatterComponentFunction = { _, _, item ->
-                                getClickableDomainComponent(item.name)
+                                getClickableDomainComponent(
+                                    item.name,
+                                    item.name
+                                )
                             }
                         ),
 

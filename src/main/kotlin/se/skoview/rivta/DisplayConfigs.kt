@@ -31,9 +31,7 @@ fun getClickableDomainComponent(
     col: Color = Color.hex(0x008583)
 ): Div {
 
-    val displayText: String =
-        if (display.isNullOrBlank()) domainName
-        else display
+    val displayText: String = display ?: ""
 
     return Div {
     }.apply {

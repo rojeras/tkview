@@ -64,6 +64,7 @@ fun Container.domainView(state: RivState) {
             marginRight = 15.px
             h1 {
                 align = Align.CENTER
+                marginBottom = 40.px
                 +"${selectedDomain.swedishShort} - ${selectedDomain.name}"
             }
             h3 { +"Beskrivning" }

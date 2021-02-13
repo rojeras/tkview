@@ -130,12 +130,17 @@ data class Version(
     val sourceControlPath: String = "",
     val documentsFolder: String = "",
     val interactionsFolder: String = "",
-    val zipUrl: String = "",
+    var zipUrl: String = "",
     val hidden: Boolean,
     val descriptionDocuments: List<DescriptionDocument> = listOf<DescriptionDocument>(),
     val interactionDescriptions: Array<InteractionDescription> = arrayOf<InteractionDescription>(),
     val reviews: List<Review> = listOf<Review>()
-)
+) {
+    init {
+        if (zipUrl.startsWith("http://rivta.se"))
+            zipUrl = zipUrl.replace("http://rivta.se", "https://rivta.se")
+    }
+}
 
 @Serializable
 data class Contract(
@@ -190,8 +195,13 @@ data class InteractionDescription(
 data class Review(
     val reviewProtocol: ReviewProtocol,
     val reviewOutcome: ReviewOutcome,
-    val reportUrl: String = ""
-)
+    var reportUrl: String = ""
+) {
+    init {
+        if (reportUrl.startsWith("http://rivta.se"))
+            reportUrl = reportUrl.replace("http://rivta.se", "https://rivta.se")
+    }
+}
 
 @Serializable
 data class ReviewProtocol(

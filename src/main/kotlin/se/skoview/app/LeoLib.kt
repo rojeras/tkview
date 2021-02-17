@@ -19,6 +19,7 @@ package se.skoview.app
 
 import org.w3c.xhr.XMLHttpRequest
 import pl.treksoft.kvision.core.Component
+import kotlin.browser.document
 
 fun getAsync(url: String, callback: (String) -> Unit) {
     console.log("getAsync(): URL: $url")
@@ -53,7 +54,14 @@ fun getHeightToRemainingViewPort(
     return "calc(100vh - ${heightToRemove}px)"
 }
 
-fun getBaseUrl(): String  {
+fun getBaseUrl(): String {
     val url = "https://rivta.se/tkview/apicache.php"
     return url
+}
+
+fun getVersion(versionName: String = "tkviewVersion"): String {
+    val versionElement = document.getElementById(versionName)
+
+    return if (versionElement != null) versionElement.getAttribute("content") ?: "-1.-1.-1"
+    else "-2.-2.-2"
 }

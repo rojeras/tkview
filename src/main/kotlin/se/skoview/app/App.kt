@@ -37,14 +37,16 @@ import tabs.rivta.domainListView
  * http://localhost:4000/standalone.html#/domains
  */
 
-// todo: Change hippo link to 7.1 format
-// todo: Display version info i grey bottom bar
+// todo: Format the footer line
 // todo: Evalutate if domains.html can be removed
 // todo: Ha samma fontstorlek i sökrutorna som för tabelltext
 // todo: Red ut varför vissa domäner är ofullständiga och inte kan läsas in (se tkview i zim)
 // todo: Red ut om det finns, eller går att få fram, vettiga datum att visa
 // todo: Change domainversion view to use Tab panels (refer to Showcase/Containers
+// todo: Update to Kvision 4
 
+// done: Display version info i grey bottom bar
+// done: Change hippo link to 7.1 format
 // done: GetCareContacts v3 does not have a hippo-link. Was due to namespace error in TPDB for this contract. Patched in tkview.
 // done: Utred. Kolla clinicalprocess.activitiyprescrption.actoutcome 2.1.1. Enligt tkview så ingår MH 2.1. Enligt källkoden är det GMH 2.0?! : hippo (TPs) does not know about minor versions
 // done: Ensure sane font sizes everywhere, also domain page and version selector

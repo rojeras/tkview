@@ -37,8 +37,10 @@ import tabs.rivta.domainListView
  * http://localhost:4000/standalone.html#/domains
  */
 
+// todo: Change hippo link to 7.1 format
+// todo: Display version info i grey bottom bar
+// todo: Evalutate if domains.html can be removed
 // todo: Ha samma fontstorlek i sökrutorna som för tabelltext
-// todo: Läs ner integrations från tpdb och ha det som grund för vilka items som ska ha länk till hippo
 // todo: Red ut varför vissa domäner är ofullständiga och inte kan läsas in (se tkview i zim)
 // todo: Red ut om det finns, eller går att få fram, vettiga datum att visa
 // todo: Change domainversion view to use Tab panels (refer to Showcase/Containers

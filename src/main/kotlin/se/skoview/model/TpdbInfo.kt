@@ -116,7 +116,8 @@ fun mkHippoDomainUrl(domainName: String): String {
 
     if (!takInstalledDomain(domainName)) return ""
 
-    return "https://integrationer.tjansteplattform.se/hippo/?filter=d${domain.id}"
+    // return "https://integrationer.tjansteplattform.se/hippo/?filter=d${domain.id}"
+    return "https://integrationer.tjansteplattform.se/hippo/#/hippo/filter=d${domain.id}"
 }
 
 fun mkHippoContractUrl(contractName: String, major: Int): String {
@@ -137,5 +138,6 @@ fun mkHippoContractUrl(contractName: String, major: Int): String {
         return ""
     }
 
-    return "https://integrationer.tjansteplattform.se/hippo/?filter=C${contract.id}"
+    // return "https://integrationer.tjansteplattform.se/hippo/?filter=C${contract.id}"
+    return "https://integrationer.tjansteplattform.se/hippo/#/hippo/filter=C${contract.id}"
 }

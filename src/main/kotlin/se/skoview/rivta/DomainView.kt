@@ -39,25 +39,13 @@ fun Container.domainView(state: RivState) {
         marginLeft = 1.vw
         marginRight = 1.vw
         width = 98.vw
-
         background = Background(Color.name(Col.WHITE))
-
-        // background = Background(Color.name(Col.LIGHTGRAY))
         overflow = Overflow.INITIAL
 
         val selectedDomainName = state.selectedDomainName
 
         val selectedDomain = DomainMap[selectedDomainName]
         if (selectedDomain == null) return@div
-
-        if (state.selectedDomainVersion == null) {
-            val domainVersion = updateDomainVersion(state, selectedDomain)
-
-            if (domainVersion != null) RivManager.selectDomainVersion(domainVersion)
-            return@div
-        }
-
-        val selectedDomainVersion = state.selectedDomainVersion
 
         simplePanel {
             marginLeft = 15.px
@@ -110,6 +98,14 @@ fun Container.domainView(state: RivState) {
             }
         }
 
+        if (state.selectedDomainVersion == null) {
+            val domainVersion = updateDomainVersion(state, selectedDomain)
+            if (domainVersion != null) RivManager.selectDomainVersion(domainVersion)
+            h3 { +"Inga versioner av denna domän är tillgänglig" }
+            return@div
+        }
+
+        val selectedDomainVersion = state.selectedDomainVersion
         val noOfVersions = mkFilteredDomainVersionsList(state, selectedDomain).size
         simplePanel {
             marginLeft = 15.px

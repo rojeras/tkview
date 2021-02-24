@@ -101,7 +101,7 @@ fun Container.domainView(state: RivState) {
         if (state.selectedDomainVersion == null) {
             val domainVersion = updateDomainVersion(state, selectedDomain)
             if (domainVersion != null) RivManager.selectDomainVersion(domainVersion)
-            h3 { +"Inga versioner av denna domän är tillgänglig" }
+            h3 { +"Ingen fastställd version av denna domän finns att tillgå" }
             return@div
         }
 
@@ -116,7 +116,7 @@ fun Container.domainView(state: RivState) {
                 margin = 5.px
 
                 when (noOfVersions) {
-                    0 -> h3 { +"Inga versioner av denna domän är tillgänglig" }
+                    0 -> h3 { +"Ingen fastställd version av denna domän finns att tillgå" }
                     // 1 -> h2 { +"Version ${mkFilteredDomainVersionsList(state, selectedDomain)[0].name}" }
                     else ->
                         hPanel {

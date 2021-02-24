@@ -61,6 +61,7 @@ data class DomDb(
     init {
         lastUpdateTime = lastChangeTime
     }
+
     companion object {
         lateinit var lastUpdateTime: String
     }
@@ -114,7 +115,7 @@ data class DomainType(
 
 @Serializable
 data class Interaction(
-    val name: String,
+    var name: String,
     val namespace: String,
     val rivtaProfile: String,
     val major: Int,
@@ -122,7 +123,12 @@ data class Interaction(
     val responderContract: Contract,
     val initiatorContract: Contract? = null,
     val interactionDescriptions: Array<InteractionDescription> = arrayOf<InteractionDescription>()
-)
+) {
+    init {
+        name = if (name == "GetLaboratoryOrderOutcomenteraction") "GetLaboratoryOrderOutcomeInteraction"
+        else name
+    }
+}
 
 @Serializable
 data class Version(

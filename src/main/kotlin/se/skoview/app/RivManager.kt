@@ -17,8 +17,8 @@
 package se.skoview.app
 
 import kotlinx.browser.window
-import pl.treksoft.kvision.redux.createReduxStore
-import pl.treksoft.navigo.Navigo
+import io.kvision.redux.createReduxStore
+import io.kvision.navigo.Navigo
 import se.skoview.model.* // ktlint-disable no-wildcard-imports
 import se.skoview.model.tpdbLoad
 import se.skoview.rivta.ContractListRecord

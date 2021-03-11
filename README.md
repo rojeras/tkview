@@ -51,3 +51,7 @@ Det är lite intrikat att sätta upp utvecklingsmiljön eftersom det finns gansk
     python3 -m http.server 
    ```
 1. Test i browsern via länken http://localhost:8000/tkview/#/domains
+
+
+För att köra standalone utan korrekta CSS-er (vilket fungerar för enklare utvecklingsaktiviteter), gå till [standalone](http://localhost:4000/standalone.html#/domains)
+

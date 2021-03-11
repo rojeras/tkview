@@ -16,7 +16,7 @@
  */
 package se.skoview.app
 
-import pl.treksoft.navigo.Navigo
+import io.kvision.navigo.Navigo
 
 enum class View(val url: String) {
     HOME("/"),

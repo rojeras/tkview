@@ -6,6 +6,7 @@ plugins {
     val kotlinVersion: String by System.getProperties()
     id("kotlinx-serialization") version kotlinVersion
     kotlin("js") version kotlinVersion
+    id("io.gitlab.arturbosch.detekt").version("1.16.0-RC3")
 }
 
 version = "1.0.0-SNAPSHOT"
@@ -32,7 +33,7 @@ kotlin {
         browser {
             runTask {
                 outputFileName = "main.bundle.js"
-                //sourceMaps = false
+                // sourceMaps = false
                 devServer = KotlinWebpackConfig.DevServer(
                     open = false,
                     port = 4000,

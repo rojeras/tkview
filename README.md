@@ -55,3 +55,5 @@ Det är lite intrikat att sätta upp utvecklingsmiljön eftersom det finns gansk
 
 För att köra standalone utan korrekta CSS-er (vilket fungerar för enklare utvecklingsaktiviteter), gå till [standalone](http://localhost:4000/standalone.html#/domains)
 
+# Changes to verify git
+Text written in MBR

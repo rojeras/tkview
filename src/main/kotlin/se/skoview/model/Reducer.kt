@@ -39,6 +39,11 @@ fun rivReducer(state: RivState, action: RivAction): RivState {
             selectedDomainVersion = updateDomainVersion(state, DomainMap[action.domainName]),
             view = View.DOMAIN
         )
+        is RivAction.SelectAndShowContract -> state.copy(
+            selectedContractName = action.contractName,
+            // selectedDomainVersion = updateDomainVersion(state, DomainMap[action.domainName]),
+            view = View.CONTRACT
+        )
         is RivAction.SelectDomainVersion -> state.copy(
             selectedDomainVersion = action.domainVersion
         )

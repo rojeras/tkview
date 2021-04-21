@@ -23,6 +23,7 @@ enum class View(val url: String) {
     DOMAIN_LIST("/domains"),
     CONTRACT_LIST("/contracts"),
     DOMAIN("/domain"),
+    CONTRACT("/contract"),
     ADMIN("/admin"),
 }
 
@@ -49,6 +50,11 @@ fun Navigo.initialize(): Navigo {
         "${View.DOMAIN.url}/:slug",
         { params ->
             RivManager.fromUrlShowDomainView(stringParameter(params, "slug"))
+        }
+    ).on(
+        "${View.CONTRACT.url}/:slug",
+        { params ->
+            RivManager.fromUrlShowContractView(stringParameter(params, "slug"))
         }
     ).on(
         "${View.ADMIN.url}/:slug",

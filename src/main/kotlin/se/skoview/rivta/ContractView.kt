@@ -1,0 +1,258 @@
+/**
+ * Copyright (C) 2020 Lars Erik Röjerås
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+package se.skoview.rivta
+
+import io.kvision.core.* // ktlint-disable no-wildcard-imports
+import io.kvision.form.select.simpleSelectInput
+import io.kvision.html.* // ktlint-disable no-wildcard-imports
+import io.kvision.panel.SimplePanel
+import io.kvision.panel.hPanel
+import io.kvision.panel.simplePanel
+import io.kvision.table.* // ktlint-disable no-wildcard-imports
+import io.kvision.utils.px
+import io.kvision.utils.vw
+import se.skoview.app.RivManager
+import se.skoview.app.formControlXs
+import se.skoview.model.* // ktlint-disable no-wildcard-imports
+
+fun Container.contractView(state: RivState) {
+
+    println("In contractView")
+
+    /*
+    div {
+
+        marginLeft = 1.vw
+        marginRight = 1.vw
+        width = 98.vw
+        background = Background(Color.name(Col.WHITE))
+        overflow = Overflow.INITIAL
+
+        val selectedDomainName = state.selectedDomainName
+
+        val selectedDomain = DomainMap[selectedDomainName]
+        if (selectedDomain == null) return@div
+
+        simplePanel {
+            marginLeft = 15.px
+            marginRight = 15.px
+            h1 {
+                align = Align.CENTER
+                marginBottom = 40.px
+                +"${selectedDomain.swedishShort} - ${selectedDomain.name}"
+            }
+            h3 { +"Beskrivning" }
+            //  span { +domainDescription }
+            p { +selectedDomain.getDescription() }
+
+            h3 { +"Domäntyp" }
+
+            div {
+                content = "${Texts.domainTypeText[selectedDomain.domainType.type]} tjänstedomän"
+                title = Texts.domainTypeAltText[selectedDomain.domainType.type]
+            }
+
+            if (!selectedDomain.owner.isNullOrEmpty()) {
+                h3 {
+                    +"Ägare"
+                }
+                span { +"${selectedDomain.owner}" }
+            }
+            p { +" " }
+
+            h3 { +"Mera information om denna tjänstedomän" }
+            ul {
+                if (!selectedDomain.issueTrackerUrl.isNullOrEmpty()) li {
+                    link(
+                        "Ärendehantering",
+                        selectedDomain.issueTrackerUrl,
+
+                    )
+                }
+                if (!selectedDomain.sourceCodeUrl.isNullOrEmpty()) li {
+                    link(
+                        "Källkod",
+                        selectedDomain.sourceCodeUrl
+                    )
+                }
+                if (!selectedDomain.infoPageUrl.isNullOrEmpty()) li {
+                    link(
+                        "Release notes",
+                        selectedDomain.infoPageUrl
+                    )
+                }
+            }
+        }
+
+        if (state.selectedDomainVersion == null) {
+            val domainVersion = updateDomainVersion(state, selectedDomain)
+            if (domainVersion != null) RivManager.selectDomainVersion(domainVersion)
+            h3 { +"Ingen fastställd version av denna domän finns att tillgå" }
+            return@div
+        }
+
+        val selectedDomainVersion = state.selectedDomainVersion
+        val noOfVersions = mkFilteredDomainVersionsList(state, selectedDomain).size
+        simplePanel {
+            marginLeft = 15.px
+            marginRight = 15.px
+            // background = Background(Color.hex(0xf8ffff))
+            border = Border(1.px, BorderStyle.SOLID)
+            simplePanel {
+                margin = 5.px
+
+                when (noOfVersions) {
+                    0 -> h3 { +"Ingen fastställd version av denna domän finns att tillgå" }
+                    // 1 -> h2 { +"Version ${mkFilteredDomainVersionsList(state, selectedDomain)[0].name}" }
+                    else ->
+                        hPanel {
+                            h3 {
+                                marginTop = 15.px
+                                +"Välj domänversion:"
+                            }
+                            add(
+                                SelectDomainVersion(state, selectedDomain)
+                                    .apply {
+                                        width = 120.px
+                                        marginLeft = 50.px
+                                        marginTop = 15.px
+                                        fontWeight = FontWeight.BOLD
+                                    }
+                            )
+                            div {
+                                marginLeft = 20.px
+                                marginTop = 20.px
+                                +" ($noOfVersions)"
+                            }
+                        }
+                }
+
+                h4 {
+                    content = "Tjänstekontrakt"
+                    marginTop = 15.px
+                }
+                marginLeft = 15.px
+                marginRight = 15.px
+                table(
+                    // listOf("Namn", "Version", "Beskrivning", "Senast uppdaterad", "Se anslutningar i hippo"),
+                    listOf("Namn", "Version", "Beskrivning", "Se anslutningar i hippo"),
+                    setOf(TableType.BORDERED, TableType.SMALL, TableType.STRIPED, TableType.HOVER),
+                    // responsiveType = ResponsiveType.RESPONSIVE
+                ) {
+                    selectedDomainVersion.interactionDescriptions
+                        .sortedBy { it.wsdlContract().first }
+                        .map {
+                            val name = it.wsdlContract().first
+                            val major = it.wsdlContract().second
+                            val minor = it.wsdlContract().third
+                            row {
+                                cell {
+                                    +name
+                                }
+                                cell {
+                                    +"$major.$minor"
+                                }
+                                cell {
+                                    +it.description
+                                }
+                                /*
+                                cell {
+                                    if (!it.lastChangedDate.isNullOrEmpty())
+                                        +it.lastChangedDate
+                                }
+                                 */
+                                cell {
+                                    val url = mkHippoContractUrl(name, major)
+                                    val linkText =
+                                        if (url.isNotBlank()) "<a href=\"$url\" target=\"_blank\"><img alt=\"Utforska i hippo\" src=\"/tkview/tpnet.png\" width=\"20\" height=\"20\"></a>"
+                                        else ""
+                                    div(
+                                        rich = true,
+                                        align = Align.CENTER,
+                                        content = linkText
+                                    ) {
+                                        title = "Se anslutningar för detta kontrakt i hippo"
+                                    }
+                                }
+                            }
+                        }
+                }
+
+                h4 { +"Specifikationer" }
+
+                if (selectedDomain.sourceCodeUrl != null) {
+
+                    val baseUrl = "${
+                    selectedDomain.sourceCodeUrl.replace(
+                        "src",
+                        "raw"
+                    )
+                    }/${selectedDomainVersion.name}/${selectedDomainVersion.documentsFolder}/"
+
+                    val documents: List<DescriptionDocument> =
+                        selectedDomainVersion.descriptionDocuments
+                    ul {
+                        documents
+                            .sortedBy { it.type }
+                            .map {
+                                li {
+                                    val displayName = when (it.type) {
+                                        RivDocumentTypeEnum.TKB -> "Tjänstekontraktsbeskrivning"
+                                        RivDocumentTypeEnum.AB -> "Arkitekturella beslut"
+                                        RivDocumentTypeEnum.IS -> "Informationsspecifikation"
+                                        else -> it.fileName
+                                    }
+                                    link(displayName, "$baseUrl${it.fileName}")
+                                    // +" (${it.lastChangedDate})"
+                                }
+                            }
+                        if (selectedDomainVersion.zipUrl.isNotEmpty())
+                            li { link("Releasepaket (zip-fil)", selectedDomainVersion.zipUrl) }
+                    }
+                }
+                h4 { +"Granskningar" }
+
+                if (selectedDomainVersion.reviews.isEmpty()) span { +"Inga granskningar är registrerade för denna version." }
+                else {
+                    table(
+                        listOf("", "Resultat", "Mera information"),
+                        setOf(TableType.BORDERED, TableType.SMALL, TableType.STRIPED, TableType.HOVER),
+                    ) {
+                        for (review in selectedDomainVersion.reviews) {
+                            row {
+                                cell { +review.reviewProtocol.name }
+                                cell {
+                                    color = when (review.reviewOutcome.name) {
+                                        "Godkänd" -> Color.name(Col.GREEN)
+                                        "Underkänd" -> Color.name(Col.RED)
+                                        "Delvis Godkänd" -> Color.name(Col.BLACK)
+                                        else -> Color.name(Col.BLACK)
+                                    }
+                                    bold { +review.reviewOutcome.name }
+                                }
+                                cell { link("Ladda ner granskningsprotokoll", review.reportUrl) }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+     */
+}
+

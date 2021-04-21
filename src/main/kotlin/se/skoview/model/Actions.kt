@@ -24,6 +24,7 @@ sealed class RivAction : RAction {
     data class SetView(val view: View) : RivAction()
     data class SelectDomainType(val type: DomainTypeEnum) : RivAction()
     data class SelectAndShowDomain(val domainName: String) : RivAction()
+    data class SelectAndShowContract(val contractName: String) : RivAction()
     data class SelectDomainVersion(val domainVersion: Version) : RivAction()
     data class ShowHiddenDomain(val isVisible: Boolean) : RivAction()
     data class ShowHiddenVersion(val isVisible: Boolean) : RivAction()

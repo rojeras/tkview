@@ -22,6 +22,7 @@ data class RivState(
     val view: View = View.DOMAIN_LIST,
     val domainType: DomainTypeEnum = DomainTypeEnum.NATIONAL,
     val selectedDomainName: String? = null,
+    val selectedContractName: String? = null,
     val selectedDomainVersion: Version? = null,
     val showHiddenDomain: Boolean = false,
     val showHiddenVersion: Boolean = false,

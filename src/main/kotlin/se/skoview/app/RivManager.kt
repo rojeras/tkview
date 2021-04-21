@@ -39,6 +39,7 @@ object RivManager {
         takApiLoad()
         tpdbLoad()
         domdbLoad()
+        bitbucketLoad()
     }
 
     fun fromUrlShowView(view: View) {
@@ -54,6 +55,11 @@ object RivManager {
     fun fromUrlShowDomainView(domainName: String) {
         println("In fromUrlshowDomainView, domainName = $domainName")
         rivStore.dispatch(RivAction.SelectAndShowDomain(domainName))
+    }
+
+    fun fromUrlShowContractView(contractName: String) {
+        println("In fromUrlShowContractView, contractName = $contractName")
+        rivStore.dispatch(RivAction.SelectAndShowContract(contractName))
     }
 
     fun fromUrlAdmin(onOff: String) {

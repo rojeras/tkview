@@ -33,7 +33,8 @@ fun getAsync(url: String, callback: (String) -> Unit) {
     xmlHttp.send()
 }
 
-fun getSync(url: String): String? {
+fun getSync(url: String): String {
+    console.log("getSync(): URL: $url")
     val xmlHttp = XMLHttpRequest()
     xmlHttp.open("GET", url, false)
     xmlHttp.send(null)
@@ -41,7 +42,7 @@ fun getSync(url: String): String? {
     return if (xmlHttp.status == 200.toShort()) {
         xmlHttp.responseText
     } else {
-        null
+       ""
     }
 }
 

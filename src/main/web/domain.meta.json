@@ -1,0 +1,12 @@
+{
+  "domain_meta": [
+    {
+      "name": "clinicalprocess:logistics:test",
+      "description": "Detta är tjänstedomänens beskrivning",
+      "swedishLong": "Det långa svenska namnet",
+      "swedishShort": "Det korta svenska namnet",
+      "owner": "Ägare till domänen",
+      "domainType": "DOMÄNTYP"
+    }
+  ]
+}

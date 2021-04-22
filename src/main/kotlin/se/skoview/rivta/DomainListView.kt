@@ -27,6 +27,7 @@ import io.kvision.utils.perc
 import io.kvision.utils.px
 import io.kvision.utils.vw
 import se.skoview.app.getHeightToRemainingViewPort
+import se.skoview.model.BbDomain
 import se.skoview.model.DomainArr
 import se.skoview.model.RivState
 import se.skoview.model.mkHippoDomainUrl
@@ -42,11 +43,14 @@ fun Container.domainListView(state: RivState) {
         marginLeft = 1.vw
         width = 98.vw
 
-        val valueList =
+        val valueList = BbDomain.mapp.map {it.value}
+
+            /*
             DomainArr
                 .filter { state.showHiddenDomain || !it.hidden }
                 // .filter { it.getDomainType() == state.domainType }
                 .sortedBy { it.name }
+             */
 
         domainTextDiv =
             div {
@@ -87,14 +91,9 @@ fun Container.domainListView(state: RivState) {
                             headerFilterPlaceholder = "Sök...",
                             width = "30%",
                             formatter = Formatter.TEXTAREA,
-                            formatterComponentFunction = { _, _, item ->
-                                getClickableDomainComponent(
-                                    item.name,
-                                    item.name
-                                )
-                            }
+                            formatterComponentFunction = { _, _, item -> getClickableDomainComponent(item.compactName, item.compactName) }
                         ),
-
+                    /*
                         ColumnDefinition(
                             title = "Svenskt kortnamn",
                             field = "swedishShort",
@@ -139,7 +138,7 @@ fun Container.domainListView(state: RivState) {
                                 }
                             }
                         ),
-
+                        */
                         ColumnDefinition(
                             title = "Anslutningar",
                             field = null,
@@ -147,7 +146,7 @@ fun Container.domainListView(state: RivState) {
                             headerSort = false,
                             width = "10%",
                             formatterComponentFunction = { _, _, item ->
-                                val url = mkHippoDomainUrl(item.name)
+                                val url = mkHippoDomainUrl(item.compactName)
                                 val linkText =
                                     if (url.isNotBlank()) "<a href=\"$url\" target=\"_blank\"><img alt=\"Utforska i hippo\" src=\"/tkview/tpnet.png\" width=\"20\" height=\"20\"></a>"
                                     else ""
@@ -159,6 +158,7 @@ fun Container.domainListView(state: RivState) {
                                 }
                             }
                         )
+
                     )
                 )
             ) {

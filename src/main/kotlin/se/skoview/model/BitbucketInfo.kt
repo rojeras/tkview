@@ -31,13 +31,18 @@ fun bitbucketLoad() {
     // fun load(callback: () -> Unit) {
     println("In bitBucketLoad()")
 
-    val url = "https://api.bitbucket.org/2.0/repositories/rivta-domains"
+    val json = Json { allowStructuredMapKeys = true }
+
+    val urlTestDomain = "https://api.bitbucket.org/2.0/repositories/svrlro/riv.clinicalprocess.logistics.test"
+    var response = getSync(urlTestDomain)
+    var bbDomain: BbDomain = json.decodeFromString(BbDomain.serializer(), response)
+
+    val urlDomains = "https://api.bitbucket.org/2.0/repositories/rivta-domains"
     // val url = "${getBaseUrl()}/http://api.ntjp.se/dominfo/v1/servicedomains.json"
 
     // Older version which I try again to get it to create the actual parsed objects
-    var response = getSync(url)
+    response = getSync(urlDomains)
     println("Size of response is: ${response.length}")
-    val json = Json { allowStructuredMapKeys = true }
     // val serviceDomains: List<ServiceDomain> = json.decodeFromString(ListSerializer(ServiceDomain.serializer()), response)
 
     var bbDomainPagination: BbDomainPagination = json.decodeFromString(BbDomainPagination.serializer(), response)
@@ -47,7 +52,6 @@ fun bitbucketLoad() {
         response = getSync(bbDomainPagination.next!!)
         bbDomainPagination = json.decodeFromString(BbDomainPagination.serializer(), response)
     }
-
 
     println("BbDomain.mapp:")
     console.log(BbDomain.mapp)
@@ -89,6 +93,12 @@ data class BbDomain(
     val scm: String = "",
     val slug: String = ""
 ) {
+
+    val compactName: String = name
+        .substring(name.indexOf(".") + 1)
+        .split(".")
+        .joinToString(separator = ":")
+
     init {
         mapp[name] = this
     }
@@ -104,7 +114,9 @@ data class Owner(
     val display_name: String = "",
     val type: String = "",
     val uuid: String = "",
-    val username: String = ""
+    val username: String = "",
+    val nickname: String = "",
+    val account_id: String = ""
 )
 
 @Serializable

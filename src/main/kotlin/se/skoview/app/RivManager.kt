@@ -39,6 +39,7 @@ object RivManager {
         takApiLoad()
         tpdbLoad()
         domdbLoad()
+        domainMetaLoad()
         bitbucketLoad()
     }
 

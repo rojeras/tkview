@@ -6,7 +6,23 @@
       "swedishLong": "Det långa svenska namnet",
       "swedishShort": "Det korta svenska namnet",
       "owner": "Ägare till domänen",
-      "domainType": "DOMÄNTYP"
+      "domainType": "Extern",
+      "domainVersions" : [
+        {
+          "tag" : "3.0.8",
+          "visible" : true,
+          "S_review" : "G",
+          "I_review" : "G",
+          "T_review" : "U"
+        },
+        {
+          "tag" : "4.0.0",
+          "visible" : true,
+          "S_review" : "G",
+          "I_review" : "G",
+          "T_review" : "G"
+        }
+      ]
     }
   ]
 }

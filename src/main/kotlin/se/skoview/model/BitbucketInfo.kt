@@ -89,7 +89,7 @@ data class BbDomain(
     val size: Int = 0,
     val created_on: String = "",
     val name: String = "",
-    val links: Links,
+    val links: Links? = null,
     val scm: String = "",
     val slug: String = ""
 ) {
@@ -99,8 +99,10 @@ data class BbDomain(
         .split(".")
         .joinToString(separator = ":")
 
+    val meta = DomainMeta.mapp[compactName]
+
     init {
-        mapp[name] = this
+        mapp[compactName] = this
     }
 
     companion object {

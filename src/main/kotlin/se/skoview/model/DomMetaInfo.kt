@@ -32,8 +32,9 @@ data class DomainMeta(
     val swedishLong: String,
     val swedishShort: String,
     val owner: String,
-    val domainType: String
-){
+    val domainType: String,
+    val domainVersions: List<DomainVersion>
+) {
     init {
         mapp[name] = this
     }
@@ -41,3 +42,12 @@ data class DomainMeta(
         val mapp: MutableMap<String, DomainMeta> = mutableMapOf()
     }
 }
+
+@Serializable
+data class DomainVersion(
+    val tag: String,
+    val visible: Boolean,
+    val S_review: String,
+    val I_review: String,
+    val T_review: String
+)

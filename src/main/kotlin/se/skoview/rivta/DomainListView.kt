@@ -93,17 +93,17 @@ fun Container.domainListView(state: RivState) {
                             formatter = Formatter.TEXTAREA,
                             formatterComponentFunction = { _, _, item -> getClickableDomainComponent(item.compactName, item.compactName) }
                         ),
-                    /*
+
                         ColumnDefinition(
                             title = "Svenskt kortnamn",
                             field = "swedishShort",
                             headerFilter = Editor.INPUT,
                             headerFilterPlaceholder = "Sök...",
                             width = "18%",
-                            formatterComponentFunction = { _, _, item ->
+                            formatterComponentFunction = { _, _, domain ->
                                 getClickableDomainComponent(
-                                    item.name,
-                                    item.swedishShort,
+                                    domain.name,
+                                    domain.meta?.swedishShort,
                                     Color.name(Col.BLACK)
                                 )
                             }
@@ -115,10 +115,10 @@ fun Container.domainListView(state: RivState) {
                             headerFilter = Editor.INPUT,
                             headerFilterPlaceholder = "Sök...",
                             width = "30%",
-                            formatterComponentFunction = { _, _, item ->
+                            formatterComponentFunction = { _, _, domain ->
                                 getClickableDomainComponent(
-                                    item.name,
-                                    item.swedishLong,
+                                    domain.name,
+                                    domain.meta?.swedishLong,
                                     Color.name(Col.BLACK)
                                 )
                             }
@@ -133,12 +133,14 @@ fun Container.domainListView(state: RivState) {
                             // formatter = Formatter.TEXTAREA,
                             formatterComponentFunction = { _, _, domain ->
                                 Div {
-                                    content = Texts.domainTypeText[domain.domainType.type]
-                                    title = Texts.domainTypeAltText[domain.domainType.type]
+                                    // content = Texts.domainTypeText[domain.meta?.domainType]
+                                    // title = Texts.domainTypeAltText[domain.meta?.domainType]
+                                    content = domain.meta?.domainType
+                                    title = domain.meta?.domainType
                                 }
                             }
                         ),
-                        */
+
                         ColumnDefinition(
                             title = "Anslutningar",
                             field = null,

@@ -18,16 +18,11 @@
 package se.skoview.rivta
 
 import io.kvision.core.* // ktlint-disable no-wildcard-imports
-import io.kvision.form.select.simpleSelectInput
 import io.kvision.html.* // ktlint-disable no-wildcard-imports
-import io.kvision.panel.SimplePanel
-import io.kvision.panel.hPanel
 import io.kvision.panel.simplePanel
 import io.kvision.table.* // ktlint-disable no-wildcard-imports
 import io.kvision.utils.px
 import io.kvision.utils.vw
-import se.skoview.app.RivManager
-import se.skoview.app.formControlXs
 import se.skoview.model.* // ktlint-disable no-wildcard-imports
 
 fun Container.domainView(state: RivState) {
@@ -44,7 +39,11 @@ fun Container.domainView(state: RivState) {
 
         val selectedDomainName = state.selectedDomainName
 
-        val selectedDomain = DomainMap[selectedDomainName]
+        println(selectedDomainName)
+
+        // val selectedDomain = DomainMap[selectedDomainName]
+        val selectedDomain = BbDomain.mapp[selectedDomainName]
+        console.log(selectedDomain)
         if (selectedDomain == null) return@div
 
         simplePanel {
@@ -53,49 +52,53 @@ fun Container.domainView(state: RivState) {
             h1 {
                 align = Align.CENTER
                 marginBottom = 40.px
-                +"${selectedDomain.swedishShort} - ${selectedDomain.name}"
+                +"${selectedDomain.meta?.swedishShort} - ${selectedDomain.compactName}"
             }
             h3 { +"Beskrivning" }
             //  span { +domainDescription }
-            p { +selectedDomain.getDescription() }
+            p { +selectedDomain.meta?.description!! }
 
             h3 { +"Domäntyp" }
 
             div {
-                content = "${Texts.domainTypeText[selectedDomain.domainType.type]} tjänstedomän"
-                title = Texts.domainTypeAltText[selectedDomain.domainType.type]
+                content = "${selectedDomain.meta?.domainType} tjänstedomän"
+                title = selectedDomain.meta?.domainType
             }
 
-            if (!selectedDomain.owner.isNullOrEmpty()) {
+            if (!selectedDomain.meta?.owner.isNullOrEmpty()) {
                 h3 {
                     +"Ägare"
                 }
-                span { +"${selectedDomain.owner}" }
+                span { +"${selectedDomain.meta?.owner}" }
             }
             p { +" " }
 
             h3 { +"Mera information om denna tjänstedomän" }
             ul {
-                if (!selectedDomain.issueTrackerUrl.isNullOrEmpty()) li {
+                if (!selectedDomain.has_issues) li {
                     link(
                         "Ärendehantering",
-                        selectedDomain.issueTrackerUrl,
-
+                        "" // selectedDomain.issueTrackerUrl,
                     )
                 }
-                if (!selectedDomain.sourceCodeUrl.isNullOrEmpty()) li {
+
+                // if (!selectedDomain.sourceCodeUrl.isNullOrEmpty()) 
+                li {
                     link(
                         "Källkod",
-                        selectedDomain.sourceCodeUrl
+                        url = selectedDomain.links?.source?.href
                     )
                 }
+                /*
                 if (!selectedDomain.infoPageUrl.isNullOrEmpty()) li {
                     link(
                         "Release notes",
                         selectedDomain.infoPageUrl
                     )
                 }
+                 */
             }
+            /*
         }
 
         if (state.selectedDomainVersion == null) {
@@ -250,6 +253,9 @@ fun Container.domainView(state: RivState) {
                     }
                 }
             }
+
+
+             */
         }
     }
 }
@@ -292,6 +298,7 @@ fun mkFilteredDomainVersionsList(state: RivState, domain: ServiceDomain): List<V
             .sortedBy { it.name }
             .reversed()
 }
+/*
 
 private class SelectDomainVersion(state: RivState, domain: ServiceDomain?) : SimplePanel() {
     init {
@@ -322,3 +329,5 @@ private class SelectDomainVersion(state: RivState, domain: ServiceDomain?) : Sim
         }
     }
 }
+
+     */

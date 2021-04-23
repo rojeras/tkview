@@ -38,6 +38,11 @@ import tabs.rivta.domainListView
  * http://localhost:4000/standalone.html#/domains
  */
 
+// todo: Skapa en metadatafile per domän och lägg i tkview/meta/. Allt utom granskningsreultaten
+// todo: Bygg upp nya klasser för att lagra domäninformationen. Dvs använd inte JSON-klasserna direkt.
+// todo: Samla ihop info från bitbucket, metadata och domdb till de nya klasserna som sedan används i presentationen.
+// todo: Lagra även information från vilken källa (BB/DOMDB/Meta...) som information kommer. Kan användas för att färga output så det blir tydligt vilken källa det är. Förbereder migrering.
+
 // todo: Format the footer line
 // todo: Evalutate if domains.html can be removed
 // todo: Ha samma fontstorlek i sökrutorna som för tabelltext

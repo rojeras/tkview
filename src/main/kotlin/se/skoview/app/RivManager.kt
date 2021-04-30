@@ -16,11 +16,15 @@
  */
 package se.skoview.app
 
-import kotlinx.browser.window
-import io.kvision.redux.createReduxStore
 import io.kvision.navigo.Navigo
+import io.kvision.redux.createReduxStore
+import kotlinx.browser.window
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.joinAll
+import kotlinx.coroutines.launch
+import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.json.Json
 import se.skoview.model.* // ktlint-disable no-wildcard-imports
-import se.skoview.model.tpdbLoad
 import se.skoview.rivta.ContractListRecord
 
 object RivManager {
@@ -35,12 +39,49 @@ object RivManager {
     val rivStore = createReduxStore(::rivReducer, RivState())
 
     fun initialize() {
+
         routing.initialize().resolve()
-        takApiLoad()
-        tpdbLoad()
-        domdbLoad()
-        domainMetaLoad()
-        bitbucketLoad()
+
+        GlobalScope.launch {
+            val metaJob = GlobalScope.launch {
+                println("Enter metaJob")
+                loadApiItem("all.domainmeta.json", ListSerializer(DomainMeta.serializer()))
+                println("Exit metaJob")
+            }
+            val tpdbDomainJob = GlobalScope.launch {
+                println("Enter tpdbDomainJob")
+                loadApiItem(
+                    "https://integrationer.tjansteplattform.se/tpdb/tpdbapi.php/api/v1/domains",
+                    ListSerializer(TpdbServiceDomain.serializer())
+                )
+                println("Exit tpdbDomainJob")
+            }
+            val tpdbContractJob = GlobalScope.launch {
+                println("Enter tpdbContractJob")
+                loadApiItem(
+                    "https://integrationer.tjansteplattform.se/tpdb/tpdbapi.php/api/v1/contracts",
+                    ListSerializer(TpdbServiceContract.serializer())
+                )
+                println("Exit tpdbContractJob")
+            }
+
+            val bbJob = GlobalScope.launch {
+                println("Enter bbJob")
+                bitbucketLoad()
+                println("Exit bbJob")
+            }
+
+            println("Before joinAll()")
+            joinAll(
+                bbJob,
+                metaJob,
+                tpdbDomainJob,
+                tpdbContractJob
+            )
+            println("After joinAll()")
+            mkTkViewInfo()
+        }
+        println("After Globalscope")
     }
 
     fun fromUrlShowView(view: View) {

@@ -28,10 +28,9 @@ import io.kvision.utils.px
 import io.kvision.utils.vw
 import se.skoview.app.getHeightToRemainingViewPort
 import se.skoview.model.BbDomain
-import se.skoview.model.DomainArr
+import se.skoview.model.DomainMeta
 import se.skoview.model.RivState
 import se.skoview.model.mkHippoDomainUrl
-import se.skoview.rivta.Texts
 import se.skoview.rivta.getClickableDomainComponent
 
 var domainTextDiv = Div()
@@ -43,7 +42,7 @@ fun Container.domainListView(state: RivState) {
         marginLeft = 1.vw
         width = 98.vw
 
-        val valueList = BbDomain.mapp.map {it.value}
+        val valueList = BbDomain.mapp.map { it.value }
 
             /*
             DomainArr

@@ -17,9 +17,32 @@
 
 package se.skoview.app
 
-import kotlinx.browser.document
-import org.w3c.xhr.XMLHttpRequest
 import io.kvision.core.Component
+import io.kvision.rest.HttpMethod
+import io.kvision.rest.RestClient
+import kotlinx.browser.document
+import kotlinx.coroutines.await
+import kotlinx.serialization.DeserializationStrategy
+import org.w3c.xhr.XMLHttpRequest
+import kotlin.js.Promise
+
+suspend fun <T : Any> loadApiItem(url: String, deserializer: DeserializationStrategy<T>): Promise<T> {
+    val restClient = RestClient()
+    println("Enter loadApiItem with $url")
+
+    val answerPromise =
+        restClient.remoteCall(
+            url = url,
+            method = HttpMethod.GET,
+            deserializer = deserializer, // ListSerializer(ServiceComponent.serializer()),
+            contentType = ""
+        )
+
+    println("loadApiItem before await() with $url")
+    answerPromise.await()
+    println("loadApiItem after await() with $url")
+    return answerPromise
+}
 
 fun getAsync(url: String, callback: (String) -> Unit) {
     console.log("getAsync(): URL: $url")
@@ -42,7 +65,7 @@ fun getSync(url: String): String {
     return if (xmlHttp.status == 200.toShort()) {
         xmlHttp.responseText
     } else {
-       ""
+        ""
     }
 }
 

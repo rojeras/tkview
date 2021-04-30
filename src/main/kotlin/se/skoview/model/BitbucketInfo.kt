@@ -35,7 +35,7 @@ fun bitbucketLoad() {
 
     val urlTestDomain = "https://api.bitbucket.org/2.0/repositories/svrlro/riv.clinicalprocess.logistics.test"
     var response = getSync(urlTestDomain)
-    var bbDomain: BbDomain = json.decodeFromString(BbDomain.serializer(), response)
+    json.decodeFromString(BbDomain.serializer(), response)
 
     val urlDomains = "https://api.bitbucket.org/2.0/repositories/rivta-domains"
     // val url = "${getBaseUrl()}/http://api.ntjp.se/dominfo/v1/servicedomains.json"
@@ -47,7 +47,7 @@ fun bitbucketLoad() {
 
     var bbDomainPagination: BbDomainPagination = json.decodeFromString(BbDomainPagination.serializer(), response)
 
-    while (bbDomainPagination?.next != null) {
+    while (bbDomainPagination.next != null) {
         println("One more turn fetching from bitbucket")
         response = getSync(bbDomainPagination.next!!)
         bbDomainPagination = json.decodeFromString(BbDomainPagination.serializer(), response)

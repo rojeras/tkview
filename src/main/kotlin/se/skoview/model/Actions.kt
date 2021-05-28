@@ -16,7 +16,7 @@
  */
 package se.skoview.model
 
-import pl.treksoft.kvision.redux.RAction
+import io.kvision.redux.RAction
 import se.skoview.app.View
 
 sealed class RivAction : RAction {

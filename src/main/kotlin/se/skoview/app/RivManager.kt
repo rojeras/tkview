@@ -17,8 +17,9 @@
 package se.skoview.app
 
 import kotlinx.browser.window
-import pl.treksoft.kvision.redux.createReduxStore
-import pl.treksoft.navigo.Navigo
+import io.kvision.redux.createReduxStore
+import io.kvision.navigo.Navigo
+import io.kvision.routing.Routing
 import se.skoview.model.* // ktlint-disable no-wildcard-imports
 import se.skoview.model.tpdbLoad
 import se.skoview.rivta.ContractListRecord
@@ -35,6 +36,7 @@ object RivManager {
     val rivStore = createReduxStore(::rivReducer, RivState())
 
     fun initialize() {
+        Routing.init()
         routing.initialize().resolve()
         takApiLoad()
         tpdbLoad()

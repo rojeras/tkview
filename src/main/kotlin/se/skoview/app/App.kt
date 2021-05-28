@@ -16,19 +16,20 @@
  */
 package se.skoview.app
 
-import pl.treksoft.kvision.Application
-import pl.treksoft.kvision.core.Overflow
-import pl.treksoft.kvision.html.footer
-import pl.treksoft.kvision.html.header
-import pl.treksoft.kvision.html.main
-import pl.treksoft.kvision.module
-import pl.treksoft.kvision.pace.Pace
-import pl.treksoft.kvision.pace.PaceOptions
-import pl.treksoft.kvision.panel.ContainerType
-import pl.treksoft.kvision.panel.root
-import pl.treksoft.kvision.require
-import pl.treksoft.kvision.startApplication
-import pl.treksoft.kvision.utils.px
+import io.kvision.Application
+import io.kvision.core.Overflow
+import io.kvision.html.footer
+import io.kvision.html.header
+import io.kvision.html.main
+import io.kvision.module
+import io.kvision.pace.Pace
+import io.kvision.pace.PaceOptions
+import io.kvision.panel.ContainerType
+import io.kvision.panel.root
+import io.kvision.require
+import io.kvision.routing.Routing
+import io.kvision.startApplication
+import io.kvision.utils.px
 import se.skoview.rivta.* // ktlint-disable no-wildcard-imports
 import tabs.rivta.domainListView
 

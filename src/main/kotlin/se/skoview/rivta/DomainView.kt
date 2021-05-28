@@ -17,15 +17,15 @@
 
 package se.skoview.rivta
 
-import pl.treksoft.kvision.core.* // ktlint-disable no-wildcard-imports
-import pl.treksoft.kvision.form.select.simpleSelectInput
-import pl.treksoft.kvision.html.* // ktlint-disable no-wildcard-imports
-import pl.treksoft.kvision.panel.SimplePanel
-import pl.treksoft.kvision.panel.hPanel
-import pl.treksoft.kvision.panel.simplePanel
-import pl.treksoft.kvision.table.* // ktlint-disable no-wildcard-imports
-import pl.treksoft.kvision.utils.px
-import pl.treksoft.kvision.utils.vw
+import io.kvision.core.* // ktlint-disable no-wildcard-imports
+import io.kvision.form.select.simpleSelectInput
+import io.kvision.html.* // ktlint-disable no-wildcard-imports
+import io.kvision.panel.SimplePanel
+import io.kvision.panel.hPanel
+import io.kvision.panel.simplePanel
+import io.kvision.table.* // ktlint-disable no-wildcard-imports
+import io.kvision.utils.px
+import io.kvision.utils.vw
 import se.skoview.app.RivManager
 import se.skoview.app.formControlXs
 import se.skoview.model.* // ktlint-disable no-wildcard-imports

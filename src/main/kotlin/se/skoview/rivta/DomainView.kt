@@ -154,6 +154,7 @@ fun Container.domainView(state: RivState) {
                     // responsiveType = ResponsiveType.RESPONSIVE
                 ) {
                     selectedDomainVersion.interactionDescriptions
+                        .distinctBy { it.wsdlContract().first + it.wsdlContract().second + it.wsdlContract().third } // Remove duplicates, see Issue #5
                         .sortedBy { it.wsdlContract().first }
                         .map {
                             val name = it.wsdlContract().first

@@ -43,9 +43,10 @@ fun Container.contractListView(state: RivState) {
             println("After bind")
 
             val valueList = ContractListRecord.objectList
-                .filter { it.domain.domainType.type == state.domainType }
+                // .filter { it.domain.domainType.type == state.domainType } // Unclear why this filtering exists.
                 .filter { state.showHiddenDomain || !it.domain.hidden }
                 .sortedBy { it.contractName }
+
             contractTextDiv =
                 div {
                     h1 {
@@ -132,16 +133,19 @@ data class ContractListRecord(
             for (domain in DomainArr) {
                 if (domain.interactions != null) {
                     for (interaction in domain.interactions.distinctBy { it.name }) {
-                        var description = "tom"
-                        if (interaction.interactionDescriptions.isNotEmpty()) {
-                            description = interaction.interactionDescriptions[0].description
-                        }
+
+                        val description =
+                            if (interaction.interactionDescriptions.isNotEmpty()) interaction.interactionDescriptions[0].description
+                            else "tom"
+
+                        val contractName = interaction.name.removeSuffix("Interaction")
+
                         objectList.add(
                             ContractListRecord(
-                                interaction.name.removeSuffix("Interaction"),
-                                description,
-                                domain,
-                                domain.name
+                                contractName = contractName,
+                                description = description,
+                                domain = domain,
+                                domainName = domain.name
                             )
                         )
                     }

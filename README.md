@@ -21,7 +21,6 @@ På detta sätt kan TkWiki invokeras genom någon av följande länkar:
 Gör följande steg för att installera TkWiki:
 1. Skapa mappen "tkview" direkt under public_html på rivta.se
 1. Packa upp tkview.zip i tkview-mappen.
-1. Placera tkview.html direkt under public_html. 
 1. Uppdatera topp-menyn på alla sidor på rivta.se. 
     * Länkten till Tjänstedomäner skall ändras till:
     
@@ -51,3 +50,6 @@ Det är lite intrikat att sätta upp utvecklingsmiljön eftersom det finns gansk
     python3 -m http.server 
    ```
 1. Test i browsern via länken http://localhost:8000/tkview/#/domains
+
+## Test direkt standalone
+http://localhost:4000/standalone.html#/domains

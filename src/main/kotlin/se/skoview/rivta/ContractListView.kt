@@ -17,14 +17,14 @@
 
 package se.skoview.rivta
 
-import pl.treksoft.kvision.core.* // ktlint-disable no-wildcard-imports
-import pl.treksoft.kvision.html.* // ktlint-disable no-wildcard-imports
-import pl.treksoft.kvision.panel.simplePanel
-import pl.treksoft.kvision.table.TableType
-import pl.treksoft.kvision.tabulator.* // ktlint-disable no-wildcard-imports
-import pl.treksoft.kvision.utils.perc
-import pl.treksoft.kvision.utils.px
-import pl.treksoft.kvision.utils.vw
+import io.kvision.core.* // ktlint-disable no-wildcard-imports
+import io.kvision.html.* // ktlint-disable no-wildcard-imports
+import io.kvision.panel.simplePanel
+import io.kvision.table.TableType
+import io.kvision.tabulator.* // ktlint-disable no-wildcard-imports
+import io.kvision.utils.perc
+import io.kvision.utils.px
+import io.kvision.utils.vw
 import se.skoview.app.getHeightToRemainingViewPort
 import se.skoview.model.DomainArr
 import se.skoview.model.RivState
@@ -43,9 +43,10 @@ fun Container.contractListView(state: RivState) {
             println("After bind")
 
             val valueList = ContractListRecord.objectList
-                .filter { it.domain.domainType.type == state.domainType }
+                // .filter { it.domain.domainType.type == state.domainType } // Unclear why this filtering exists.
                 .filter { state.showHiddenDomain || !it.domain.hidden }
                 .sortedBy { it.contractName }
+
             contractTextDiv =
                 div {
                     h1 {
@@ -132,16 +133,19 @@ data class ContractListRecord(
             for (domain in DomainArr) {
                 if (domain.interactions != null) {
                     for (interaction in domain.interactions.distinctBy { it.name }) {
-                        var description = "tom"
-                        if (interaction.interactionDescriptions.isNotEmpty()) {
-                            description = interaction.interactionDescriptions[0].description
-                        }
+
+                        val description =
+                            if (interaction.interactionDescriptions.isNotEmpty()) interaction.interactionDescriptions[0].description
+                            else "tom"
+
+                        val contractName = interaction.name.removeSuffix("Interaction")
+
                         objectList.add(
                             ContractListRecord(
-                                interaction.name.removeSuffix("Interaction"),
-                                description,
-                                domain,
-                                domain.name
+                                contractName = contractName,
+                                description = description,
+                                domain = domain,
+                                domainName = domain.name
                             )
                         )
                     }

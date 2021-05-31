@@ -16,13 +16,13 @@
  */
 package se.skoview.rivta
 
-import pl.treksoft.kvision.core.* // ktlint-disable no-wildcard-imports
-import pl.treksoft.kvision.html.* // ktlint-disable no-wildcard-imports
-import pl.treksoft.kvision.panel.flexPanel
-import pl.treksoft.kvision.panel.hPanel
-import pl.treksoft.kvision.panel.simplePanel
-import pl.treksoft.kvision.utils.perc
-import pl.treksoft.kvision.utils.px
+import io.kvision.core.* // ktlint-disable no-wildcard-imports
+import io.kvision.html.* // ktlint-disable no-wildcard-imports
+import io.kvision.panel.flexPanel
+import io.kvision.panel.hPanel
+import io.kvision.panel.simplePanel
+import io.kvision.utils.perc
+import io.kvision.utils.px
 import se.skoview.app.getVersion
 import se.skoview.model.RivState
 

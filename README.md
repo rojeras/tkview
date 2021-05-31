@@ -21,7 +21,6 @@ På detta sätt kan TkWiki invokeras genom någon av följande länkar:
 Gör följande steg för att installera TkWiki:
 1. Skapa mappen "tkview" direkt under public_html på rivta.se
 1. Packa upp tkview.zip i tkview-mappen.
-1. Placera tkview.html direkt under public_html. 
 1. Uppdatera topp-menyn på alla sidor på rivta.se. 
     * Länkten till Tjänstedomäner skall ändras till:
     

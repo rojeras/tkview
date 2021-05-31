@@ -32,7 +32,7 @@ import se.skoview.model.* // ktlint-disable no-wildcard-imports
 
 fun Container.domainView(state: RivState) {
 
-    println("In domainView")
+    println("In domainView with domain: ${state.selectedDomainName}")
 
     div {
 

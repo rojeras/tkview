@@ -18,9 +18,9 @@ package se.skoview.model
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-import se.skoview.app.RivManager
-import se.skoview.app.getAsync
-import se.skoview.app.getBaseUrl
+import se.skoview.controller.RivManager
+import se.skoview.controller.getAsync
+import se.skoview.controller.getBaseUrl
 
 @Serializable
 data class TakApiDto(

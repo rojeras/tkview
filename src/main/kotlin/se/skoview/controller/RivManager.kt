@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package se.skoview.app
+package se.skoview.controller
 
 import kotlinx.browser.window
 import io.kvision.redux.createReduxStore
@@ -22,7 +22,7 @@ import io.kvision.navigo.Navigo
 import io.kvision.routing.Routing
 import se.skoview.model.* // ktlint-disable no-wildcard-imports
 import se.skoview.model.tpdbLoad
-import se.skoview.rivta.ContractListRecord
+import se.skoview.view.ContractListRecord
 
 object RivManager {
 

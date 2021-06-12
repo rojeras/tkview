@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package se.skoview.app
+package se.skoview.controller
 
 import io.kvision.core.Background
 import io.kvision.core.Col

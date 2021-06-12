@@ -15,14 +15,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package se.skoview.rivta
+package se.skoview.view
 
 import io.kvision.core.Color
 import io.kvision.core.WhiteSpace
 import io.kvision.core.WordBreak
 import io.kvision.core.onClick
 import io.kvision.html.* // ktlint-disable no-wildcard-imports
-import se.skoview.app.RivManager
+import se.skoview.controller.RivManager
 import se.skoview.model.DomainTypeEnum
 
 fun getClickableDomainComponent(

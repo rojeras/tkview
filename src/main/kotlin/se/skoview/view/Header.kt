@@ -14,18 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package se.skoview.rivta
+package se.skoview.view
 
 import io.kvision.core.* // ktlint-disable no-wildcard-imports
 import io.kvision.form.check.checkBoxInput
-import io.kvision.form.select.simpleSelectInput
 import io.kvision.html.* // ktlint-disable no-wildcard-imports
 import io.kvision.panel.* // ktlint-disable no-wildcard-imports
 import io.kvision.utils.px
-import se.skoview.app.RivManager
-import se.skoview.app.View
-import se.skoview.app.formControlXs
-import se.skoview.model.DomainTypeEnum
+import se.skoview.controller.RivManager
+import se.skoview.controller.View
 import se.skoview.model.RivAction
 import se.skoview.model.RivState
 

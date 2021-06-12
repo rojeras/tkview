@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package se.skoview.app
+package se.skoview.controller
 
 import io.kvision.Application
 import io.kvision.core.Overflow
@@ -27,10 +27,9 @@ import io.kvision.pace.PaceOptions
 import io.kvision.panel.ContainerType
 import io.kvision.panel.root
 import io.kvision.require
-import io.kvision.routing.Routing
 import io.kvision.startApplication
 import io.kvision.utils.px
-import se.skoview.rivta.* // ktlint-disable no-wildcard-imports
+import se.skoview.view.* // ktlint-disable no-wildcard-imports
 import tabs.rivta.domainListView
 
 /**
@@ -39,13 +38,13 @@ import tabs.rivta.domainListView
  */
 
 // todo: Format the footer line
-// todo: Evalutate if domains.html can be removed
+// todo: Evaluate if domains.html can be removed
 // todo: Ha samma fontstorlek i sökrutorna som för tabelltext
 // todo: Red ut varför vissa domäner är ofullständiga och inte kan läsas in (se tkview i zim)
 // todo: Red ut om det finns, eller går att få fram, vettiga datum att visa
-// todo: Change domainversion view to use Tab panels (refer to Showcase/Containers
-// todo: Update to Kvision 4
+// todo: Change domainversion view to use Tab panels (refer to Showcase/Containers)
 
+// done: Update to Kvision 4
 // done: Display version info i grey bottom bar
 // done: Change hippo link to 7.1 format
 // done: GetCareContacts v3 does not have a hippo-link. Was due to namespace error in TPDB for this contract. Patched in tkview.
@@ -64,11 +63,17 @@ import tabs.rivta.domainListView
 // done: Paginering
 // done: Red ut kotlins serialization och instansiering och defalutvärden
 
+/**
+ * Application class. Responsible for invocation and defines the main loop.
+ */
 class App : Application() {
     init {
         require("css/tkview.css")
     }
 
+    /**
+     * Application startup.
+     */
     override fun start() {
         Pace.init(require("pace-progressbar/themes/green/pace-theme-bounce.css"))
         Pace.setOptions(PaceOptions(manual = true))
@@ -84,7 +89,7 @@ class App : Application() {
                 // The old RivTaMainPage
                 headerNav(state)
             }
-            /**
+            /*
              * main() below subscribe to state changes.
              * The application main dispatcher that sets the view in the application will end up here where * the correct page can be rendered.
              */
@@ -116,6 +121,10 @@ class App : Application() {
     }
 }
 
+/**
+ * Kotlin application entry point. Will invoke [App.start].
+ *
+ */
 fun main() {
     startApplication(::App, module.hot)
 }

@@ -16,7 +16,7 @@
  */
 package se.skoview.model
 
-import se.skoview.app.View
+import se.skoview.controller.View
 
 data class RivState(
     val view: View = View.DOMAIN_LIST,

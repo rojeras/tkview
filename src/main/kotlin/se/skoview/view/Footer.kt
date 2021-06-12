@@ -14,16 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package se.skoview.rivta
+package se.skoview.view
 
 import io.kvision.core.* // ktlint-disable no-wildcard-imports
 import io.kvision.html.* // ktlint-disable no-wildcard-imports
 import io.kvision.panel.flexPanel
-import io.kvision.panel.hPanel
-import io.kvision.panel.simplePanel
 import io.kvision.utils.perc
 import io.kvision.utils.px
-import se.skoview.app.getVersion
+import se.skoview.controller.getVersion
 import se.skoview.model.RivState
 
 fun Container.footerInfo(state: RivState) {

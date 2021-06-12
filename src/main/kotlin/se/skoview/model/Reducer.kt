@@ -16,9 +16,9 @@
  */
 package se.skoview.model
 
-import se.skoview.app.View
-import se.skoview.rivta.getDefaultDomainVersion
-import se.skoview.rivta.mkFilteredDomainVersionsList
+import se.skoview.controller.View
+import se.skoview.view.getDefaultDomainVersion
+import se.skoview.view.mkFilteredDomainVersionsList
 
 fun rivReducer(state: RivState, action: RivAction): RivState {
     println("=====>>> In Reducer, action:")

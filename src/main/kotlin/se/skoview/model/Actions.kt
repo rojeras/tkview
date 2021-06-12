@@ -17,7 +17,7 @@
 package se.skoview.model
 
 import io.kvision.redux.RAction
-import se.skoview.app.View
+import se.skoview.controller.View
 
 sealed class RivAction : RAction {
     object HomePage : RivAction()

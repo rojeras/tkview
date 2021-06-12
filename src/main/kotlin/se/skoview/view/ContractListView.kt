@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package se.skoview.rivta
+package se.skoview.view
 
 import io.kvision.core.* // ktlint-disable no-wildcard-imports
 import io.kvision.html.* // ktlint-disable no-wildcard-imports
@@ -25,7 +25,7 @@ import io.kvision.tabulator.* // ktlint-disable no-wildcard-imports
 import io.kvision.utils.perc
 import io.kvision.utils.px
 import io.kvision.utils.vw
-import se.skoview.app.getHeightToRemainingViewPort
+import se.skoview.controller.getHeightToRemainingViewPort
 import se.skoview.model.DomainArr
 import se.skoview.model.RivState
 import se.skoview.model.ServiceDomain

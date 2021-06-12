@@ -15,11 +15,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package se.skoview.app
+package se.skoview.controller
 
-import org.w3c.xhr.XMLHttpRequest
 import io.kvision.core.Component
-import kotlin.browser.document
+import kotlinx.browser.document
+import org.w3c.xhr.XMLHttpRequest
 
 fun getAsync(url: String, callback: (String) -> Unit) {
     console.log("getAsync(): URL: $url")
@@ -54,10 +54,7 @@ fun getHeightToRemainingViewPort(
     return "calc(100vh - ${heightToRemove}px)"
 }
 
-fun getBaseUrl(): String {
-    val url = "https://rivta.se/tkview/apicache.php"
-    return url
-}
+fun getBaseUrl(): String = "https://rivta.se/tkview/apicache.php"
 
 fun getVersion(versionName: String = "tkviewVersion"): String {
     val versionElement = document.getElementById(versionName)

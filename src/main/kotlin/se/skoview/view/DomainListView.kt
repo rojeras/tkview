@@ -26,12 +26,12 @@ import io.kvision.tabulator.Align
 import io.kvision.utils.perc
 import io.kvision.utils.px
 import io.kvision.utils.vw
-import se.skoview.app.getHeightToRemainingViewPort
+import se.skoview.controller.getHeightToRemainingViewPort
 import se.skoview.model.DomainArr
 import se.skoview.model.RivState
 import se.skoview.model.mkHippoDomainUrl
-import se.skoview.rivta.Texts
-import se.skoview.rivta.getClickableDomainComponent
+import se.skoview.view.Texts
+import se.skoview.view.getClickableDomainComponent
 
 var domainTextDiv = Div()
 

@@ -18,6 +18,9 @@ package se.skoview.controller
 
 import io.kvision.navigo.Navigo
 
+/**
+ * Definition of the possible views and their URL representations.
+ */
 enum class View(val url: String) {
     HOME("/"),
     DOMAIN_LIST("/domains"),
@@ -27,7 +30,9 @@ enum class View(val url: String) {
 }
 
 /**
- * This is the entry point which is invoked when a new URL is set and Enter pressed.
+ * Creates the navigation Navigo object.
+ *
+ * @return Navigo object to use in this application.
  */
 fun Navigo.initialize(): Navigo {
     return on(
@@ -58,6 +63,9 @@ fun Navigo.initialize(): Navigo {
     )
 }
 
+/**
+ * Extract query string from URL
+ */
 fun stringParameter(params: dynamic, parameterName: String): String {
     return (params[parameterName]).toString()
 }

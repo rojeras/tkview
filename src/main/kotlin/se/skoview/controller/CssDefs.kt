@@ -23,6 +23,9 @@ import io.kvision.core.Style
 import io.kvision.utils.px
 import io.kvision.utils.rem
 
+/**
+ * Used to select domain version.
+ */
 val formControlXs = Style {
     setStyle("height", "calc(1.3em + .4rem + 2px)")
     setStyle("padding", "0.2rem 0.4rem")

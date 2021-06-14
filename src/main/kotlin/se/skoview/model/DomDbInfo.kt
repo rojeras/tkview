@@ -26,12 +26,20 @@ import se.skoview.controller.getAsync
 import se.skoview.controller.getBaseUrl
 import kotlin.collections.List
 
-@Serializable
-data class SearchResult(val total_count: Int, val incomplete_results: Boolean)
-
+/**
+ * Global array of domains.
+ */
 val DomainArr = mutableListOf<ServiceDomain>()
+
+/**
+ * Global map of domains. Domain name (namespace) is used for key.
+ */
 val DomainMap = mutableMapOf<String, ServiceDomain>()
 
+/**
+ * Read and and parse all domain info from DOMDB. [kotlinx.serialization] is used to parse the JSON response to
+ * Kotlin objects. The classes contains init-blocks which store the information in different collections.
+ */
 fun domdbLoad() {
     // fun load(callback: () -> Unit) {
     println("In DomDb:load()")
@@ -53,6 +61,9 @@ fun domdbLoad() {
     }
 }
 
+/**
+ * Top DOMDB cache respons object. The cache adds a structre with two elements, a list of domains and timestamp when the cache was last updated.
+ */
 @Serializable
 data class DomDb(
     val answer: List<ServiceDomain>,
@@ -67,6 +78,9 @@ data class DomDb(
     }
 }
 
+/**
+ * Object specification based on output from DOMDB-api.
+ */
 @Serializable
 data class ServiceDomain(
     val name: String,
@@ -85,6 +99,9 @@ data class ServiceDomain(
 ) {
     var domainTypeString: String? = null // Used for filtering in tabulator
 
+    /**
+     * The init block verifies the domain and store them in the global map and array.
+     */
     init {
         if (
             interactions != null &&
@@ -100,6 +117,9 @@ data class ServiceDomain(
     }
 }
 
+/**
+ * Object specification based on output from DOMDB-api
+ */
 @Serializable
 data class DomainType(
     val name: String
@@ -113,6 +133,9 @@ data class DomainType(
         }
 }
 
+/**
+ * Object specification based on output from DOMDB-api
+ */
 @Serializable
 data class Interaction(
     var name: String,
@@ -130,6 +153,9 @@ data class Interaction(
     }
 }
 
+/**
+ * Object specification based on output from DOMDB-api
+ */
 @Serializable
 data class Version(
     val name: String,
@@ -148,6 +174,9 @@ data class Version(
     }
 }
 
+/**
+ * Object specification based on output from DOMDB-api
+ */
 @Serializable
 data class Contract(
     val name: String,
@@ -164,6 +193,9 @@ data class Contract(
     }
 }
 
+/**
+ * Object specification based on output from DOMDB-api
+ */
 @Serializable
 data class DescriptionDocument(
     val fileName: String,
@@ -179,6 +211,9 @@ data class DescriptionDocument(
         }
 }
 
+/**
+ * Object specification based on output from DOMDB-api
+ */
 @Serializable
 data class InteractionDescription(
     val description: String = "",
@@ -197,6 +232,9 @@ data class InteractionDescription(
     }
 }
 
+/**
+ * Object specification based on output from DOMDB-api
+ */
 @Serializable
 data class Review(
     val reviewProtocol: ReviewProtocol,
@@ -209,12 +247,18 @@ data class Review(
     }
 }
 
+/**
+ * Object specification based on output from DOMDB-api
+ */
 @Serializable
 data class ReviewProtocol(
     val name: String,
     val code: String
 )
 
+/**
+ * Object specification based on output from DOMDB-api
+ */
 @Serializable
 data class ReviewOutcome(
     val name: String,

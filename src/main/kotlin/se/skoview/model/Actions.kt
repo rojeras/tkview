@@ -19,6 +19,9 @@ package se.skoview.model
 import io.kvision.redux.RAction
 import se.skoview.controller.View
 
+/**
+ * The redux actions that can be dispatched.
+ */
 sealed class RivAction : RAction {
     object HomePage : RivAction()
     data class SetView(val view: View) : RivAction()

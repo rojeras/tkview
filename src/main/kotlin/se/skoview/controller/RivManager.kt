@@ -24,17 +24,24 @@ import se.skoview.model.* // ktlint-disable no-wildcard-imports
 import se.skoview.model.tpdbLoad
 import se.skoview.view.ContractListRecord
 
+/**
+ * Main application controller object. Responsible for initialization, navigation and redux dispatching.
+ */
 object RivManager {
 
     /**
-     * The routing.navigate() calls below will set the URL AND invoke the callbacks in Routing.tk
-     * The state is not updated automatically. It must be updated here and mirror the view to show.
-     * When the view is updated main() will be called to display the view.
+     * Navigo set up to handle routing.
      */
     private val routing = Navigo(null, true, "#")
 
+    /**
+     * The redux store is set up.
+     */
     val rivStore = createReduxStore(::rivReducer, RivState())
 
+    /**
+     * Initializing and load of base data from the APIs.
+     */
     fun initialize() {
         Routing.init()
         routing.initialize().resolve()
@@ -43,44 +50,93 @@ object RivManager {
         domdbLoad()
     }
 
-    fun fromUrlShowView(view: View) {
-        println("RivManager.fromUrlShowView($view)")
-        rivStore.dispatch(RivAction.SetView(view))
-    }
-
+    /**
+     * Function to set view. Done via update of URL.
+     *
+     * @param view The view (page) to show.
+     */
     fun fromAppShowView(view: View) {
         println("RivManager.fromAppShowView($view)")
         routing.navigate(view.url)
     }
 
-    fun fromUrlShowDomainView(domainName: String) {
-        println("In fromUrlshowDomainView, domainName = $domainName")
-        rivStore.dispatch(RivAction.SelectAndShowDomain(domainName))
+    /**
+     * Function invoked when URL is changed, by [Navigo.initialize], and which dispatch view action.
+     *
+     * @param view The view (page) to show. Used for domain- and contract lists.
+     */
+    fun fromUrlShowView(view: View) {
+        println("RivManager.fromUrlShowView($view)")
+        rivStore.dispatch(RivAction.SetView(view))
     }
 
-    fun fromUrlAdmin(onOff: String) {
-        println("In fromUrlAdmin, onOff = $onOff")
-        rivStore.dispatch(RivAction.SetAdminMode(onOff))
-    }
-
+    /**
+     * Function to show domain page. Done via update of URL.
+     *
+     * @param domainName Name (namespace) of domain to show.
+     */
     fun fromAppShowDomainView(domainName: String) {
         println("In fromAppShowDomainView, domainName = $domainName")
         routing.navigate(View.DOMAIN.url + "/$domainName")
     }
 
+    /**
+     * Function invoked when URL is changed to domain view (domain page).
+     *
+     * @param domainName Name (namespace) of domain to show.
+     */
+    fun fromUrlShowDomainView(domainName: String) {
+        println("In fromUrlshowDomainView, domainName = $domainName")
+        rivStore.dispatch(RivAction.SelectAndShowDomain(domainName))
+    }
+
+    /**
+     * Function invoked when URL is changed to enable/disable (secret) admin view
+     */
+    fun fromUrlAdmin(onOff: String) {
+        println("In fromUrlAdmin, onOff = $onOff")
+        rivStore.dispatch(RivAction.SetAdminMode(onOff))
+    }
+
+    /**
+     * Function to call to indicate domdb loading complete.
+     */
     fun domdbLoadingComplete() {
         ContractListRecord.initialize()
         rivStore.dispatch(RivAction.DomdbLoadingComplete(true))
     }
 
+    /**
+     * Creates a state change event as a GUI refresh (state is not changed).
+      */
     fun refresh() {
         rivStore.dispatch(RivAction.Refresh)
     }
 
+    /**
+     * Function to select a certain domain type.
+     *
+     * @param type Domain type selected.
+     */
     fun selectDomainType(type: DomainTypeEnum) {
         rivStore.dispatch(RivAction.SelectDomainType(type))
     }
 
+    /**
+     * Function to select a domain version.
+     *
+     * @param domainVersion Version to select.
+     */
+    fun selectDomainVersion(domainVersion: Version) {
+        rivStore.dispatch(RivAction.SelectDomainVersion(domainVersion))
+    }
+
+    /**
+     * Function to set/reset a state boolean flag.
+     *
+     * @param flag String with name of state property to set/reset.
+     * @param value Boolean flag value.
+     */
     fun setFlag(flag: String, value: Boolean) {
         when (flag) {
             RivAction.ShowHiddenDomain::class.simpleName -> rivStore.dispatch(
@@ -103,10 +159,9 @@ object RivManager {
         }
     }
 
-    fun selectDomainVersion(domainVersion: Version) {
-        rivStore.dispatch(RivAction.SelectDomainVersion(domainVersion))
-    }
-
+    /**
+     * Function to request the a refresh of the server cache.
+     */
     fun resetCache() {
         println("Manager reset cache")
 

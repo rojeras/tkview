@@ -25,7 +25,6 @@ import se.skoview.controller.View
 sealed class RivAction : RAction {
     object HomePage : RivAction()
     data class SetView(val view: View) : RivAction()
-    data class SelectDomainType(val type: DomainTypeEnum) : RivAction()
     data class SelectAndShowDomain(val domainName: String) : RivAction()
     data class SelectDomainVersion(val domainVersion: Version) : RivAction()
     data class ShowHiddenDomain(val isVisible: Boolean) : RivAction()

@@ -99,14 +99,14 @@ fun Container.domainView(state: RivState) {
         }
 
         if (state.selectedDomainVersion == null) {
-            val domainVersion = updateDomainVersion(state, selectedDomain)
+            val domainVersion = state.defaultDomainVersion(selectedDomain)
             if (domainVersion != null) RivManager.selectDomainVersion(domainVersion)
             h3 { +"Ingen fastställd version av denna domän finns att tillgå" }
             return@div
         }
 
         val selectedDomainVersion = state.selectedDomainVersion
-        val noOfVersions = mkFilteredDomainVersionsList(state, selectedDomain).size
+        val noOfVersions = state.mkFilteredDomainVersionsList(selectedDomain).size
         simplePanel {
             marginLeft = 15.px
             marginRight = 15.px
@@ -255,50 +255,13 @@ fun Container.domainView(state: RivState) {
     }
 }
 
-fun getDefaultDomainVersion(state: RivState, domain: ServiceDomain): Version? {
-    // versions will be sorted with higher version numbers first
-    val versions = mkFilteredDomainVersionsList(state, domain)
 
-    // Go through list and try to find version which is not RC (contains an "_") nor trunk - return first one
-    for (version in versions) {
-        if (
-            !version.name.contains("trunk") &&
-            !version.name.contains("_")
-        )
-            return version
-    }
-
-    // Go through list and try to find version which is not trunk - return first one
-    for (version in versions) {
-        if (
-            !version.name.contains("trunk")
-        )
-            return version
-    }
-
-    // If still no hit just return the first one - which ought to be a sinlge trunk
-    if (versions.isEmpty()) return null
-
-    return versions[0]
-}
-
-fun mkFilteredDomainVersionsList(state: RivState, domain: ServiceDomain): List<Version> {
-    return if (domain.versions == null)
-        listOf()
-    else
-        domain.versions
-            .filter { state.showHiddenVersion || !it.hidden }
-            .filter { state.showRcVersion || !it.name.contains("RC") }
-            .filter { state.showTrunkVersion || !it.name.contains("trunk") }
-            .sortedBy { it.name }
-            .reversed()
-}
 
 private class SelectDomainVersion(state: RivState, domain: ServiceDomain?) : SimplePanel() {
     init {
         requireNotNull(domain)
 
-        val versions = mkFilteredDomainVersionsList(state, domain)
+        val versions = state.mkFilteredDomainVersionsList(domain)
         val options = versions.map { Pair(it.name, it.name) }
 
         // if (state.selectedDomainVersion == null) store.dispatch(RivAction.SelectDomainVersion(versions[0]))

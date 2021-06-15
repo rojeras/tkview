@@ -114,15 +114,6 @@ object RivManager {
     }
 
     /**
-     * Function to select a certain domain type.
-     *
-     * @param type Domain type selected.
-     */
-    fun selectDomainType(type: DomainTypeEnum) {
-        rivStore.dispatch(RivAction.SelectDomainType(type))
-    }
-
-    /**
      * Function to select a domain version.
      *
      * @param domainVersion Version to select.

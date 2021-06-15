@@ -22,6 +22,12 @@ import se.skoview.controller.RivManager
 import se.skoview.controller.getAsync
 import se.skoview.controller.getBaseUrl
 
+/**
+ * Holds the cached answer from TAK-api. Will be populated as part of the deserialization in [takApiLoad].
+ *
+ * @param answer A list of [InstalledContracts]
+ * @param lastChangeTime Time when the server cache was last updated.
+ */
 @Serializable
 data class TakApiDto(
     val answer: List<InstalledContracts>,
@@ -35,6 +41,13 @@ data class TakApiDto(
     }
 }
 
+/**
+ * Kotlin class representing deserialized JSON data from TAK-api. Connects a contract [serviceContract] to a platform [connectionPoint].
+ *
+ * @param id API id.
+ * @param connectionPoint Represent a platform.
+ * @param serviceContract A service contract.
+ */
 @Serializable
 data class InstalledContracts(
     val id: Int,
@@ -42,6 +55,14 @@ data class InstalledContracts(
     val serviceContract: TakServiceContract
 )
 
+/**
+ * Kotlin class representing deserialized JSON data from TAK-api. Represent a platform.
+ *
+ * @param id API id.
+ * @param platform Owner of the platform ("NTJP", "SLL"...)
+ * @param environment Type of platform ("PROD", "QA", "TEST")
+ * @param snapshotTime The last time this information was updated in the TAK-api.
+ */
 @Serializable
 data class ConnectionPoint(
     val id: Int,
@@ -50,6 +71,16 @@ data class ConnectionPoint(
     val snapshotTime: String
 )
 
+/**
+ * Kotlin class representing deserialized JSON data from TAK-api. Tak service contract.
+ *
+ * @property id API id.
+ * @property name Contract name.
+ * @property namespace Contract namespace.
+ * @property major Major version.
+ * @property minor Minor version.
+ * @constructor Create empty Tak service contract
+ */
 @Serializable
 data class TakServiceContract(
     val id: Int,
@@ -63,6 +94,10 @@ data class TakServiceContract(
     }
 }
 
+/**
+ * Tak api load
+ *
+ */
 fun takApiLoad() {
     val url = "${getBaseUrl()}/http://api.ntjp.se/coop/api/v1/installedContracts"
 
@@ -78,6 +113,12 @@ fun takApiLoad() {
 
 val takInstalledContractNamespace = mutableSetOf<String>()
 
+/**
+ * Tak installed domain
+ *
+ * @param domainName
+ * @return Return <i>true</i> if any contract in the domain is installed in any platform, else <i>false</i>.
+ */
 fun takInstalledDomain(domainName: String): Boolean {
     val domain: TpdbServiceDomain? = tpdbDomainMap[domainName]
     if (domain == null) return false

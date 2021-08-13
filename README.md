@@ -51,5 +51,12 @@ Det är lite intrikat att sätta upp utvecklingsmiljön eftersom det finns gansk
    ```
 1. Test i browsern via länken http://localhost:8000/tkview/#/domains
 
-## Test direkt standalone
+## Test direkt standalone 
 http://localhost:4000/standalone.html#/domains
+
+## KDoc-dokumentation   
+KDoc är Kotlins motsvarighet till Javadoc. TkView är dokumenterat mha KDoc. Använd följande steg för att generera dokumentationen:
+
+1. Klona detta repo
+2. Kör gradle-tasken `tkview/Tasks/documentation/dokkaHtml`
+3. Öppna filen `build/dokka/html/tkview/index.html`

@@ -22,6 +22,13 @@ import se.skoview.controller.RivManager
 import se.skoview.controller.getAsync
 import se.skoview.controller.getBaseUrl
 
+/**
+ * Tpdb service contract dto. A wrapper for the answer from the server cache.
+ *
+ * @property answer A wrapper list of all [TpdbServiceContract]s the TPDB-api returns.
+ * @property lastChangeTime Last time the cache was updated.
+ * @constructor Create empty Tpdb service contract dto
+ */
 @Serializable
 data class TpdbServiceContractDto(
     val answer: List<TpdbServiceContract>,
@@ -31,11 +38,27 @@ data class TpdbServiceContractDto(
         lastUpdateTime = lastChangeTime
     }
 
+    /**
+     * Companion. Singleton string with timestamp information.
+     *
+     * @constructor Create empty Companion
+     */
     companion object {
         lateinit var lastUpdateTime: String
     }
 }
 
+/**
+ * Tpdb service contract
+ *
+ * @property id API id.
+ * @property serviceDomainId The id of the service domain this contract belong.
+ * @property name
+ * @property namespace
+ * @property major
+ * @property synonym A synonym which optionally can be used in the Statistics application
+ * @constructor Create empty Tpdb service contract
+ */
 @Serializable
 data class TpdbServiceContract(
     val id: Int,
@@ -50,6 +73,13 @@ data class TpdbServiceContract(
     }
 }
 
+/**
+ * Tpdb service domain dto. Wrapper object.
+ *
+ * @property answer List of domains
+ * @property lastChangeTime Last time the cache was updated.
+ * @constructor Create empty Tpdb service domain dto
+ */
 @Serializable
 data class TpdbServiceDomainDto(
     val answer: List<TpdbServiceDomain>,
@@ -58,12 +88,24 @@ data class TpdbServiceDomainDto(
     init {
         lastUpdateTime = lastChangeTime
     }
-
+    /**
+     * Companion. Singleton string with timestamp information.
+     *
+     * @constructor Create empty Companion
+     */
     companion object {
         lateinit var lastUpdateTime: String
     }
 }
 
+/**
+ * Tpdb service domain
+ *
+ * @property id API id
+ * @property domainName
+ * @property synonym
+ * @constructor Create empty Tpdb service domain
+ */
 @Serializable
 data class TpdbServiceDomain(
     val id: Int,
@@ -75,9 +117,20 @@ data class TpdbServiceDomain(
     }
 }
 
+/**
+ * Tpdb domain map. Global map with domains. Key is domain name.
+ */
 val tpdbDomainMap by lazy { mutableMapOf<String, TpdbServiceDomain>() }
+
+/**
+ * Tpdb contract map. Global map with contracts. Key is [Pair] of contract name and major version.
+ */
 val tpdbContractMap: MutableMap<Pair<String, Int>, TpdbServiceContract> = mutableMapOf()
 
+/**
+ * Tpdb load. Load of domain- and contract information. It is stored in the global maps [tpdbDomainMap] and [tpdbContractMap]. When the asynchronous loading is complete the state is refreshed to force a GUI update.
+ *
+ */
 fun tpdbLoad() {
     // fun load(callback: () -> Unit) {
     println("In tpdbload()")
@@ -110,16 +163,28 @@ fun tpdbLoad() {
     }
 }
 
+/**
+ * Make hippo domain url. The URL can be used by the user to enter hippo with the domain selected.
+ *
+ * @param domainName Name of URL
+ * @return URL to hippo where the domain is selected.
+ */
 fun mkHippoDomainUrl(domainName: String): String {
     val domain: TpdbServiceDomain? = tpdbDomainMap[domainName]
     if (domain == null) return ""
 
     if (!takInstalledDomain(domainName)) return ""
 
-    // return "https://integrationer.tjansteplattform.se/hippo/?filter=d${domain.id}"
     return "https://integrationer.tjansteplattform.se/hippo/#/hippo/filter=d${domain.id}"
 }
 
+/**
+ * Make hippo contract url. The URL can be used by the user to enter hippo with the contract selected.
+ *
+ * @param contractName Name of contract to select in hippo.
+ * @param major Major version of contract to select in hippo.
+ * @return URL to hippo where the contract is selected.
+ */
 fun mkHippoContractUrl(contractName: String, major: Int): String {
     val contract: TpdbServiceContract? = tpdbContractMap[Pair(contractName, major)]
     if (contract == null) {
@@ -127,7 +192,9 @@ fun mkHippoContractUrl(contractName: String, major: Int): String {
         return ""
     }
 
-    // Handle namespace error in TPDB
+    /**
+     * Zap to handle namespace error in TPDB.
+      */
     val checkedNamespace =
         if (contract.namespace.equals("urn:riv:cliniralprocess:logistics:logistics:GetCareContactsResponder:3")) "urn:riv:clinicalprocess:logistics:logistics:GetCareContactsResponder:3"
         else contract.namespace
@@ -138,6 +205,5 @@ fun mkHippoContractUrl(contractName: String, major: Int): String {
         return ""
     }
 
-    // return "https://integrationer.tjansteplattform.se/hippo/?filter=C${contract.id}"
     return "https://integrationer.tjansteplattform.se/hippo/#/hippo/filter=C${contract.id}"
 }

@@ -30,8 +30,16 @@ import se.skoview.model.DomainArr
 import se.skoview.model.RivState
 import se.skoview.model.ServiceDomain
 
+/**
+ * This div is used as a base to calculate page height.
+ */
 var contractTextDiv = Div()
 
+/**
+ * Contract list view. The container contains the list of contracts.
+ *
+ * @param state The current state object (redux state).
+ */
 fun Container.contractListView(state: RivState) {
     println("In contractListView")
     div {
@@ -39,13 +47,11 @@ fun Container.contractListView(state: RivState) {
         marginLeft = 1.vw
         width = 98.vw
 
+        /**
+         * Defines the main panel for this view with the table of service contracts.
+         */
         simplePanel {
             println("After bind")
-
-            val valueList = ContractListRecord.objectList
-                // .filter { it.domain.domainType.type == state.domainType } // Unclear why this filtering exists.
-                .filter { state.showHiddenDomain || !it.domain.hidden }
-                .sortedBy { it.contractName }
 
             contractTextDiv =
                 div {
@@ -55,9 +61,23 @@ fun Container.contractListView(state: RivState) {
                     }
                     p { +"Här hittar du en förteckning över samtliga tjänstekontakt. Klicka på raderna i tabellen för mer information." }
                 }
+            /**
+             * Contains all of the page except the main heading and description.
+             */
             simplePanel {
                 setStyle("height", getHeightToRemainingViewPort(contractTextDiv, 40))
 
+                /**
+                 * Value list. Defines the information to include in the contract list table. Contracts from hidden domains are filtered out, and sorting is based on contract name.
+                 */
+                val valueList = ContractListRecord.objectList
+                    // .filter { it.domain.domainType.type == state.domainType } // Unclear why this filtering exists.
+                    .filter { state.showHiddenDomain || !it.domain.hidden }
+                    .sortedBy { it.contractName }
+
+                /**
+                 * The actual table, created with (http://tabulator.info/)[Tabulator] .
+                 */
                 tabulator(
                     valueList,
                     types = setOf(TableType.BORDERED, TableType.STRIPED, TableType.HOVER),
@@ -120,6 +140,15 @@ fun Container.contractListView(state: RivState) {
     }
 }
 
+/**
+ * Contract list record. Defines each row in the contract table. The rows are stored in the companion (singleton) [objectList]. It is populated by the companion [initialize] function.
+ *
+ * @property contractName
+ * @property description
+ * @property domain
+ * @property domainName
+ * @constructor Create empty Contract list record
+ */
 data class ContractListRecord(
     val contractName: String,
     val description: String,

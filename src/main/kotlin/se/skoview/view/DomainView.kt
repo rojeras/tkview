@@ -30,6 +30,11 @@ import se.skoview.controller.RivManager
 import se.skoview.controller.formControlXs
 import se.skoview.model.* // ktlint-disable no-wildcard-imports
 
+/**
+ * Domain view. Defines the page which displays a (single) domain.
+ *
+ * @param state
+ */
 fun Container.domainView(state: RivState) {
 
     println("In domainView with domain: ${state.selectedDomainName}")
@@ -255,8 +260,14 @@ fun Container.domainView(state: RivState) {
     }
 }
 
-
-
+/**
+ * Select domain version. Panel to select a version of a domain.
+ *
+ * @constructor
+ *
+ * @param state - current state
+ * @param domain - current domain
+ */
 private class SelectDomainVersion(state: RivState, domain: ServiceDomain?) : SimplePanel() {
     init {
         requireNotNull(domain)

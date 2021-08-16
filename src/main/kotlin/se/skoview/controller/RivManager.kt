@@ -151,7 +151,7 @@ object RivManager {
     }
 
     /**
-     * Function to request the a refresh of the server cache.
+     * Function to request a refresh of the server cache.
      */
     fun resetCache() {
         println("Manager reset cache")

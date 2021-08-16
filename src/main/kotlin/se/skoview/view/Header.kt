@@ -28,6 +28,11 @@ import se.skoview.model.RivState
 
 var rivTaPageTop: Div = Div()
 
+/**
+ * Header nav. Mainly used to display a (normally) hidden admin menu.
+ *
+ * @param state - current state
+ */
 fun Container.headerNav(state: RivState) {
 
     div {
@@ -105,6 +110,15 @@ fun Container.headerNav(state: RivState) {
     }
 }
 
+/**
+ * Select page button. In admin mode - display buttons to select page.
+ *
+ * @constructor
+ *
+ * @param state
+ * @param label
+ * @param view
+ */
 private class SelectPageButton(state: RivState, label: String, view: View) : SimplePanel() {
     init {
         marginBottom = 5.px
@@ -122,6 +136,13 @@ private class SelectPageButton(state: RivState, label: String, view: View) : Sim
     }
 }
 
+/**
+ * Reset cache button. In admin mode - display button to reset server cache.
+ *
+ * @constructor
+ *
+ * @param label
+ */
 class ResetCacheButton(label: String) : SimplePanel() {
     init {
         marginBottom = 5.px
@@ -138,6 +159,15 @@ class ResetCacheButton(label: String) : SimplePanel() {
     }
 }
 
+/**
+ * Filter check box. function to handle admin checkboxes.
+ *
+ * @constructor
+ *
+ * @param label
+ * @param action
+ * @param currentlySet
+ */
 private class FilterCheckBox(label: String, action: String, currentlySet: Boolean) : SimplePanel() {
     init {
         div {

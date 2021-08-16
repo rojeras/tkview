@@ -24,6 +24,11 @@ import io.kvision.utils.px
 import se.skoview.controller.getVersion
 import se.skoview.model.RivState
 
+/**
+ * Footer info. Defines the text to show at the bottom of each page.
+ *
+ * @param state - current state
+ */
 fun Container.footerInfo(state: RivState) {
     flexPanel(direction = FlexDirection.ROW, justify = JustifyContent.SPACEEVENLY, alignItems = AlignItems.CENTER) {
         marginTop = 5.px

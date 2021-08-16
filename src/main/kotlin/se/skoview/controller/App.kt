@@ -30,7 +30,6 @@ import io.kvision.require
 import io.kvision.startApplication
 import io.kvision.utils.px
 import se.skoview.view.* // ktlint-disable no-wildcard-imports
-import tabs.rivta.domainListView
 
 /**
  * Application class. Responsible for invocation and defines the main loop.

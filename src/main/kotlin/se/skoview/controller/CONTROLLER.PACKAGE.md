@@ -1,3 +1,3 @@
 # Package se.skoview.controller
 
-Initialize and startup the application.
+Initialize, startup and the main controller of the application.

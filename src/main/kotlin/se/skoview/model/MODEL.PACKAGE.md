@@ -1,3 +1,3 @@
 # Package se.skoview.model
 
-Contains all code which is shared between *hippo* and *stat*. 
+The Model package manage all data in the application. In its center is a Redux store.

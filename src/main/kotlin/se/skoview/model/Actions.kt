@@ -20,7 +20,7 @@ import io.kvision.redux.RAction
 import se.skoview.controller.View
 
 /**
- * The redux actions that can be dispatched.
+ * The redux actions that can be dispatched. See the [RivState] parameters for a description.
  */
 sealed class RivAction : RAction {
     object HomePage : RivAction()

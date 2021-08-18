@@ -29,6 +29,11 @@ val kvisionVersion: String by System.getProperties()
 
 val webDir = file("src/main/web")
 
+// Fix to https://youtrack.jetbrains.com/issue/KT-48273 / LEO 2021-08-18
+rootProject.plugins.withType(org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin::class.java) {
+    rootProject.the<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension>().versions.webpackDevServer.version = "4.0.0-rc.0"
+}
+
 kotlin {
     js {
         browser {

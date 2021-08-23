@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package tabs.rivta
+package se.skoview.view
 
 import io.kvision.core.* // ktlint-disable no-wildcard-imports
 import io.kvision.html.* // ktlint-disable no-wildcard-imports
@@ -26,15 +26,20 @@ import io.kvision.tabulator.Align
 import io.kvision.utils.perc
 import io.kvision.utils.px
 import io.kvision.utils.vw
-import se.skoview.app.getHeightToRemainingViewPort
+import se.skoview.controller.getHeightToRemainingViewPort
 import se.skoview.model.DomainArr
 import se.skoview.model.RivState
 import se.skoview.model.mkHippoDomainUrl
-import se.skoview.rivta.Texts
-import se.skoview.rivta.getClickableDomainComponent
+import se.skoview.view.Texts
+import se.skoview.view.getClickableDomainComponent
 
 var domainTextDiv = Div()
 
+/**
+ * Domain list view. Manage the list of domains.
+ *
+ * @param state Current state.
+ */
 fun Container.domainListView(state: RivState) {
     println("In domainListView")
     div {

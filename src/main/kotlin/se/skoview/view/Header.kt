@@ -14,23 +14,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package se.skoview.rivta
+package se.skoview.view
 
 import io.kvision.core.* // ktlint-disable no-wildcard-imports
 import io.kvision.form.check.checkBoxInput
-import io.kvision.form.select.simpleSelectInput
 import io.kvision.html.* // ktlint-disable no-wildcard-imports
 import io.kvision.panel.* // ktlint-disable no-wildcard-imports
 import io.kvision.utils.px
-import se.skoview.app.RivManager
-import se.skoview.app.View
-import se.skoview.app.formControlXs
-import se.skoview.model.DomainTypeEnum
+import se.skoview.controller.RivManager
+import se.skoview.controller.View
 import se.skoview.model.RivAction
 import se.skoview.model.RivState
 
 var rivTaPageTop: Div = Div()
 
+/**
+ * Header nav. Mainly used to display a (normally) hidden admin menu.
+ *
+ * @param state - current state
+ */
 fun Container.headerNav(state: RivState) {
 
     div {
@@ -108,6 +110,15 @@ fun Container.headerNav(state: RivState) {
     }
 }
 
+/**
+ * Select page button. In admin mode - display buttons to select page.
+ *
+ * @constructor
+ *
+ * @param state
+ * @param label
+ * @param view
+ */
 private class SelectPageButton(state: RivState, label: String, view: View) : SimplePanel() {
     init {
         marginBottom = 5.px
@@ -125,6 +136,13 @@ private class SelectPageButton(state: RivState, label: String, view: View) : Sim
     }
 }
 
+/**
+ * Reset cache button. In admin mode - display button to reset server cache.
+ *
+ * @constructor
+ *
+ * @param label
+ */
 class ResetCacheButton(label: String) : SimplePanel() {
     init {
         marginBottom = 5.px
@@ -141,6 +159,15 @@ class ResetCacheButton(label: String) : SimplePanel() {
     }
 }
 
+/**
+ * Filter check box. function to handle admin checkboxes.
+ *
+ * @constructor
+ *
+ * @param label
+ * @param action
+ * @param currentlySet
+ */
 private class FilterCheckBox(label: String, action: String, currentlySet: Boolean) : SimplePanel() {
     init {
         div {

@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package se.skoview.rivta
+package se.skoview.view
 
 import io.kvision.core.* // ktlint-disable no-wildcard-imports
 import io.kvision.form.select.simpleSelectInput
@@ -26,10 +26,16 @@ import io.kvision.panel.simplePanel
 import io.kvision.table.* // ktlint-disable no-wildcard-imports
 import io.kvision.utils.px
 import io.kvision.utils.vw
-import se.skoview.app.RivManager
-import se.skoview.app.formControlXs
+import kotlinx.browser.window
+import se.skoview.controller.RivManager
+import se.skoview.controller.formControlXs
 import se.skoview.model.* // ktlint-disable no-wildcard-imports
 
+/**
+ * Domain view. Defines the page which displays a (single) domain.
+ *
+ * @param state
+ */
 fun Container.domainView(state: RivState) {
 
     println("In domainView with domain: ${state.selectedDomainName}")
@@ -73,44 +79,20 @@ fun Container.domainView(state: RivState) {
                 span { +"${selectedDomain.owner}" }
             }
             p { +" " }
-
-            h3 { +"Mera information om denna tjänstedomän" }
-            ul {
-                if (!selectedDomain.issueTrackerUrl.isNullOrEmpty()) li {
-                    link(
-                        "Ärendehantering",
-                        selectedDomain.issueTrackerUrl,
-
-                    )
-                }
-                if (!selectedDomain.sourceCodeUrl.isNullOrEmpty()) li {
-                    link(
-                        "Källkod",
-                        selectedDomain.sourceCodeUrl
-                    )
-                }
-                if (!selectedDomain.infoPageUrl.isNullOrEmpty()) li {
-                    link(
-                        "Release notes",
-                        selectedDomain.infoPageUrl
-                    )
-                }
-            }
         }
 
         if (state.selectedDomainVersion == null) {
-            val domainVersion = updateDomainVersion(state, selectedDomain)
+            val domainVersion = state.defaultDomainVersion(selectedDomain)
             if (domainVersion != null) RivManager.selectDomainVersion(domainVersion)
             h3 { +"Ingen fastställd version av denna domän finns att tillgå" }
             return@div
         }
 
         val selectedDomainVersion = state.selectedDomainVersion
-        val noOfVersions = mkFilteredDomainVersionsList(state, selectedDomain).size
+        val noOfVersions = state.mkFilteredDomainVersionsList(selectedDomain).size
         simplePanel {
             marginLeft = 15.px
             marginRight = 15.px
-            // background = Background(Color.hex(0xf8ffff))
             border = Border(1.px, BorderStyle.SOLID)
             simplePanel {
                 margin = 5.px
@@ -198,10 +180,10 @@ fun Container.domainView(state: RivState) {
                 if (selectedDomain.sourceCodeUrl != null) {
 
                     val baseUrl = "${
-                    selectedDomain.sourceCodeUrl.replace(
-                        "src",
-                        "raw"
-                    )
+                        selectedDomain.sourceCodeUrl.replace(
+                            "src",
+                            "raw"
+                        )
                     }/${selectedDomainVersion.name}/${selectedDomainVersion.documentsFolder}/"
 
                     val documents: List<DescriptionDocument> =
@@ -221,8 +203,13 @@ fun Container.domainView(state: RivState) {
                                     // +" (${it.lastChangedDate})"
                                 }
                             }
-                        if (selectedDomainVersion.zipUrl.isNotEmpty())
-                            li { link("Releasepaket (zip-fil)", selectedDomainVersion.zipUrl) }
+                        // if (selectedDomainVersion.zipUrl.isNotEmpty()) li { link("Releasepaket (zip-fil)", selectedDomainVersion.zipUrl) }
+                        if (!selectedDomain.infoPageUrl.isNullOrEmpty()) li {
+                            link(
+                                "Release notes",
+                                selectedDomain.infoPageUrl
+                            )
+                        }
                     }
                 }
                 h4 { +"Granskningar" }
@@ -250,55 +237,56 @@ fun Container.domainView(state: RivState) {
                         }
                     }
                 }
+                button("Ladda ner releasepaket (zip-fil) för version ${state.selectedDomainVersion.name}")
+                    .onClick {
+                        // window.open("${selectedDomainVersion.zipUrl}","_blank","resizable=yes")
+                        window.open("${selectedDomainVersion.zipUrl}")
+                        println("Button 'Ladda ner' clicked")
+                    }.apply {
+                        size = ButtonSize.SMALL
+                        addBsBgColor(BsBgColor.PRIMARY)
+                        addBsColor(BsColor.WHITE)
+                        marginBottom = 5.px
+                        disabled = false
+                    }
+            }
+        }
+
+        h3 {
+            content = "Mera information om denna tjänstedomän"
+            marginTop = 15.px
+        }
+        ul {
+            if (!selectedDomain.issueTrackerUrl.isNullOrEmpty()) li {
+                link(
+                    "Ärendehantering",
+                    selectedDomain.issueTrackerUrl,
+
+                )
+            }
+            if (!selectedDomain.sourceCodeUrl.isNullOrEmpty()) li {
+                link(
+                    "Källkod",
+                    selectedDomain.sourceCodeUrl
+                )
             }
         }
     }
 }
 
-fun getDefaultDomainVersion(state: RivState, domain: ServiceDomain): Version? {
-    // versions will be sorted with higher version numbers first
-    val versions = mkFilteredDomainVersionsList(state, domain)
-
-    // Go through list and try to find version which is not RC (contains an "_") nor trunk - return first one
-    for (version in versions) {
-        if (
-            !version.name.contains("trunk") &&
-            !version.name.contains("_")
-        )
-            return version
-    }
-
-    // Go through list and try to find version which is not trunk - return first one
-    for (version in versions) {
-        if (
-            !version.name.contains("trunk")
-        )
-            return version
-    }
-
-    // If still no hit just return the first one - which ought to be a sinlge trunk
-    if (versions.isEmpty()) return null
-
-    return versions[0]
-}
-
-fun mkFilteredDomainVersionsList(state: RivState, domain: ServiceDomain): List<Version> {
-    return if (domain.versions == null)
-        listOf()
-    else
-        domain.versions
-            .filter { state.showHiddenVersion || !it.hidden }
-            .filter { state.showRcVersion || !it.name.contains("RC") }
-            .filter { state.showTrunkVersion || !it.name.contains("trunk") }
-            .sortedBy { it.name }
-            .reversed()
-}
-
+/**
+ * Select domain version. Panel to select a version of a domain.
+ *
+ * @constructor
+ *
+ * @param state - current state
+ * @param domain - current domain
+ */
 private class SelectDomainVersion(state: RivState, domain: ServiceDomain?) : SimplePanel() {
     init {
         requireNotNull(domain)
 
-        val versions = mkFilteredDomainVersionsList(state, domain)
+        val versions = state.mkFilteredDomainVersionsList(domain)
         val options = versions.map { Pair(it.name, it.name) }
 
         // if (state.selectedDomainVersion == null) store.dispatch(RivAction.SelectDomainVersion(versions[0]))

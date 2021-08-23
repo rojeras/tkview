@@ -4,8 +4,10 @@ import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 plugins {
     val kotlinVersion: String by System.getProperties()
+    val dokkaVersion: String by System.getProperties()
     id("kotlinx-serialization") version kotlinVersion
     kotlin("js") version kotlinVersion
+    id("org.jetbrains.dokka") version dokkaVersion
 }
 
 version = "1.0.0-SNAPSHOT"
@@ -26,6 +28,11 @@ val kotlinVersion: String by System.getProperties()
 val kvisionVersion: String by System.getProperties()
 
 val webDir = file("src/main/web")
+
+// Fix to https://youtrack.jetbrains.com/issue/KT-48273 / LEO 2021-08-18
+rootProject.plugins.withType(org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin::class.java) {
+    rootProject.the<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension>().versions.webpackDevServer.version = "4.0.0-rc.0"
+}
 
 kotlin {
     js {
@@ -76,6 +83,34 @@ kotlin {
         implementation("io.kvision:kvision-testutils:$kvisionVersion:tests")
     }
     sourceSets["main"].resources.srcDir(webDir)
+}
+
+tasks.dokkaHtml.configure {
+    val USER_HOME = System.getenv("HOME")
+    // Set module name displayed in the final output
+    moduleName.set("tkview")
+    outputDirectory.set(buildDir.resolve("dokka/html"))
+    cacheRoot.set(file("$USER_HOME/.cache/dokka"))
+    dokkaSourceSets.configureEach {
+        includes.from("src/main/kotlin/se/skoview/MODULE.md")
+        includes.from("src/main/kotlin/se/skoview/controller/CONTROLLER.PACKAGE.md")
+        includes.from("src/main/kotlin/se/skoview/model/MODEL.PACKAGE.md")
+        includes.from("src/main/kotlin/se/skoview/view/VIEW.PACKAGE.md")
+    }
+}
+
+tasks.dokkaGfm.configure {
+    val USER_HOME = System.getenv("HOME")
+    // Set module name displayed in the final output
+    moduleName.set("tkview")
+    outputDirectory.set(buildDir.resolve("dokka/gfm"))
+    cacheRoot.set(file("$USER_HOME/.cache/dokka"))
+    dokkaSourceSets.configureEach {
+        includes.from("src/main/kotlin/se/skoview/MODULE.md")
+        includes.from("src/main/kotlin/se/skoview/controller/CONTROLLER.PACKAGE.md")
+        includes.from("src/main/kotlin/se/skoview/model/MODEL.PACKAGE.md")
+        includes.from("src/main/kotlin/se/skoview/view/VIEW.PACKAGE.md")
+    }
 }
 
 fun getNodeJsBinaryExecutable(): String {

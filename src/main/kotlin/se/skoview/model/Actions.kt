@@ -17,12 +17,14 @@
 package se.skoview.model
 
 import io.kvision.redux.RAction
-import se.skoview.app.View
+import se.skoview.controller.View
 
+/**
+ * The redux actions that can be dispatched. See the [RivState] parameters for a description.
+ */
 sealed class RivAction : RAction {
     object HomePage : RivAction()
     data class SetView(val view: View) : RivAction()
-    data class SelectDomainType(val type: DomainTypeEnum) : RivAction()
     data class SelectAndShowDomain(val domainName: String) : RivAction()
     data class SelectDomainVersion(val domainVersion: Version) : RivAction()
     data class ShowHiddenDomain(val isVisible: Boolean) : RivAction()

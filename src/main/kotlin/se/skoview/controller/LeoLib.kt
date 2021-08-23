@@ -15,12 +15,18 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package se.skoview.app
+package se.skoview.controller
 
-import org.w3c.xhr.XMLHttpRequest
 import io.kvision.core.Component
-import kotlin.browser.document
+import kotlinx.browser.document
+import org.w3c.xhr.XMLHttpRequest
 
+/**
+ * Library function to make asynchronous API call.
+ *
+ * @param url URL of the api call,
+ * @param callback Lambda to invoke on the result of the call,
+ */
 fun getAsync(url: String, callback: (String) -> Unit) {
     console.log("getAsync(): URL: $url")
     val xmlHttp = XMLHttpRequest()
@@ -33,6 +39,13 @@ fun getAsync(url: String, callback: (String) -> Unit) {
     xmlHttp.send()
 }
 
+/**
+ * Library function to make synchronous API call.
+ *
+ * @param url URL of the api call
+ *
+ * @return The respons of the call if successful, else null.
+ */
 fun getSync(url: String): String? {
     val xmlHttp = XMLHttpRequest()
     xmlHttp.open("GET", url, false)
@@ -45,6 +58,14 @@ fun getSync(url: String): String? {
     }
 }
 
+/**
+ * Library function. Calculates height of remaining viewport below the top of a certain component and returns input string for setStyle call.
+ *
+ * @param topComponent Component to base the calculation from.
+ * @param delta A delta value which will be set depending on the height of the component.
+ *
+ * @return String with CSS setting to be used in call to [setStyle][io.kvision.core.StyledComponent.setStyle].
+ */
 fun getHeightToRemainingViewPort(
     topComponent: Component,
     delta: Int = 48
@@ -54,11 +75,18 @@ fun getHeightToRemainingViewPort(
     return "calc(100vh - ${heightToRemove}px)"
 }
 
-fun getBaseUrl(): String {
-    val url = "https://rivta.se/tkview/apicache.php"
-    return url
-}
+/**
+ * Library function.
+ *
+ * @return URL to api. In our case the caching application.
+ */
+fun getBaseUrl(): String = "https://rivta.se/tkview/apicache.php"
 
+/**
+ * Library function. Obtains and return the version information (set in index.html)
+ *
+ * @return Current version of application.
+ */
 fun getVersion(versionName: String = "tkviewVersion"): String {
     val versionElement = document.getElementById(versionName)
 

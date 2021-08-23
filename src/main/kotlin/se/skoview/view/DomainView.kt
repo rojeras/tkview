@@ -26,6 +26,7 @@ import io.kvision.panel.simplePanel
 import io.kvision.table.* // ktlint-disable no-wildcard-imports
 import io.kvision.utils.px
 import io.kvision.utils.vw
+import kotlinx.browser.window
 import se.skoview.controller.RivManager
 import se.skoview.controller.formControlXs
 import se.skoview.model.* // ktlint-disable no-wildcard-imports
@@ -78,29 +79,6 @@ fun Container.domainView(state: RivState) {
                 span { +"${selectedDomain.owner}" }
             }
             p { +" " }
-
-            h3 { +"Mera information om denna tjänstedomän" }
-            ul {
-                if (!selectedDomain.issueTrackerUrl.isNullOrEmpty()) li {
-                    link(
-                        "Ärendehantering",
-                        selectedDomain.issueTrackerUrl,
-
-                    )
-                }
-                if (!selectedDomain.sourceCodeUrl.isNullOrEmpty()) li {
-                    link(
-                        "Källkod",
-                        selectedDomain.sourceCodeUrl
-                    )
-                }
-                if (!selectedDomain.infoPageUrl.isNullOrEmpty()) li {
-                    link(
-                        "Release notes",
-                        selectedDomain.infoPageUrl
-                    )
-                }
-            }
         }
 
         if (state.selectedDomainVersion == null) {
@@ -115,7 +93,6 @@ fun Container.domainView(state: RivState) {
         simplePanel {
             marginLeft = 15.px
             marginRight = 15.px
-            // background = Background(Color.hex(0xf8ffff))
             border = Border(1.px, BorderStyle.SOLID)
             simplePanel {
                 margin = 5.px
@@ -203,10 +180,10 @@ fun Container.domainView(state: RivState) {
                 if (selectedDomain.sourceCodeUrl != null) {
 
                     val baseUrl = "${
-                    selectedDomain.sourceCodeUrl.replace(
-                        "src",
-                        "raw"
-                    )
+                        selectedDomain.sourceCodeUrl.replace(
+                            "src",
+                            "raw"
+                        )
                     }/${selectedDomainVersion.name}/${selectedDomainVersion.documentsFolder}/"
 
                     val documents: List<DescriptionDocument> =
@@ -226,8 +203,13 @@ fun Container.domainView(state: RivState) {
                                     // +" (${it.lastChangedDate})"
                                 }
                             }
-                        if (selectedDomainVersion.zipUrl.isNotEmpty())
-                            li { link("Releasepaket (zip-fil)", selectedDomainVersion.zipUrl) }
+                        // if (selectedDomainVersion.zipUrl.isNotEmpty()) li { link("Releasepaket (zip-fil)", selectedDomainVersion.zipUrl) }
+                        if (!selectedDomain.infoPageUrl.isNullOrEmpty()) li {
+                            link(
+                                "Release notes",
+                                selectedDomain.infoPageUrl
+                            )
+                        }
                     }
                 }
                 h4 { +"Granskningar" }
@@ -255,6 +237,38 @@ fun Container.domainView(state: RivState) {
                         }
                     }
                 }
+                button("Ladda ner releasepaket (zip-fil) för version ${state.selectedDomainVersion.name}")
+                    .onClick {
+                        // window.open("${selectedDomainVersion.zipUrl}","_blank","resizable=yes")
+                        window.open("${selectedDomainVersion.zipUrl}")
+                        println("Button 'Ladda ner' clicked")
+                    }.apply {
+                        size = ButtonSize.SMALL
+                        addBsBgColor(BsBgColor.PRIMARY)
+                        addBsColor(BsColor.WHITE)
+                        marginBottom = 5.px
+                        disabled = false
+                    }
+            }
+        }
+
+        h3 {
+            content = "Mera information om denna tjänstedomän"
+            marginTop = 15.px
+        }
+        ul {
+            if (!selectedDomain.issueTrackerUrl.isNullOrEmpty()) li {
+                link(
+                    "Ärendehantering",
+                    selectedDomain.issueTrackerUrl,
+
+                )
+            }
+            if (!selectedDomain.sourceCodeUrl.isNullOrEmpty()) li {
+                link(
+                    "Källkod",
+                    selectedDomain.sourceCodeUrl
+                )
             }
         }
     }

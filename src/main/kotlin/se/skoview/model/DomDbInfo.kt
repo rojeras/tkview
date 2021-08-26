@@ -49,13 +49,14 @@ fun domdbLoad() {
 
     // Older version which I try again to get it to create the actual parsed objects
     getAsync(url) { response ->
-        println("Size of response is: ${response.length}")
+        println("Size of domdb response is: ${response.length}")
         val json = Json { allowStructuredMapKeys = true }
         // val serviceDomains: List<ServiceDomain> = json.decodeFromString(ListSerializer(ServiceDomain.serializer()), response)
 
         val domDb: DomDb = json.decodeFromString(DomDb.serializer(), response)
 
         console.log(domDb)
+        console.log(DomainArr)
 
         RivManager.domdbLoadingComplete()
     }
@@ -282,6 +283,7 @@ data class InteractionDescription(
     val wsdlFileName: String
 ) {
     // Parse the wsdl file name to create contractName, major and minor
+
     override fun equals(other: Any?): Boolean {
         if (other == null || other !is InteractionDescription) return false
         return description == other.description &&

@@ -26,9 +26,7 @@ import io.kvision.utils.perc
 import io.kvision.utils.px
 import io.kvision.utils.vw
 import se.skoview.controller.getHeightToRemainingViewPort
-import se.skoview.model.DomainArr
-import se.skoview.model.RivState
-import se.skoview.model.ServiceDomain
+import se.skoview.model.* // ktlint-disable no-wildcard-imports
 
 /**
  * This div is used as a base to calculate page height.
@@ -42,6 +40,9 @@ var contractTextDiv = Div()
  */
 fun Container.contractListView(state: RivState) {
     println("In contractListView")
+
+    ContractListRecord.initialize(state)
+
     div {
         background = Background(Color.name(Col.WHITE))
         marginLeft = 1.vw
@@ -150,6 +151,74 @@ fun Container.contractListView(state: RivState) {
  * @constructor Create empty Contract list record
  */
 data class ContractListRecord(
+    val contractName: String,
+    val description: String,
+    val domain: ServiceDomain,
+    val domainName: String
+) {
+    // The equals check does not include the description
+    // We do not want to get duplicates due to different description fields
+    override fun equals(other: Any?): Boolean {
+        return (
+            (other is ContractListRecord) &&
+                this.contractName == other.contractName &&
+                this.domain == other.domain
+            )
+    }
+
+    companion object {
+        val objectList = mutableListOf<ContractListRecord>()
+
+        fun initialize(state: RivState) {
+            for (domain in DomainArr) {
+                val versions =
+                    state.mkFilteredDomainVersionsList(domain) // Returns visible versions in reverse version order (highest first)
+                for (version in versions) {
+                    if (!version.hidden) {
+                        version.interactionDescriptions
+                            .distinctBy { it.wsdlContract().first + it.wsdlContract().second + it.wsdlContract().third } // Remove duplicates, see Issue #5
+                            .sortedBy { it.wsdlContract().first }
+                            .map {
+                                val description = it.description
+                                val contractName = it.wsdlContract().first
+                                // val major = it.wsdlContract().second
+                                // val minor = it.wsdlContract().third
+                                val contractListRecord = ContractListRecord(
+                                    contractName = contractName,
+                                    description = description,
+                                    domain = domain,
+                                    domainName = domain.name
+                                )
+                                if (!objectList.contains(contractListRecord)) objectList.add(contractListRecord)
+                            }
+                    }
+                }
+                /*
+                if (domain.interactions != null) {
+                    for (interaction in domain.interactions.distinctBy { it.name }) {
+
+                        val description =
+                            if (interaction.interactionDescriptions.isNotEmpty()) interaction.interactionDescriptions[0].description
+                            else "tom"
+
+                        val contractName = interaction.name.removeSuffix("Interaction")
+
+                        objectList.add(
+                            ContractListRecord(
+                                contractName = contractName,
+                                description = description,
+                                domain = domain,
+                                domainName = domain.name
+                            )
+                        )
+                    }
+                    */
+            }
+        }
+    }
+}
+
+data class XContractListRecord(
     val contractName: String,
     val description: String,
     val domain: ServiceDomain,

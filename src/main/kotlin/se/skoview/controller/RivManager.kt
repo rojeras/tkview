@@ -102,7 +102,7 @@ object RivManager {
      * Function to call to indicate domdb loading complete.
      */
     fun domdbLoadingComplete() {
-        ContractListRecord.initialize()
+        // ContractListRecord.initialize()
         rivStore.dispatch(RivAction.DomdbLoadingComplete(true))
     }
 

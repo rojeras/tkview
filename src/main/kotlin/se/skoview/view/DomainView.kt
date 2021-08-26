@@ -244,6 +244,8 @@ fun Container.domainView(state: RivState) {
                         println("Button 'Ladda ner' clicked")
                     }.apply {
                         size = ButtonSize.SMALL
+                        fontFamily = "Ariel"
+                        fontWeight = FontWeight.BOLD
                         addBsBgColor(BsBgColor.PRIMARY)
                         addBsColor(BsColor.WHITE)
                         marginBottom = 5.px

@@ -91,6 +91,7 @@ data class TakServiceContract(
 ) {
     init {
         takInstalledContractNamespace.add(namespace)
+        println("Saving contract $namespace")
     }
 }
 

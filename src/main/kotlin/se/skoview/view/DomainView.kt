@@ -230,7 +230,9 @@ fun Container.domainView(state: RivState) {
                                         "Delvis Godkänd" -> Color.name(Col.BLACK)
                                         else -> Color.name(Col.BLACK)
                                     }
-                                    bold { +review.reviewOutcome.name }
+                                    // bold { +review.reviewOutcome.name }
+                                    // Migrate 5.1.0 set bold
+                                    +review.reviewOutcome.name
                                 }
                                 cell { link("Ladda ner granskningsprotokoll", review.reportUrl) }
                             }

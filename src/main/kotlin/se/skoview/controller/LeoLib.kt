@@ -18,6 +18,7 @@
 package se.skoview.controller
 
 import io.kvision.core.Component
+import io.kvision.core.getElementJQuery
 import kotlinx.browser.document
 import org.w3c.xhr.XMLHttpRequest
 

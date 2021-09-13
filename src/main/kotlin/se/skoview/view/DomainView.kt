@@ -180,10 +180,10 @@ fun Container.domainView(state: RivState) {
                 if (selectedDomain.sourceCodeUrl != null) {
 
                     val baseUrl = "${
-                        selectedDomain.sourceCodeUrl.replace(
-                            "src",
-                            "raw"
-                        )
+                    selectedDomain.sourceCodeUrl.replace(
+                        "src",
+                        "raw"
+                    )
                     }/${selectedDomainVersion.name}/${selectedDomainVersion.documentsFolder}/"
 
                     val documents: List<DescriptionDocument> =
@@ -214,7 +214,7 @@ fun Container.domainView(state: RivState) {
                 }
                 h4 { +"Granskningar" }
 
-                if (selectedDomainVersion.reviews.isEmpty()) span { +"Inga granskningar är registrerade för denna version." }
+                if (selectedDomainVersion.reviews.isEmpty()) span {+"Inga granskningar är registrerade för denna version." }
                 else {
                     table(
                         listOf("", "Resultat", "Mera information"),
@@ -239,20 +239,22 @@ fun Container.domainView(state: RivState) {
                         }
                     }
                 }
-                button("Ladda ner releasepaket (zip-fil) för version ${state.selectedDomainVersion.name}")
-                    .onClick {
+                p { +" "}
+                button("Ladda ner releasepaket (zip-fil) för version ${state.selectedDomainVersion.name}", style = ButtonStyle.PRIMARY) {
+                    onClick {
                         // window.open("${selectedDomainVersion.zipUrl}","_blank","resizable=yes")
                         window.open("${selectedDomainVersion.zipUrl}")
                         println("Button 'Ladda ner' clicked")
-                    }.apply {
-                        size = ButtonSize.SMALL
-                        fontFamily = "Ariel"
+                    } /* .apply {
+                        size = ButtonSize.LARGE
+                        fontFamily = "Times New Roman"
                         fontWeight = FontWeight.BOLD
                         addBsBgColor(BsBgColor.PRIMARY)
                         addBsColor(BsColor.WHITE)
                         marginBottom = 5.px
                         disabled = false
-                    }
+                    } */
+                }
             }
         }
 

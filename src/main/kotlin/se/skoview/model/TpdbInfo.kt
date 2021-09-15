@@ -69,7 +69,9 @@ data class TpdbServiceContract(
     val synonym: String? = null
 ) {
     init {
-        tpdbContractMap[Pair(name, major)] = this
+        if (id != 400) { // Remove erronous urn:riv:crm:financial:billing:claim:ProcessClaimSpecificationResponder:1. Does not exist anymore. Fix issue #15.
+            tpdbContractMap[Pair(name, major)] = this
+        }
     }
 }
 

@@ -15,11 +15,11 @@ group = "se.skoview"
 
 repositories {
     mavenCentral()
-    jcenter()
-    maven { url = uri("https://dl.bintray.com/kotlin/kotlin-eap") }
-    maven { url = uri("https://kotlin.bintray.com/kotlinx") }
-    maven { url = uri("https://dl.bintray.com/kotlin/kotlin-js-wrappers") }
-    maven { url = uri("https://dl.bintray.com/rjaros/kotlin") }
+    // jcenter()
+    // maven { url = uri("https://dl.bintray.com/kotlin/kotlin-eap") }
+    // maven { url = uri("https://kotlin.bintray.com/kotlinx") }
+    // maven { url = uri("https://dl.bintray.com/kotlin/kotlin-js-wrappers") }
+    // maven { url = uri("https://dl.bintray.com/rjaros/kotlin") }
     mavenLocal()
 }
 
@@ -60,6 +60,7 @@ kotlin {
                 }
             }
         }
+        binaries.executable()
     }
     sourceSets["main"].dependencies {
         implementation("io.kvision:kvision:$kvisionVersion")
@@ -71,12 +72,21 @@ kotlin {
         implementation("io.kvision:kvision-bootstrap-upload:$kvisionVersion")
         implementation("io.kvision:kvision-bootstrap-dialog:$kvisionVersion")
         implementation("io.kvision:kvision-bootstrap-typeahead:$kvisionVersion")
-        // implementation("io.kvision:kvision-i18n:$kvisionVersion")
         implementation("io.kvision:kvision-tabulator:$kvisionVersion")
         implementation("io.kvision:kvision-datacontainer:$kvisionVersion")
         implementation("io.kvision:kvision-redux-kotlin:$kvisionVersion")
         implementation("io.kvision:kvision-pace:$kvisionVersion")
         implementation("io.kvision:kvision-routing-navigo:$kvisionVersion")
+        implementation("io.kvision:kvision-fontawesome:$kvisionVersion")
+        implementation("io.kvision:kvision-i18n:$kvisionVersion")
+        implementation("io.kvision:kvision-richtext:$kvisionVersion")
+        implementation("io.kvision:kvision-handlebars:$kvisionVersion")
+        implementation("io.kvision:kvision-datacontainer:$kvisionVersion")
+        implementation("io.kvision:kvision-chart:$kvisionVersion")
+        implementation("io.kvision:kvision-toast:$kvisionVersion")
+        implementation("io.kvision:kvision-react:$kvisionVersion")
+        implementation("io.kvision:kvision-state:$kvisionVersion")
+        implementation("io.kvision:kvision-rest:$kvisionVersion")
     }
     sourceSets["test"].dependencies {
         implementation(kotlin("test-js"))

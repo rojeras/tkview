@@ -20,9 +20,9 @@ package se.skoview.view
 import io.kvision.core.* // ktlint-disable no-wildcard-imports
 import io.kvision.html.* // ktlint-disable no-wildcard-imports
 import io.kvision.panel.simplePanel
-import io.kvision.table.TableType
 import io.kvision.tabulator.* // ktlint-disable no-wildcard-imports
 import io.kvision.tabulator.Align
+import io.kvision.tabulator.TableType
 import io.kvision.utils.perc
 import io.kvision.utils.px
 import io.kvision.utils.vw
@@ -30,8 +30,6 @@ import se.skoview.controller.getHeightToRemainingViewPort
 import se.skoview.model.DomainArr
 import se.skoview.model.RivState
 import se.skoview.model.mkHippoDomainUrl
-import se.skoview.view.Texts
-import se.skoview.view.getClickableDomainComponent
 
 var domainTextDiv = Div()
 

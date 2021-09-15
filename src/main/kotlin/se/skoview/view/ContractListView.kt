@@ -20,8 +20,14 @@ package se.skoview.view
 import io.kvision.core.* // ktlint-disable no-wildcard-imports
 import io.kvision.html.* // ktlint-disable no-wildcard-imports
 import io.kvision.panel.simplePanel
-import io.kvision.table.TableType
-import io.kvision.tabulator.* // ktlint-disable no-wildcard-imports
+// import io.kvision.tabulator.* // ktlint-disable no-wildcard-imports
+import io.kvision.tabulator.ColumnDefinition
+import io.kvision.tabulator.Editor
+import io.kvision.tabulator.Formatter
+import io.kvision.tabulator.Layout
+import io.kvision.tabulator.TableType
+import io.kvision.tabulator.TabulatorOptions
+import io.kvision.tabulator.tabulator
 import io.kvision.utils.perc
 import io.kvision.utils.px
 import io.kvision.utils.vw
@@ -81,7 +87,12 @@ fun Container.contractListView(state: RivState) {
                  */
                 tabulator(
                     valueList,
-                    types = setOf(TableType.BORDERED, TableType.STRIPED, TableType.HOVER),
+                    types = setOf(
+                        TableType.BORDERED,
+                        TableType.STRIPED,
+                        TableType.HOVER
+                    ),
+                    // types = setOf(TableType.BORDERED, TableType.STRIPED, TableType.HOVER),
                     options = TabulatorOptions(
                         layout = Layout.FITCOLUMNS,
 

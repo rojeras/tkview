@@ -1,6 +1,7 @@
 import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpack
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
+// import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     val kotlinVersion: String by System.getProperties()
@@ -8,6 +9,7 @@ plugins {
     id("kotlinx-serialization") version kotlinVersion
     kotlin("js") version kotlinVersion
     id("org.jetbrains.dokka") version dokkaVersion
+    // kotlin("jvm") version "1.5.30"
 }
 
 version = "1.0.0-SNAPSHOT"
@@ -30,9 +32,11 @@ val kvisionVersion: String by System.getProperties()
 val webDir = file("src/main/web")
 
 // Fix to https://youtrack.jetbrains.com/issue/KT-48273 / LEO 2021-08-18
+/*
 rootProject.plugins.withType(org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin::class.java) {
     rootProject.the<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension>().versions.webpackDevServer.version = "4.0.0-rc.0"
 }
+ */
 
 kotlin {
     js {
@@ -179,3 +183,17 @@ afterEvaluate {
         }
     }
 }
+/*
+dependencies {
+    implementation(kotlin("stdlib-jdk8"))
+}
+
+val compileKotlin: KotlinCompile by tasks
+compileKotlin.kotlinOptions {
+    jvmTarget = "1.8"
+}
+val compileTestKotlin: KotlinCompile by tasks
+compileTestKotlin.kotlinOptions {
+    jvmTarget = "1.8"
+}
+ */

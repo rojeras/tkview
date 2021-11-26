@@ -1,15 +1,13 @@
-import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin
-import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpack
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
-// import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     val kotlinVersion: String by System.getProperties()
-    val dokkaVersion: String by System.getProperties()
-    id("kotlinx-serialization") version kotlinVersion
+    kotlin("plugin.serialization") version kotlinVersion
     kotlin("js") version kotlinVersion
+    val kvisionVersion: String by System.getProperties()
+    id("io.kvision") version kvisionVersion
+    val dokkaVersion: String by System.getProperties()
     id("org.jetbrains.dokka") version dokkaVersion
-    // kotlin("jvm") version "1.5.30"
 }
 
 version = "1.0.0-SNAPSHOT"
@@ -17,11 +15,7 @@ group = "se.skoview"
 
 repositories {
     mavenCentral()
-    // jcenter()
-    // maven { url = uri("https://dl.bintray.com/kotlin/kotlin-eap") }
-    // maven { url = uri("https://kotlin.bintray.com/kotlinx") }
-    // maven { url = uri("https://dl.bintray.com/kotlin/kotlin-js-wrappers") }
-    // maven { url = uri("https://dl.bintray.com/rjaros/kotlin") }
+    jcenter()
     mavenLocal()
 }
 
@@ -30,13 +24,6 @@ val kotlinVersion: String by System.getProperties()
 val kvisionVersion: String by System.getProperties()
 
 val webDir = file("src/main/web")
-
-// Fix to https://youtrack.jetbrains.com/issue/KT-48273 / LEO 2021-08-18
-/*
-rootProject.plugins.withType(org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin::class.java) {
-    rootProject.the<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension>().versions.webpackDevServer.version = "4.0.0-rc.0"
-}
- */
 
 kotlin {
     js {
@@ -126,74 +113,3 @@ tasks.dokkaGfm.configure {
         includes.from("src/main/kotlin/se/skoview/view/VIEW.PACKAGE.md")
     }
 }
-
-fun getNodeJsBinaryExecutable(): String {
-    val nodeDir = NodeJsRootPlugin.apply(project).nodeJsSetupTaskProvider.get().destination
-    val isWindows = System.getProperty("os.name").toLowerCase().contains("windows")
-    val nodeBinDir = if (isWindows) nodeDir else nodeDir.resolve("bin")
-    val command = NodeJsRootPlugin.apply(project).nodeCommand
-    val finalCommand = if (isWindows && command == "node") "node.exe" else command
-    return nodeBinDir.resolve(finalCommand).absolutePath
-}
-
-tasks {
-    create("generatePotFile", Exec::class) {
-        dependsOn("compileKotlinJs")
-        executable = getNodeJsBinaryExecutable()
-        args("$buildDir/js/node_modules/gettext-extract/bin/gettext-extract")
-        inputs.files(kotlin.sourceSets["main"].kotlin.files)
-        outputs.file("$projectDir/src/main/resources/i18n/messages.pot")
-    }
-}
-afterEvaluate {
-    tasks {
-        getByName("processResources", Copy::class) {
-            dependsOn("compileKotlinJs")
-            exclude("**/*.pot")
-            doLast("Convert PO to JSON") {
-                destinationDir.walkTopDown().filter {
-                    it.isFile && it.extension == "po"
-                }.forEach {
-                    exec {
-                        executable = getNodeJsBinaryExecutable()
-                        args(
-                            "$buildDir/js/node_modules/gettext.js/bin/po2json",
-                            it.absolutePath,
-                            "${it.parent}/${it.nameWithoutExtension}.json"
-                        )
-                        println("Converted ${it.name} to ${it.nameWithoutExtension}.json")
-                    }
-                    it.delete()
-                }
-            }
-        }
-        create("zip", Zip::class) {
-            dependsOn("browserProductionWebpack")
-            group = "package"
-            destinationDirectory.set(file("$buildDir/libs"))
-            val distribution =
-                project.tasks.getByName("browserProductionWebpack", KotlinWebpack::class).destinationDirectory!!
-            from(distribution) {
-                include("*.*")
-            }
-            from(webDir)
-            duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-            inputs.files(distribution, webDir)
-            outputs.file(archiveFile)
-        }
-    }
-}
-/*
-dependencies {
-    implementation(kotlin("stdlib-jdk8"))
-}
-
-val compileKotlin: KotlinCompile by tasks
-compileKotlin.kotlinOptions {
-    jvmTarget = "1.8"
-}
-val compileTestKotlin: KotlinCompile by tasks
-compileTestKotlin.kotlinOptions {
-    jvmTarget = "1.8"
-}
- */

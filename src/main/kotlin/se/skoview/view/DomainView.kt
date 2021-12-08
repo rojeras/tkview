@@ -152,12 +152,7 @@ fun Container.domainView(state: RivState) {
                                 cell {
                                     +it.description
                                 }
-                                /*
-                                cell {
-                                    if (!it.lastChangedDate.isNullOrEmpty())
-                                        +it.lastChangedDate
-                                }
-                                 */
+
                                 cell {
                                     val url = mkHippoContractUrl(name, major)
                                     val linkText =
@@ -245,15 +240,7 @@ fun Container.domainView(state: RivState) {
                         // window.open("${selectedDomainVersion.zipUrl}","_blank","resizable=yes")
                         window.open("${selectedDomainVersion.zipUrl}")
                         println("Button 'Ladda ner' clicked")
-                    } /* .apply {
-                        size = ButtonSize.LARGE
-                        fontFamily = "Times New Roman"
-                        fontWeight = FontWeight.BOLD
-                        addBsBgColor(BsBgColor.PRIMARY)
-                        addBsColor(BsColor.WHITE)
-                        marginBottom = 5.px
-                        disabled = false
-                    } */
+                    }
                 }
             }
         }

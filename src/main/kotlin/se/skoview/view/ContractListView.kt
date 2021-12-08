@@ -204,26 +204,6 @@ data class ContractListRecord(
                             }
                     }
                 }
-                /*
-                if (domain.interactions != null) {
-                    for (interaction in domain.interactions.distinctBy { it.name }) {
-
-                        val description =
-                            if (interaction.interactionDescriptions.isNotEmpty()) interaction.interactionDescriptions[0].description
-                            else "tom"
-
-                        val contractName = interaction.name.removeSuffix("Interaction")
-
-                        objectList.add(
-                            ContractListRecord(
-                                contractName = contractName,
-                                description = description,
-                                domain = domain,
-                                domainName = domain.name
-                            )
-                        )
-                    }
-                    */
             }
         }
     }

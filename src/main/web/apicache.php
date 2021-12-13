@@ -40,11 +40,6 @@ if ($url == 'reset') {
 $filename = md5($url) . '.cache';
 $filepath = $cache_path . $filename;
 
-/*
- * This if-stmt has been removed to stop the script from trying to obtain new data from the apis.
- * Temporary workaround while there is a problem fetching from api.ntjp... data
- * LEO 2021-12-13
- *
 if (!file_exists($filepath) || (time() - 84600 > filemtime($filepath))) {
     $data = callApi($url);
     // Only create/update the file if the call succeeded
@@ -52,7 +47,6 @@ if (!file_exists($filepath) || (time() - 84600 > filemtime($filepath))) {
         file_put_contents($filepath, $data);
     }
 }
-*/
 
 // $data = json_decode(file_get_contents($filepath), true);
 $lastChangeTime = date("Y-m-d H:i:s", filemtime($filepath));

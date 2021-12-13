@@ -24,41 +24,15 @@ date_default_timezone_set('Europe/Stockholm');
 
 $requestURI = $_SERVER['REQUEST_URI'];
 
-$scriptName = '/' . basename(__FILE__, 'apicache.php') . '/';
-$scriptLocation = '/tkview';
+$scriptName = '/' . basename(__FILE__, 'testapicache.php') . '/';
+$scriptLocation = '/tkviewrc';
 
 $url = str_replace($scriptName, "", $requestURI);
 $url = str_replace($scriptLocation, "", $url);
 
-$cache_path = 'cache/';
+$data = callApi($url);
 
-if ($url == 'reset') {
-    array_map('unlink', glob($cache_path . "*.cache"));
-    exit();
-}
-
-$filename = md5($url) . '.cache';
-$filepath = $cache_path . $filename;
-
-/*
- * This if-stmt has been removed to stop the script from trying to obtain new data from the apis.
- * Temporary workaround while there is a problem fetching from api.ntjp.se... data
- * LEO 2021-12-13
- *
-if (!file_exists($filepath) || (time() - 84600 > filemtime($filepath))) {
-    $data = callApi($url);
-    // Only create/update the file if the call succeeded
-    if ($data) {
-        file_put_contents($filepath, $data);
-    }
-}
-*/
-
-// $data = json_decode(file_get_contents($filepath), true);
-$lastChangeTime = date("Y-m-d H:i:s", filemtime($filepath));
-$data = file_get_contents($filepath);
-
-echo '{ "answer" : '. $data . ', "lastChangeTime" : "' . $lastChangeTime . '" }' ;
+echo  $data  ;
 
 exit;
 // ---------------------------------------------------------------------------
@@ -72,7 +46,10 @@ function callApi($url)
     $result = curl_exec($curl);
 
     $info = curl_getinfo($curl);
-    // echo date('c'), '. Request to ', $info['url'];
+    echo 'Took ', $info['total_time'], ' seconds to send a request to ', $info['url'], "\n";
+    echo 'http_code ', $info['http_code'], "\n";
+    echo 'size_download ', $info['size_download'], "\n";
+
 
     $resultJSON = json_decode($result);
 
@@ -88,8 +65,6 @@ function callApi($url)
         echo "Data ends with:\n", substr($result, -20);
         $foundError = true;
     }
-
-    // echo ' took ', $info['total_time'], ' seconds. Received ', strlen($result), ' bytes and ', count($resultJSON), " items. \n";
 
     curl_close($curl);
 

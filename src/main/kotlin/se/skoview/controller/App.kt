@@ -100,7 +100,6 @@ fun main() {
         BootstrapTypeaheadModule,
         BootstrapUploadModule,
         RichTextModule,
-        ChartModule,
         TabulatorModule,
         CoreModule,
         panelsCompatibilityMode = true

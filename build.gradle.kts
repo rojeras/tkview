@@ -2,11 +2,11 @@ import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 plugins {
     val kotlinVersion: String by System.getProperties()
+    val kvisionVersion: String by System.getProperties()
+    val dokkaVersion: String by System.getProperties()
     kotlin("plugin.serialization") version kotlinVersion
     kotlin("js") version kotlinVersion
-    val kvisionVersion: String by System.getProperties()
     id("io.kvision") version kvisionVersion
-    val dokkaVersion: String by System.getProperties()
     id("org.jetbrains.dokka") version dokkaVersion
 }
 
@@ -15,7 +15,6 @@ group = "se.skoview"
 
 repositories {
     mavenCentral()
-    jcenter()
     mavenLocal()
 }
 
@@ -38,7 +37,6 @@ kotlin {
                         "/kv/*" to "http://localhost:8080",
                         "/kvws/*" to mapOf("target" to "ws://localhost:8080", "ws" to true)
                     ),
-                    // contentBase = mutableListOf("$buildDir/processedResources/js/main")
                     static = mutableListOf("$buildDir/processedResources/js/main")
                 )
             }
@@ -69,15 +67,7 @@ kotlin {
         implementation("io.kvision:kvision-pace:$kvisionVersion")
         implementation("io.kvision:kvision-routing-navigo:$kvisionVersion")
         implementation("io.kvision:kvision-fontawesome:$kvisionVersion")
-        implementation("io.kvision:kvision-i18n:$kvisionVersion")
         implementation("io.kvision:kvision-richtext:$kvisionVersion")
-        implementation("io.kvision:kvision-handlebars:$kvisionVersion")
-        implementation("io.kvision:kvision-datacontainer:$kvisionVersion")
-        implementation("io.kvision:kvision-chart:$kvisionVersion")
-        implementation("io.kvision:kvision-toast:$kvisionVersion")
-        implementation("io.kvision:kvision-react:$kvisionVersion")
-        implementation("io.kvision:kvision-state:$kvisionVersion")
-        implementation("io.kvision:kvision-rest:$kvisionVersion")
     }
     sourceSets["test"].dependencies {
         implementation(kotlin("test-js"))

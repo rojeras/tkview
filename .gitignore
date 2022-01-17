@@ -10,3 +10,5 @@ build/
 src/main/web/cache/
 
 src/main/web/tkview/
+
+.kotlin-js-store/yarn.lock

@@ -83,7 +83,7 @@ fun Container.contractListView(state: RivState) {
                     .sortedBy { it.contractName }
 
                 /**
-                 * The actual table, created with (http://tabulator.info/)[Tabulator] .
+                 * The actual table, created with (http://tabulator.info/) .
                  */
                 tabulator(
                     valueList,
@@ -192,8 +192,6 @@ data class ContractListRecord(
                             .map {
                                 val description = it.description
                                 val contractName = it.wsdlContract().first
-                                // val major = it.wsdlContract().second
-                                // val minor = it.wsdlContract().third
                                 val contractListRecord = ContractListRecord(
                                     contractName = contractName,
                                     description = description,
@@ -202,41 +200,6 @@ data class ContractListRecord(
                                 )
                                 if (!objectList.contains(contractListRecord)) objectList.add(contractListRecord)
                             }
-                    }
-                }
-            }
-        }
-    }
-}
-
-data class XContractListRecord(
-    val contractName: String,
-    val description: String,
-    val domain: ServiceDomain,
-    val domainName: String
-) {
-    companion object {
-        val objectList = mutableListOf<ContractListRecord>()
-
-        fun initialize() {
-            for (domain in DomainArr) {
-                if (domain.interactions != null) {
-                    for (interaction in domain.interactions.distinctBy { it.name }) {
-
-                        val description =
-                            if (interaction.interactionDescriptions.isNotEmpty()) interaction.interactionDescriptions[0].description
-                            else "tom"
-
-                        val contractName = interaction.name.removeSuffix("Interaction")
-
-                        objectList.add(
-                            ContractListRecord(
-                                contractName = contractName,
-                                description = description,
-                                domain = domain,
-                                domainName = domain.name
-                            )
-                        )
                     }
                 }
             }

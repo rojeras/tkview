@@ -139,7 +139,6 @@ fun tpdbLoad() {
 
     val url = "${getBaseUrl()}/https://integrationer.tjansteplattform.se/tpdb/tpdbapi.php/api/v1/domains"
 
-    // Older version which I try again to get it to create the actual parsed objects
     getAsync(url) { response ->
         println("Size of domains are: ${response.length}")
         val json = Json { allowStructuredMapKeys = true }

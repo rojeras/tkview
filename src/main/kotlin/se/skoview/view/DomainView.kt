@@ -238,7 +238,7 @@ fun Container.domainView(state: RivState) {
                 button("Ladda ner releasepaket (zip-fil) för version ${state.selectedDomainVersion.name}", style = ButtonStyle.PRIMARY) {
                     onClick {
                         // window.open("${selectedDomainVersion.zipUrl}","_blank","resizable=yes")
-                        window.open("${selectedDomainVersion.zipUrl}")
+                        window.open(selectedDomainVersion.zipUrl)
                         println("Button 'Ladda ner' clicked")
                     }
                 }

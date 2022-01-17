@@ -129,7 +129,7 @@ data class ServiceDomain(
             DomainArr.add(this)
             domainTypeString = domainType.name
         } else {
-            if (!this.name.isNullOrBlank()) println("${this.name} is incomplete and removed")
+            if (!this.name.isBlank()) println("${this.name} is incomplete and removed")
         }
     }
 }
@@ -344,11 +344,11 @@ data class ReviewOutcome(
 /**
  * Definition of domain types.
  */
-enum class DomainTypeEnum(val displayName: String) {
-    NATIONAL("Nationell"),
-    APPLICATION_SPECIFIC("Applikationsspecifik"),
-    EXTERNAL("Extern"),
-    UNKNOWN("Okänd")
+enum class DomainTypeEnum() {
+    NATIONAL(),
+    APPLICATION_SPECIFIC,
+    EXTERNAL,
+    UNKNOWN,
 }
 
 /**

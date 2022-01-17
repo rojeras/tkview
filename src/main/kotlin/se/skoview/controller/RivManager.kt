@@ -22,7 +22,6 @@ import io.kvision.navigo.Navigo
 import io.kvision.routing.Routing
 import se.skoview.model.* // ktlint-disable no-wildcard-imports
 import se.skoview.model.tpdbLoad
-import se.skoview.view.ContractListRecord
 
 /**
  * Main application controller object. Responsible for initialization, navigation and redux dispatching.

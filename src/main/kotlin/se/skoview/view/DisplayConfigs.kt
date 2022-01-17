@@ -26,7 +26,7 @@ import se.skoview.controller.RivManager
 import se.skoview.model.DomainTypeEnum
 
 /**
- * Get clickable domain component. Creates a selectable component used from [Tabulator] cells.
+ * Get clickable domain component. Creates a selectable component used from cells.
  *
  * @param domainName - domain that can be selected
  * @param display - text to display in the cell
